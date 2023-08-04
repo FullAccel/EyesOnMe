@@ -52,7 +52,7 @@ class AlarmFunctions(private val context: Context){
 
         pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
             PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_IMMUTABLE)
-        }else{
+        } else{
             PendingIntent.getBroadcast(context,alarm_code,intent,PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
