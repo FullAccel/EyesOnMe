@@ -24,7 +24,7 @@ class MainActivity: FlutterActivity() {
     private val CHANNEL = "samples.flutter.dev/battery"
 
     private fun kakaoLogin() {
-        KakaoSdk.init(this, "64b112780c39b7057081cfb547fddd35")
+        KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         // 로그인 조합 예제
         Log.e("welcome", "카카오 로그인 호출")
         // 카카오계정으로 로그인 공통 callback 구성
