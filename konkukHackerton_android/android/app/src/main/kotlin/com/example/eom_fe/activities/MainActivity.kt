@@ -5,19 +5,13 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-import android.util.Log
 import com.example.eom_fe.R
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.KakaoSdk
-import com.kakao.sdk.common.KakaoSdk.init
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
@@ -40,10 +34,10 @@ class MainActivity: FlutterActivity() {
         db = AlarmDB.getDatabase(this)
         KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         loginFunctions = LoginFunctions(this, applicationContext)
-        init()
+        initLogin()
     }
 
-    fun init() {
+    private fun initLogin() {
         loginFunctions.kakaoLogin()
         // kakaoLogin이 끝난 후 getMemberInfo가 실행되어야 함
         memberInfo = loginFunctions.getMemberInfo()
