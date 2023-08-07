@@ -4,8 +4,10 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.net.ParseException
 import android.os.Build
+import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import java.text.SimpleDateFormat
@@ -16,6 +18,7 @@ class AlarmFunctions(private val context: Context){
     private lateinit var pendingIntent: PendingIntent
     private val ioScope by lazy { CoroutineScope(Dispatchers.IO) }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun callAlarm(time : String, alarm_code : Int, content : String){
 
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -57,5 +60,26 @@ class AlarmFunctions(private val context: Context){
         }
 
         alarmManager.cancel(pendingIntent)
+    }
+
+    private fun playSound() {
+        // private fun playSound(context: Context) { }
+        val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT || audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+                // 무음 모드나 진동 모드인 경우 해제하여 소리 울리게 하기
+                audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+            }
+        } else {
+            if (audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT) {
+                // 무음 모드인 경우 해제하여 소리 울리게 하기
+                audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+            }
+        }
+
+        // 소리를 울릴 수 있는 알림(혹은 미디어)을 실행하는 코드 작성
+        // 여기서는 알림(Notification)을 사용하는 경우를 예로 들어 작성하지만, 필요에 따라 다른 방법으로 소리를 울릴 수 있습니다.
+        // 알림에 사용할 소리를 등록하고 알림을 실행하는 코드 작성
     }
 }
