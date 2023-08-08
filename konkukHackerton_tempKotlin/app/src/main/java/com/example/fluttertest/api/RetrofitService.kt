@@ -1,6 +1,7 @@
 package com.example.fluttertest.api
 
 import com.example.fluttertest.data.MemberData
+import com.example.fluttertest.data.UserApiResponseData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -8,13 +9,13 @@ interface RetrofitService {
 
     //Member
     @POST("member")
-    fun addMemberData(@Body params: MemberData): Call<MemberData>
+    fun addMemberData(@Body params: MemberData): Call<UserApiResponseData>
 
     @GET("member/{memberId}")
     fun getMemberData(@Path("memberId") number: Int): Call<MemberData>
 
-    @GET("member/{email}")
-    fun findMemberData(@Path("email") email: String): Call<MemberData>
+    @GET("member/follow/{email}")
+    fun findMemberData(@Path("email") email: String): Call<UserApiResponseData>
 
 
     /*

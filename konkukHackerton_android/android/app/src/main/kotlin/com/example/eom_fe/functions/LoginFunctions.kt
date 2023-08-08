@@ -45,7 +45,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                         val name: String = user?.kakaoAccount?.profile?.nickname.toString()
                         val email: String = user?.kakaoAccount?.email.toString()
                         val profileUrl: String = user?.kakaoAccount?.profile?.profileImageUrl.toString()
-                        findLoginInfoHttp { memberInfo ->
+                        findLoginInfoHttp(email) { memberInfo ->
                             if (memberInfo == null) {
                                 Log.d("welcome", "memberInfo == null")
                                 val memberData = MemberData(0, name, email, profileUrl, 0, 0)
@@ -106,20 +106,23 @@ class LoginFunctions(context: Context, applicationContext: Context) {
         }
     }
 
-    private fun findLoginInfoHttp(callback: (memberInfo: MemberData?) -> Unit){
+    private fun findLoginInfoHttp(email: String, callback: (memberInfo: MemberData?) -> Unit){
         Log.d("welcome", "findLoginHttp called")
-        val findMemberInfo = RetrofitBuilder.api.findMemberData("nonesuch_0@naver.com")
-        findMemberInfo.enqueue(object : Callback<MemberData> {
-            override fun onResponse(call: Call<MemberData>, response: Response<MemberData>) {
+        Log.d("welcome", "email : $email")
+        val findMemberInfo = RetrofitBuilder.api.findMemberData(email)
+        findMemberInfo.enqueue(object : Callback<UserApiResponseData> {
+            override fun onResponse(call: Call<UserApiResponseData>, response: Response<UserApiResponseData>) {
                 Log.d("welcome" ,response.errorBody().toString())
                 Log.d("welcome" ,response.code().toString())
                 if (response.isSuccessful) {
                     // 사용자 정보 있음
                     Log.d("welcome", "findLoginHttp -> response.isSuccessful")
                     Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
+                    Log.d("welcome", "response.body : ${response.body()}")
+//                    memberInfo = response.body()!!
                     val userApiResponseData = response.body() as UserApiResponseData
                     memberInfo = userApiResponseData.data
-                    Log.d("welcome", memberInfo.toString())
+                    Log.d("welcome", "memberInfo : ${memberInfo.toString()}")
                     callback(memberInfo)
                 }
                 else {
@@ -129,7 +132,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                 }
             }
 
-            override fun onFailure(call: Call<MemberData>, t: Throwable) {
+            override fun onFailure(call: Call<UserApiResponseData>, t: Throwable) {
                 // 사용자 정보 없음
                 callback(null)
                 Log.d("welcome", "findLoginHttp -> onFailure")
@@ -141,17 +144,21 @@ class LoginFunctions(context: Context, applicationContext: Context) {
     private fun createMemberInfo(memberData: MemberData, callback: (createdMemberInfo: MemberData) -> Unit) {
         val createMemberInfo = RetrofitBuilder.api.addMemberData(memberData)
         Log.d("welcome" ,"createMemberInfo called")
-        createMemberInfo.enqueue(object : Callback<MemberData> {
-            override fun onResponse(call: Call<MemberData>, response: Response<MemberData>) {
+        Log.d("welcome", "original data : ${memberData.toString()}")
+        createMemberInfo.enqueue(object : Callback<UserApiResponseData> {
+            override fun onResponse(call: Call<UserApiResponseData>, response: Response<UserApiResponseData>) {
                 Log.d("welcome" ,response.errorBody().toString())
                 Log.d("welcome" ,response.code().toString())
                 Log.d("welcome", response.raw().toString())
                 if (response.isSuccessful) {
                     Log.d("welcome", "createMemberInfo -> response.isSuccessful")
                     Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
+                    Log.d("welcome", "response -> ${response}")
+                    Log.d("welcome", "response.body : ${response.body()}")
                     val userApiResponseData = response.body() as UserApiResponseData
                     memberInfo = userApiResponseData.data
-                    Log.d("welcome", memberInfo.toString())
+//                    memberInfo = response.body()!!
+                    Log.d("welcome", "memberInfo : ${memberInfo.toString()}")
                     callback(memberInfo)
                 } else {
                     // POST 요청 실패 처리
@@ -160,7 +167,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                 }
             }
 
-            override fun onFailure(call: Call<MemberData>, t: Throwable) {
+            override fun onFailure(call: Call<UserApiResponseData>, t: Throwable) {
                 // POST 요청 실패 처리
 //                callback(null)
                 Log.d("welcome", "createMemberInfo -> onFailure")
