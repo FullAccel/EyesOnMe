@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "51140544799",
+    "project_id": "konkuk-hackerton",
+    "storage_bucket": "konkuk-hackerton.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51140544799:android:6837b4ee609c0bdfc1c82a",
+        "android_client_info": {
+          "package_name": "com.example.eom_fe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51140544799-j9v4384el2kpka555thpf6g2ead7922j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO9Wz3qPVHV9TxHtUBdH6wDUBZBHn6taM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51140544799-j9v4384el2kpka555thpf6g2ead7922j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51140544799:android:6f0b9b1bf9d21023c1c82a",
+        "android_client_info": {
+          "package_name": "com.example.eom_fe.activities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "51140544799-j9v4384el2kpka555thpf6g2ead7922j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO9Wz3qPVHV9TxHtUBdH6wDUBZBHn6taM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "51140544799-j9v4384el2kpka555thpf6g2ead7922j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

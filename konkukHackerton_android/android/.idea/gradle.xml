@@ -9,6 +9,7 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/permission_handler-8.3.0/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

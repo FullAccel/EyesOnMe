@@ -8,6 +8,7 @@ data class MemberData(
     val email: String,
     val profileUrl: String,
     val planSuccessCount: Int,
-    val challengeSuccessCount: Int
+    val challengeSuccessCount: Int,
+    val firebaseToken: String
 )
     : Serializable

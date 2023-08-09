@@ -20,6 +20,8 @@ import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
 import kotlinx.coroutines.*
 
@@ -62,8 +64,23 @@ class MainActivity: FlutterActivity() {
             // This method is invoked on the main thread.
                 call, result ->
             if (call.method == "kakaoLogin") {
-                memberInfo = loginFunctions.kakaoLogin()
-                initLogin()
+                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w("tokennnn", "Fetching FCM registration token failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new FCM registration token
+                    val token = task.result
+
+                    // Log and toast
+                    val msg = token.toString()
+                    memberInfo = loginFunctions.kakaoLogin(msg)
+                    initLogin()
+                    Log.d("tokennnn", msg)
+//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                })
+
             }
             else if (call.method == "showAlarmList") {
                 val i = Intent(this, AlarmListActivity::class.java)

@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat.*
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.data.UserApiResponseData
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -26,9 +28,11 @@ class LoginFunctions(context: Context, applicationContext: Context) {
     val mainContext = context
     val applicationContext = applicationContext
 
-    var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0)
+    var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0, "")
 
-    fun kakaoLogin(): MemberData {
+    var memberToken: String = ""
+
+    fun kakaoLogin(memberToken: String): MemberData {
 
         // 로그인 조합 예제
         Log.e("welcome", "카카오 로그인 호출")
@@ -53,7 +57,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                         findLoginInfoHttp(email) { memberInfo ->
                             if (memberInfo == null) {
                                 Log.d("welcome", "memberInfo == null")
-                                val memberData = MemberData(0, name, email, profileUrl, 0, 0)
+                                val memberData = MemberData(0, name, email, profileUrl, 0, 0, memberToken)
                                 createMemberInfo(memberData) { createdMemberInfo ->
 //                                    val i = Intent(this, AlarmListActivity::class.java)
 //                                    startActivity(i)
