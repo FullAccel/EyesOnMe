@@ -18,6 +18,17 @@ interface RetrofitService {
     fun findMemberData(@Path("email") email: String): Call<UserApiResponseData>
 
 
+    // Follow
+    // Call<Any> 수정할 것
+    @POST("follow/{memberId}/{followMemberId}")
+    fun followOtherMember(
+        @Path("memberId") number: Int,
+        @Path("followMemberId") otherNumber: Int
+    ): Call<Any>
+
+//    @GET("follow/{followings}")
+//    fun getFollowingList(@Path("followings" ))
+
     /*
     //Region
 

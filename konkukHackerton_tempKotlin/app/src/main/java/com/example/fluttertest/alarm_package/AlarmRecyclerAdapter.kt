@@ -10,13 +10,16 @@ class AlarmRecyclerAdapter(var items:ArrayList<AlarmDataModel>)
     : RecyclerView.Adapter<AlarmRecyclerAdapter.ViewHolder>() {
 
     interface OnItemClickListener{ // 완전히 독립적인 class를 만들 수 있게 함
-        fun OnItemClick(data: AlarmDataModel, position: Int)
+        fun OnItemClick(position: Int, item: AlarmDataModel)
     }
 
-    var itemClickListener: OnItemClickListener? = null
+    var itemClickListener: OnItemClickListener?= null
 
     inner class ViewHolder(val binding: RowBinding) : RecyclerView.ViewHolder(binding.root) {
         init{ // 초기화
+            binding.row.setOnClickListener {
+                itemClickListener?.OnItemClick(adapterPosition, items[adapterPosition])
+            }
         }
     }
 
