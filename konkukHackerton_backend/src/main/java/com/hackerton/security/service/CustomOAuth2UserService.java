@@ -1,7 +1,7 @@
 package com.hackerton.security.service;
 
-import com.hackerton.member.domain.Member;
-import com.hackerton.member.dto.MemberRepository;
+import com.hackerton.domain.member.entity.Member;
+import com.hackerton.domain.member.entity.MemberRepository;
 import com.hackerton.security.dto.OAuthAttributes;
 import com.hackerton.security.dto.SessionMember;
 import jakarta.servlet.http.HttpSession;
@@ -47,7 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         System.out.println(attributes.getEmail());
         System.out.println("Hello");
         Member member = memberRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
+                .map(entity -> entity.update(attributes.getName(), attributes.getProfileUrl()))
                 .orElse(attributes.toEntity());
         System.out.println(member.getEmail());
         return memberRepository.save(member);
