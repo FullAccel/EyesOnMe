@@ -1,17 +1,24 @@
 package com.example.eom_fe.alarm_package
 
-import com.example.eom_fe.R
-
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.CanceledException
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.ContextCompat.startForegroundService
+import com.example.eom_fe.R
+import com.example.eom_fe.activities.AlarmListActivity
+import com.example.eom_fe.activities.BackgroundActivity
+import com.example.eom_fe.activities.MainActivity
+
 
 class AlarmReceiver() : BroadcastReceiver() {
 
@@ -27,36 +34,12 @@ class AlarmReceiver() : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onReceive(context: Context?, intent: Intent?) {
-        manager = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        //NotificationChannel 인스턴스를 createNotificationChannel()에 전달하여 앱 알림 채널을 시스템에 등록
-        manager.createNotificationChannel(
-            NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-        )
+        Log.d("welcome", "onReceived called...")
 
-        builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val i = Intent(context, BackgroundActivity::class.java)
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        context?.startActivity(i)
 
-        val intent2 = Intent(context, AlarmService::class.java)
-        val requestCode = intent?.extras!!.getInt("alarm_rqCode")
-        val title = intent.extras!!.getString("content")
-
-        val pendingIntent = if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.S){
-            PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_IMMUTABLE); //Activity를 시작하는 인텐트 생성
-        }else {
-            PendingIntent.getActivity(context,requestCode,intent2,PendingIntent.FLAG_UPDATE_CURRENT);
-        }
-
-        val notification = builder.setContentTitle(title)
-            .setContentText("SCHEDULE MANAGER")
-//            .setSmallIcon(R.drawable.btn_star)
-            .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .build()
-
-        manager.notify(1, notification)
     }
 }

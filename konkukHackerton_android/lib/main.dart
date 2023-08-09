@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'extra_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,10 +11,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // GlobalKey를 생성하십시오.
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey, // navigatorKey를 MaterialApp에 추가
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -33,6 +40,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        '/extraScreen': (context) => const ExtraScreen(), // Define route for ExtraScreen
+      },
     );
   }
 }
@@ -61,18 +71,58 @@ class _MyHomePageState extends State<MyHomePage> {
   // Get battery level.
   String _batteryLevel = 'Unknown battery level.';
 
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-    try {
-      final int result = await platform.invokeMethod('getBatteryLevel');
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
+  @override
+  void initState() {
+    super.initState();
 
-    setState(() {
-      _batteryLevel = batteryLevel;
+    setExtraScreenHandler();
+  }
+
+  // 코틀린 -> 플러터 화면 띄우려고 핸들러 설정
+  void setExtraScreenHandler() {
+    platform.setMethodCallHandler((call) async {
+      print("setExtraScreenHandler");
+      if (call.method == 'showExtraScreen') {
+        print("showExtraScreen");
+        _showExtraScreen();
+      }
     });
+  }
+
+  Future<void> _getBatteryLevel() async {
+    try {
+      await platform.invokeMethod('kakaoLogin');
+    } on PlatformException catch (e) {
+      // batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+  }
+
+  Future<void> _getBatteryLevel2() async {
+    try {
+      await platform.invokeMethod('showAlarmList');
+    } on PlatformException catch (e) {
+      // batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+  }
+
+  Future<void> _showExtraScreen() async {
+    try {
+      Navigator.pushNamed(context, '/extraScreen'); // Navigate to ExtraScreen
+
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<bool> permission() async {
+    Map<Permission, PermissionStatus> status =
+    await [Permission.systemAlertWindow].request(); // [] 권한배열에 권한을 작성
+
+    if (await Permission.systemAlertWindow.isGranted) {
+      return Future.value(true);
+    } else {
+      return Future.value(false);
+    }
   }
 
   @override
@@ -84,12 +134,32 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             ElevatedButton(
               onPressed: _getBatteryLevel,
-              child: const Text('Get Battery Level'),
+              child: const Text('Login w/ Kakao'),
             ),
-            Text(_batteryLevel),
+            ElevatedButton(
+              onPressed: permission,
+              child: const Text('Get Permission'),
+            ),
+            ElevatedButton(
+              onPressed: _getBatteryLevel2,
+              child: const Text('AlarmListActivity'),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+/*
+Future<void> _callFlutterFunction(String method, Map<String, dynamic> arguments) async {
+  try {
+    if (method == 'show_extra_screen') {
+      final result = await MyApp.navigatorKey.currentState?.push(MaterialPageRoute(builder: (context) => const ExtraScreen()));
+      print('Kotlin에서 전달된 데이터: $result');
+    }
+  } on PlatformException catch (e) {
+    print('Error: ${e.message}');
+  }
+}
+*/

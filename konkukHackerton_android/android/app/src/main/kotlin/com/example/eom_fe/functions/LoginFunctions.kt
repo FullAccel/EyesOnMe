@@ -1,10 +1,14 @@
 package com.example.eom_fe.functions
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.*
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.data.UserApiResponseData
@@ -15,15 +19,16 @@ import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.reflect.Member
 
 class LoginFunctions(context: Context, applicationContext: Context) {
 
     val mainContext = context
     val applicationContext = applicationContext
 
-    lateinit var memberInfo: MemberData
+    var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0)
 
-    fun kakaoLogin() {
+    fun kakaoLogin(): MemberData {
 
         // 로그인 조합 예제
         Log.e("welcome", "카카오 로그인 호출")
@@ -104,9 +109,10 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                 callback = callback
             )
         }
+        return memberInfo
     }
 
-    private fun findLoginInfoHttp(email: String, callback: (memberInfo: MemberData?) -> Unit){
+    private fun findLoginInfoHttp(email: String, callback: (memberInfo: MemberData?) -> Unit) {
         Log.d("welcome", "findLoginHttp called")
         Log.d("welcome", "email : $email")
         val findMemberInfo = RetrofitBuilder.api.findMemberData(email)
@@ -174,10 +180,5 @@ class LoginFunctions(context: Context, applicationContext: Context) {
             }
         })
     }
-
-    fun getMemberInfo(): MemberData {
-        return memberInfo
-    }
-
 
 }
