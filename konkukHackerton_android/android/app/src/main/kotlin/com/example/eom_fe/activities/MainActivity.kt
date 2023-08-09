@@ -64,7 +64,7 @@ class MainActivity: FlutterActivity() {
             if (call.method == "kakaoLogin") {
                 memberInfo = loginFunctions.kakaoLogin()
                 initLogin()
-
+            }
             else if (call.method == "showAlarmList") {
                 val i = Intent(this, AlarmListActivity::class.java)
                 startActivity(i)
