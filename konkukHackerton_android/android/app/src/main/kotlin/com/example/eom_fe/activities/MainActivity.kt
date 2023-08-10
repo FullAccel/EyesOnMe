@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
+import android.view.KeyEvent
+import android.view.MotionEvent
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
@@ -50,6 +52,17 @@ class MainActivity: FlutterActivity() {
         fi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context?.startForegroundService(fi)
 
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+//        super.onWindowFocusChanged(hasFocus)
+
+        Log.d("welcome", "Focus changed !");
+
+        if (!hasFocus) {
+            Log.d("welcome", "Lost focus !");
+
+        }
     }
 
     private fun initLogin() {

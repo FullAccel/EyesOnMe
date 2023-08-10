@@ -19,9 +19,6 @@
         <activity
             android:name=".activities.BackgroundActivity"
             android:exported="true">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activities.MainActivity"
@@ -66,6 +63,10 @@
             android:name=".alarm_package.AlarmService"
             android:enabled="true"
             /> <!-- 기타 속성들 -->
+        <service
+            android:name=".follow.KeepService"
+            android:enabled="true"
+            />
         <service
             android:name=".follow.MyFirebaseMessagingService"
             android:enabled="true"

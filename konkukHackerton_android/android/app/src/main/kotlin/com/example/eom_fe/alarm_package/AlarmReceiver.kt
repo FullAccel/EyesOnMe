@@ -18,6 +18,7 @@ import com.example.eom_fe.R
 import com.example.eom_fe.activities.AlarmListActivity
 import com.example.eom_fe.activities.BackgroundActivity
 import com.example.eom_fe.activities.MainActivity
+import com.example.eom_fe.follow.KeepService
 
 
 class AlarmReceiver() : BroadcastReceiver() {
@@ -37,9 +38,13 @@ class AlarmReceiver() : BroadcastReceiver() {
 
         Log.d("welcome", "onReceived called...")
 
-        val i = Intent(context, BackgroundActivity::class.java)
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        context?.startActivity(i)
+        val serviceIntent = Intent(context, KeepService::class.java)
+        context?.startService(serviceIntent)
+//        val i = Intent(context, BackgroundActivity::class.java)
+//        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//        context?.startActivity(i)
 
     }
+
+
 }

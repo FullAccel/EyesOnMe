@@ -28,6 +28,7 @@ class AlarmListActivity : AppCompatActivity() {
 
     val alarmFunctions = AlarmFunctions(this)
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         listBinding = ActivityAlarmListBinding.inflate(layoutInflater)
