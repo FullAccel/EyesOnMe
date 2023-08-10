@@ -9,6 +9,6 @@ data class MemberData(
     val profileUrl: String,
     val planSuccessCount: Int,
     val challengeSuccessCount: Int,
-    val firebaseToken: String
+    var firebaseToken: String = ""
 )
     : Serializable

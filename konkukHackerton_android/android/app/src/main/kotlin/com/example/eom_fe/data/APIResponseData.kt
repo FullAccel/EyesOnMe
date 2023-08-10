@@ -1,10 +1,8 @@
 package com.example.eom_fe.data
 
-import java.io.Serializable
-
-data class UserApiResponseData(
+data class APIResponseData(
     val status: Int,
     val code: String,
     val message: String,
-    val data: MemberData
+    val data: Any
 ) : java.io.Serializable
