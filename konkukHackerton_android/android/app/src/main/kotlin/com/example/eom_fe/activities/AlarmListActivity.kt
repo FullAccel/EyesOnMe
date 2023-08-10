@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmRecyclerAdapter
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
 import com.example.eom_fe.databinding.ActivityAlarmListBinding
-import com.example.eom_fe.databinding.RowBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

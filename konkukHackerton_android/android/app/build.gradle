@@ -85,7 +85,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     kapt "androidx.room:room-compiler:2.5.2"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:x.y.z'
-
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2" // 적절한 버전 사용
 
     // 카카오 로그인
     implementation "com.kakao.sdk:v2-user:2.6.0"

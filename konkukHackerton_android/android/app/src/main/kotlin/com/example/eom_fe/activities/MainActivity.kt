@@ -1,31 +1,33 @@
 package com.example.eom_fe.activities
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
-import android.view.KeyEvent
-import android.view.MotionEvent
-import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import io.flutter.embedding.android.FlutterActivity
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodChannel
-
 import com.example.eom_fe.R
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmService
 import com.example.eom_fe.data.MemberData
+import com.example.eom_fe.data.ToDoData
+import com.example.eom_fe.follow.CustomMessageFactory
+import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.KakaoSdk
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlin.coroutines.suspendCoroutine
+
 
 class MainActivity: FlutterActivity() {
     private val CHANNEL = "samples.flutter.dev/battery"
@@ -35,9 +37,11 @@ class MainActivity: FlutterActivity() {
     var data:ArrayList<AlarmDataModel> = ArrayList()
     lateinit var db: AlarmDB
     val alarmFunctions = AlarmFunctions(this)
+//    val dataFunctions = DataFunctions(this, )
 
     lateinit var memberInfo: MemberData
     lateinit var loginFunctions: LoginFunctions
+    lateinit var dataFunctions: DataFunctions
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
@@ -46,6 +50,7 @@ class MainActivity: FlutterActivity() {
         db = AlarmDB.getDatabase(this)
         KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         loginFunctions = LoginFunctions(this, applicationContext)
+        dataFunctions = DataFunctions(this, applicationContext)
 
         // AlarmService : 앱 강종해도 종료되지 않고 계속 실행되도록 하는 서비스
         val fi = Intent(context, AlarmService::class.java)
@@ -72,6 +77,13 @@ class MainActivity: FlutterActivity() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+//        flutterEngine.platformViewsController
+//            .registry
+//            .registerViewFactory(
+//                "CustomMessageFactory",
+//                CustomMessageFactory(activity, MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL))
+//            )
+        GeneratedPluginRegistrant.registerWith(flutterEngine)
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
             // This method is invoked on the main thread.
@@ -89,10 +101,27 @@ class MainActivity: FlutterActivity() {
                     // Log and toast
                     val msg = token.toString()
                     memberInfo = loginFunctions.kakaoLogin(msg)
+
+                    // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
+                    // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
+                    dataFunctions.init(memberInfo)
                     initLogin()
                     Log.d("tokennnn", msg)
 //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                 })
+
+            }
+            else if (call.method == "getData") {
+                //
+                runBlocking {
+                    val date = "20230811"
+                    val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
+                    flow.collect { data ->
+                        println("Received data: $data")
+                        // json으로 파싱하고 -> result.success로 보내기
+                    }
+                }
+//                result.success(dataFunctions.runDailyPlansByDate("20230811"))
 
             }
             else if (call.method == "showAlarmList") {

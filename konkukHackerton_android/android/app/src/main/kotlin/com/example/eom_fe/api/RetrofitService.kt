@@ -2,6 +2,7 @@ package com.example.eom_fe.api
 
 import com.example.eom_fe.data.APIResponseData
 import com.example.eom_fe.data.MemberData
+import com.example.eom_fe.data.ToDoData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -50,7 +51,7 @@ interface RetrofitService {
     ): Call<APIResponseData>
 
     @GET("dailyplan/{memberId}/month")
-    fun getSingleDailyPlan(
+    fun getMontlyPlan(
         // 데일리 플랜 월별로 가져오기
         @Path("memberId") number: Int
     ): Call<APIResponseData>
@@ -59,19 +60,25 @@ interface RetrofitService {
     // ToDo
 
     @POST("todo/{dailyplanId}")
-    fun addTodoData(@Path("dailyplanId") number: Int): Call<APIResponseData>
+    fun addTodoData(@Path("dailyplanId") number: Int, @Body params: ToDoData): Call<APIResponseData>
 
     @PUT("todo/{todoId}")
-    fun editTodoData(@Path("todoId") number: Int): Call<APIResponseData>
+    fun editTodoData(@Path("todoId") number: Int, @Body params: ToDoData): Call<APIResponseData>
 
     @GET("todo/{todoId}")
     fun getTodoData(@Path("todoId") number: Int): Call<APIResponseData>
 
-    @DELETE("todo/{todoId")
+    @DELETE("todo/{todoId}")
     fun deleteTodoData(@Path("todoId") number: Int): Call<APIResponseData>
 
     @GET("todo/{dailyplanId}/list")
-    fun getAllDailyTodoData(@Path("dailyplanId") number: Int): Call<APIResponseData>
+    fun getDailyTodoData(@Path("dailyplanId") number: Int): Call<APIResponseData>
+
+    @POST("todo/complete/{todoId}")
+    fun completeTodoData(@Path("todoId") number: Int): Call<APIResponseData>
+
+    @POST("todo/fail/{todoId}")
+    fun failureTodoData(@Path("todoId") number: Int): Call<APIResponseData>
 
 
 
