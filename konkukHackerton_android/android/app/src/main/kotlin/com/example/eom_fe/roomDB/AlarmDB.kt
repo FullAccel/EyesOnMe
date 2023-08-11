@@ -10,7 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [AlarmDataModel::class],
-    version = 2
+    version = 2,
+    exportSchema = false,
 )
 
 abstract class AlarmDB: RoomDatabase(){

@@ -8,37 +8,37 @@ public final class AlarmDataModel {
     @androidx.room.PrimaryKey(autoGenerate = true)
     private int serialNum;
     private int alarm_code;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private java.lang.String time;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     private java.lang.String content;
     
-    @org.jetbrains.annotations.NotNull()
-    public final com.example.eom_fe.roomDB.AlarmDataModel copy(int serialNum, int alarm_code, @org.jetbrains.annotations.NotNull()
-    java.lang.String time, @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
+    public final com.example.eom_fe.roomDB.AlarmDataModel copy(int serialNum, int alarm_code, @org.jetbrains.annotations.NotNull
+    java.lang.String time, @org.jetbrains.annotations.NotNull
     java.lang.String content) {
         return null;
     }
     
-    @java.lang.Override()
-    public boolean equals(@org.jetbrains.annotations.Nullable()
+    @java.lang.Override
+    public boolean equals(@org.jetbrains.annotations.Nullable
     java.lang.Object other) {
         return false;
     }
     
-    @java.lang.Override()
+    @java.lang.Override
     public int hashCode() {
         return 0;
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
     public java.lang.String toString() {
         return null;
     }
     
-    public AlarmDataModel(int serialNum, int alarm_code, @org.jetbrains.annotations.NotNull()
-    java.lang.String time, @org.jetbrains.annotations.NotNull()
+    public AlarmDataModel(int serialNum, int alarm_code, @org.jetbrains.annotations.NotNull
+    java.lang.String time, @org.jetbrains.annotations.NotNull
     java.lang.String content) {
         super();
     }
@@ -65,31 +65,31 @@ public final class AlarmDataModel {
     public final void setAlarm_code(int p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String component3() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getTime() {
         return null;
     }
     
-    public final void setTime(@org.jetbrains.annotations.NotNull()
+    public final void setTime(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String component4() {
         return null;
     }
     
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public final java.lang.String getContent() {
         return null;
     }
     
-    public final void setContent(@org.jetbrains.annotations.NotNull()
+    public final void setContent(@org.jetbrains.annotations.NotNull
     java.lang.String p0) {
     }
 }

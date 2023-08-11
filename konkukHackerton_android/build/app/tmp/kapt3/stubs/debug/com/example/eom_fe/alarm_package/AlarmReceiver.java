@@ -6,11 +6,11 @@ import java.lang.System;
 public final class AlarmReceiver extends android.content.BroadcastReceiver {
     private android.app.NotificationManager manager;
     private androidx.core.app.NotificationCompat.Builder builder;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public static final com.example.eom_fe.alarm_package.AlarmReceiver.Companion Companion = null;
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public static final java.lang.String CHANNEL_ID = "channel";
-    @org.jetbrains.annotations.NotNull()
+    @org.jetbrains.annotations.NotNull
     public static final java.lang.String CHANNEL_NAME = "channel1";
     
     public AlarmReceiver() {
@@ -19,9 +19,9 @@ public final class AlarmReceiver extends android.content.BroadcastReceiver {
     
     @android.annotation.SuppressLint(value = {"UnspecifiedImmutableFlag"})
     @androidx.annotation.RequiresApi(value = android.os.Build.VERSION_CODES.O)
-    @java.lang.Override()
-    public void onReceive(@org.jetbrains.annotations.Nullable()
-    android.content.Context context, @org.jetbrains.annotations.Nullable()
+    @java.lang.Override
+    public void onReceive(@org.jetbrains.annotations.Nullable
+    android.content.Context context, @org.jetbrains.annotations.Nullable
     android.content.Intent intent) {
     }
     
