@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.example.eom_fe.app-mergeDebugResources-43:/layout/activity_alarm_list.xml",
+        "source": "com.example.eom_fe.app-main-37:/layout/activity_alarm_list.xml"
+    },
+    {
+        "merged": "com.example.eom_fe.app-mergeDebugResources-43:/layout/row.xml",
+        "source": "com.example.eom_fe.app-main-37:/layout/row.xml"
+    }
+]

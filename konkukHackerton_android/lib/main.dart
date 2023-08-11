@@ -1,5 +1,24 @@
+import 'package:eom_fe/screens/entire_plan.dart';
+import 'package:eom_fe/screens/home_screen.dart';
+import 'package:eom_fe/screens/intro_screen1.dart';
+import 'package:eom_fe/screens/login_screen.dart';
+import 'package:eom_fe/screens/plan_delete/plan_delete1.dart';
+import 'package:eom_fe/screens/plan_delete/plan_delete2.dart';
+import 'package:eom_fe/screens/plan_putoff/plan_putoff1.dart';
+import 'package:eom_fe/screens/plan_putoff/plan_putoff2.dart';
+import 'package:eom_fe/screens/plan_putoff/plan_putoff3.dart';
+import 'package:eom_fe/screens/planning_finish.dart';
+import 'package:eom_fe/screens/planning_sleeptime.dart';
+import 'package:eom_fe/screens/planning_wakeuptime.dart';
+import 'package:eom_fe/screens/sleep_time_screen.dart';
+import 'package:eom_fe/screens/start_plan.dart';
+import 'package:eom_fe/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'extra_screen.dart';
@@ -21,27 +40,13 @@ class MyApp extends StatelessWidget {
       navigatorKey: navigatorKey, // navigatorKey를 MaterialApp에 추가
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
       routes: {
-        '/extraScreen': (context) => const ExtraScreen(), // Define route for ExtraScreen
+        '/extraScreen': (context) =>
+            const ExtraScreen(), // Define route for ExtraScreen
       },
     );
   }
@@ -49,15 +54,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -89,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> _getBatteryLevel() async {
+  Future<void> _kakaologin() async {
     try {
       await platform.invokeMethod('kakaoLogin');
     } on PlatformException catch (e) {
@@ -108,7 +104,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _showExtraScreen() async {
     try {
       Navigator.pushNamed(context, '/extraScreen'); // Navigate to ExtraScreen
-
     } on PlatformException catch (e) {
       print("Error: ${e.message}");
     }
@@ -116,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<bool> permission() async {
     Map<Permission, PermissionStatus> status =
-    await [Permission.systemAlertWindow].request(); // [] 권한배열에 권한을 작성
+        await [Permission.systemAlertWindow].request(); // [] 권한배열에 권한을 작성
 
     if (await Permission.systemAlertWindow.isGranted) {
       return Future.value(true);
@@ -127,26 +122,81 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: _getBatteryLevel,
-              child: const Text('Login w/ Kakao'),
+    return ScreenUtilInit(
+      designSize: Size(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          // You can use the library anywhere in the app even in theme
+          initialRoute: '/plan/start',
+          getPages: [
+            GetPage(name: '/', page: () => HomeScreen()),
+            GetPage(name: '/intro1', page: () => IntroScreen1()),
+            GetPage(name: '/intro2', page: () => HomeScreen()),
+            GetPage(
+              name: '/login',
+              page: () => LoginScreen(
+                  onPressedKakao: _kakaologin, onPressedGoogle: () {}),
             ),
-            ElevatedButton(
-              onPressed: permission,
-              child: const Text('Get Permission'),
+            GetPage(name: '/profile', page: () => UserProfileScreen()),
+            GetPage(name: '/plan/tomorrow', page: () => SleepTimeScreen()),
+            GetPage(
+              name: '/plan/finish',
+              page: () => PlanningFinish(),
+              transition: Transition.rightToLeft,
             ),
-            ElevatedButton(
-              onPressed: _getBatteryLevel2,
-              child: const Text('AlarmListActivity'),
+            GetPage(
+              name: '/plan/sleep',
+              page: () => PlanningSleepTime(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: '/plan/wakeup',
+              page: () => PlanningWakeupTime(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(name: '/plan', page: () => EntirePlan()),
+            GetPage(name: "/plan/start", page: () => StartPlan()),
+            GetPage(name: "/plan/putoff1", page: () => PlanPutoff1()),
+            GetPage(
+              name: "/plan/putoff2",
+              page: () => PlanPutoff2(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/plan/putoff3",
+              page: () => PlanPutoff3(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/plan/delete1",
+              page: () => PlanDelete1(),
+            ),
+            GetPage(
+              name: "/plan/delete2",
+              page: () => PlanDelete2(),
+              transition: Transition.rightToLeft,
             ),
           ],
-        ),
-      ),
+        );
+      },
+      // home: LoginScreen(
+      //   onPressedKakao: _kakaoLogin,
+      // ),
+      // home: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      //     children: [
+      //       ElevatedButton(
+      //         onPressed: _kakaoLogin,
+      //         child: const Text('kakao login'),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

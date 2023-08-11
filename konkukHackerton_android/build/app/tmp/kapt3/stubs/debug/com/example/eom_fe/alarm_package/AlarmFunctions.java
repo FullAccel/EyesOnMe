@@ -8,7 +8,7 @@ public final class AlarmFunctions {
     private android.app.PendingIntent pendingIntent;
     private final kotlin.Lazy ioScope$delegate = null;
     
-    public AlarmFunctions(@org.jetbrains.annotations.NotNull()
+    public AlarmFunctions(@org.jetbrains.annotations.NotNull
     android.content.Context context) {
         super();
     }
@@ -18,8 +18,8 @@ public final class AlarmFunctions {
     }
     
     @androidx.annotation.RequiresApi(value = android.os.Build.VERSION_CODES.M)
-    public final void callAlarm(@org.jetbrains.annotations.NotNull()
-    java.lang.String time, int alarm_code, @org.jetbrains.annotations.NotNull()
+    public final void callAlarm(@org.jetbrains.annotations.NotNull
+    java.lang.String time, int alarm_code, @org.jetbrains.annotations.NotNull
     java.lang.String content) {
     }
     
