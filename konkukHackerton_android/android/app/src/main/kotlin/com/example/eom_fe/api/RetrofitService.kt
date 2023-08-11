@@ -54,10 +54,11 @@ interface RetrofitService {
         @Path("dailyPlanId") number: Int
     ): Call<APIResponseData>
 
-    @GET("dailyplan/{memberId}/month")
+    @GET("dailyplan/{memberId}/{yyyymm}")
     fun getMontlyPlan(
         // 데일리 플랜 월별로 가져오기
-        @Path("memberId") number: Int
+        @Path("memberId") number: Int,
+        @Path("yyyymm") yearMonth: String
     ): Call<APIResponseData>
 
 

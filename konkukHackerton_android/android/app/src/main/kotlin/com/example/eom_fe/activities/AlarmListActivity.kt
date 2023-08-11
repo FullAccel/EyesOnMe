@@ -1,5 +1,6 @@
 package com.example.eom_fe.activities
 
+import android.app.Application
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,9 +9,11 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmRecyclerAdapter
+import com.example.eom_fe.data.ToDoData
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
 import com.example.eom_fe.databinding.ActivityAlarmListBinding
+import com.example.eom_fe.functions.DataFunctions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,13 +27,18 @@ class AlarmListActivity : AppCompatActivity() {
     var data:ArrayList<AlarmDataModel> = ArrayList()
     lateinit var db: AlarmDB
 
-    val alarmFunctions = AlarmFunctions(this)
+
+    lateinit var dataFunctions: DataFunctions
+    lateinit var alarmFunctions: AlarmFunctions
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         listBinding = ActivityAlarmListBinding.inflate(layoutInflater)
         setContentView(listBinding.root)
+        dataFunctions = MainActivity.mContext?.let { DataFunctions(it, applicationContext) }!!
+        alarmFunctions = AlarmFunctions(MainActivity.mContext!!)
+        MainActivity.mInfo?.let { dataFunctions.init(it) }
         init()
     }
 
@@ -44,15 +52,15 @@ class AlarmListActivity : AppCompatActivity() {
         listBinding.addAlarmBtn.setOnClickListener() {
             val hour = listBinding.timePicker.hour.toString()
             val minute = listBinding.timePicker.minute.toString()
-            val time = "2023-08-10 $hour:$minute:00" // 알람이 울리는 시간
+            val time = "2023-08-12 $hour:$minute:00" // 알람이 울리는 시간
 
-            val random = (1..100000) // 1~100000 범위에서 알람코드 랜덤으로 생성
-            val alarmCode = random.random()
             val content = listBinding.alarmText.text.toString()
-            setAlarm(alarmCode, content, time)
+//            setAlarm(alarmCode, content, time)
 
             coroutineScope.launch(Dispatchers.IO) {
-                db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, content))
+//                db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, content))
+                val todo = ToDoData(0, content, "C", time, time, "C001")
+                dataFunctions.postTodoDataFunc("20230812", todo, true)
                 data = db.alarmDao().getAllAlarms() as ArrayList<AlarmDataModel>
                 Log.d("alarmNotification", "getAllAlarm (MainActivity) - ${data.size}")
                 launch(Dispatchers.Main) {
@@ -68,6 +76,7 @@ class AlarmListActivity : AppCompatActivity() {
                 alarmFunctions.cancelAlarm(item.alarm_code)
                 coroutineScope.launch(Dispatchers.IO) {
                     db.alarmDao().deleteAlarm(item.alarm_code)
+                    dataFunctions.deleteTodoDataFunc(item.alarm_code)
                     launch(Dispatchers.Main) {
                         adapter.notifyItemRemoved(position)
                     }

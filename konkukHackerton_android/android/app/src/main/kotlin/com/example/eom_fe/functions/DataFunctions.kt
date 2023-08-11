@@ -42,6 +42,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
     // date : yyyymmdd 형식 (ex. 20230811)
     fun addDailyPlanFunc(date: String, callback: (Int?) -> Unit) {
+        Log.d("addDailyPlanFunc", "addDailyPlanFunc called")
+        Log.d("addDailyPlanFunc", "memberInfo: $memberInfo")
         val addDailyPlanBuilder = RetrofitBuilder.api.addDailyPlan(memberInfo.id, date)
         addDailyPlanBuilder.enqueue(object: Callback<APIResponseData> {
             override fun onResponse(
@@ -56,9 +58,11 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as Int
                     callback(result)
                 }
+                Log.d("addDailyPlanFunc", "addDailyPlanFunc null (1)")
                 callback(null)
             }
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("addDailyPlanFunc", "addDailyPlanFunc null (2)")
                 callback(null)
             }
         }
@@ -111,8 +115,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
         )
     }
 
-    fun getMonthlyPlanFunc(callback: (List<DailyPlanData>?) -> Unit) {
-        val getMonthlyPlanBuilder = RetrofitBuilder.api.getMontlyPlan(memberInfo.id)
+    fun getMonthlyPlanFunc(yearMonth: String, callback: (List<DailyPlanData>?) -> Unit) {
+        Log.d("getMonthlyPlanFunc", "getMonthlyPlanFunc started")
+        val getMonthlyPlanBuilder = RetrofitBuilder.api.getMontlyPlan(memberInfo.id, yearMonth)
         getMonthlyPlanBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
@@ -126,10 +131,12 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as List<DailyPlanData>
                     callback(result)
                 }
-                else callback(null)
+                Log.d("getMonthlyPlanFunc", "getMonthlyPlanFunc null (1)")
+                callback(null)
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("getMonthlyPlanFunc", "getMonthlyPlanFunc null (2)")
                 callback(null)
             }
         }
@@ -141,7 +148,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
     fun findDailyPlanIdFunc(date: String, callback: (Int?) -> Unit) {
         val fyearMonth: String = date.take(6)
         val fdate: Int = date.takeLast(2).toInt()
-        getMonthlyPlanFunc { result ->
+        Log.d("findDailyPlanIdFunc", "fYM: $fyearMonth, fdate: $fdate")
+        getMonthlyPlanFunc(fyearMonth) { result ->
             if (result != null) {
                 // 작업 결과 사용
                 for (day in result) {
@@ -203,29 +211,41 @@ class DataFunctions (context: Context, applicationContext: Context) {
     // 실제 todo post
     @RequiresApi(Build.VERSION_CODES.M)
     fun postTodoDataFunc(date: String, todo: ToDoData, alarm: Boolean) {
-        findDailyPlanIdFunc(date) { dailyPlanId ->
-            if (dailyPlanId != null) {
-                // post 하기
-                addTodoDataFunc(dailyPlanId, todo) { code ->
-                    if (code != null && alarm) {
-                        val time = todo.alarmStartTime // 알람이 울리는 시간
+        Log.d("postTodoDataFunc", "postTodoDataFunc called")
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d("postTodoDataFunc", "Coroutine scope started")
+            findDailyPlanIdFunc(date) { dailyPlanId ->
+                if (dailyPlanId != null) {
+                    // post 하기
+                    Log.d("postTodoDataFunc", "dailyPlanId != null")
+                    addTodoDataFunc(dailyPlanId, todo) { code ->
+                        if (code != null && alarm) {
+                            val time = todo.alarmStartTime // 알람이 울리는 시간
 
-                        val content = todo.title
-                        setAlarm(code, content, time)
-                        db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
-                    }
-                }
-            } else {
-                // dailyPlanId가 없는 경우
-                addDailyPlanFunc(date) { dpId ->
-                    if (dpId != null) {
-                        addTodoDataFunc(dpId, todo) { code ->
-                            if (code != null && alarm) {
-                                val time = todo.alarmStartTime // 알람이 울리는 시간
+                            val content = todo.title
 
-                                val content = todo.title
+                            CoroutineScope(Dispatchers.IO).launch {
                                 setAlarm(code, content, time)
                                 db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
+                            }
+                        }
+                    }
+                } else {
+                    // dailyPlanId가 없는 경우
+                    Log.d("postTodoDataFunc", "dailyPlanId == null")
+                    addDailyPlanFunc(date) { dpId ->
+                        if (dpId != null) {
+                            addTodoDataFunc(dpId, todo) { code ->
+                                if (code != null && alarm) {
+                                    val time = todo.alarmStartTime // 알람이 울리는 시간
+
+                                    val content = todo.title
+                                    CoroutineScope(Dispatchers.IO).launch {
+                                        setAlarm(code, content, time)
+                                        db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
+                                    }
+
+                                }
                             }
                         }
                     }
@@ -259,9 +279,11 @@ class DataFunctions (context: Context, applicationContext: Context) {
         )
     }
 
+    // 실제 Todo 수정으로 사용 가능
     fun editTodoDataFunc(todo: ToDoData) {
         val editTodoDataBuilder = RetrofitBuilder.api.editTodoData(todo.id, todo)
         editTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
+            @RequiresApi(Build.VERSION_CODES.M)
             override fun onResponse(
                 call: Call<APIResponseData>,
                 response: Response<APIResponseData>
@@ -272,6 +294,21 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Boolean
+                    if (result) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            for (alarm in db.alarmDao().getAllAlarms()) {
+                                if (alarm.alarm_code == todo.id) {
+                                    alarmFunctions.cancelAlarm(alarm.alarm_code)
+                                    db.alarmDao().deleteAlarm(alarm.alarm_code)
+                                    setAlarm(todo.id, todo.title, todo.alarmStartTime)
+                                    db.alarmDao().addAlarm(AlarmDataModel(todo.id, todo.id, todo.alarmStartTime, todo.title))
+                                    // alarmEndTime은?...
+                                    return@launch
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
 
@@ -281,8 +318,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
         )
     }
 
-    fun getTodoDataFunc(todo: ToDoData) {
-        val getTodoDataBuilder = RetrofitBuilder.api.getTodoData(todo.id)
+    fun getTodoDataFunc(todoId: Int) {
+        val getTodoDataBuilder = RetrofitBuilder.api.getTodoData(todoId)
         getTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
@@ -303,9 +340,11 @@ class DataFunctions (context: Context, applicationContext: Context) {
         )
     }
 
-    fun deleteTodoDataFunc(todo: ToDoData) {
-        val deleteTodoDataBuilder = RetrofitBuilder.api.deleteTodoData(todo.id)
+    // 실제 todo 지울 때 사용 가능
+    fun deleteTodoDataFunc(todoId: Int) {
+        val deleteTodoDataBuilder = RetrofitBuilder.api.deleteTodoData(todoId)
         deleteTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
+            @RequiresApi(Build.VERSION_CODES.M)
             override fun onResponse(
                 call: Call<APIResponseData>,
                 response: Response<APIResponseData>
@@ -316,6 +355,18 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Boolean
+                    if (result) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            for (alarm in db.alarmDao().getAllAlarms()) {
+                                if (alarm.alarm_code == todoId) {
+                                    alarmFunctions.cancelAlarm(alarm.alarm_code)
+                                    db.alarmDao().deleteAlarm(alarm.alarm_code)
+                                    return@launch
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
 
@@ -352,9 +403,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
         }
     }
 
-
-    fun completeTodoDataFunc(todo: ToDoData) {
-        val completeTodoDataBuilder = RetrofitBuilder.api.completeTodoData(todo.id)
+    // 실제 todo complete 시 사용 가능
+    fun completeTodoDataFunc(todoId: Int) {
+        val completeTodoDataBuilder = RetrofitBuilder.api.completeTodoData(todoId)
         completeTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
@@ -366,6 +417,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Boolean
+                    // 알람 지워야 할까?
                 }
             }
 
@@ -375,8 +427,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
         )
     }
 
-    fun failureTodoDataFunc(todo: ToDoData) {
-        val failureTodoDataBuilder = RetrofitBuilder.api.failureTodoData(todo.id)
+    // 실제 todo failure 시 사용 가능
+    fun failureTodoDataFunc(todoId: Int) {
+        val failureTodoDataBuilder = RetrofitBuilder.api.failureTodoData(todoId)
         failureTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
@@ -388,6 +441,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Boolean
+                    // 알람 만들어야 할까?
                 }
             }
 

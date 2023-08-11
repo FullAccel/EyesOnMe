@@ -1,5 +1,6 @@
 package com.example.eom_fe.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -15,6 +16,7 @@ import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
+import com.facebook.stetho.Stetho
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
@@ -35,6 +37,8 @@ class MainActivity: FlutterActivity() {
     companion object {
         var memberId: Int? = null
         var mInfo: MemberData? = null
+        var mContext: Context? = null
+
     }
 
     private val CHANNEL = "samples.flutter.dev/battery"
@@ -53,12 +57,13 @@ class MainActivity: FlutterActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         super.onStart()
+//        Stetho.initializeWithDefaults(this)
 
-        db = AlarmDB.getDatabase(this)
+        db = AlarmDB.getDatabase(applicationContext)
         KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         loginFunctions = LoginFunctions(this, applicationContext)
         dataFunctions = DataFunctions(this, applicationContext)
-
+        mContext = context
         // AlarmService : 앱 강종해도 종료되지 않고 계속 실행되도록 하는 서비스
         val fi = Intent(context, AlarmService::class.java)
         fi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
