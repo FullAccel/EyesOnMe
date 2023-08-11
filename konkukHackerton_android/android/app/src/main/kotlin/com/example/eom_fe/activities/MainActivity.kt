@@ -245,11 +245,7 @@ class MainActivity: FlutterActivity() {
                     }
                 }
                 "getWakeAlarm" -> {
-                    val jsonString = call.arguments as String
-                    val jsonObject = JSONObject(jsonString)
-
-                    val startTime = jsonObject.getString("startTime")
-                    val date = startTime.substring(0, 4) + startTime.substring(5, 7) + startTime.substring(8, 10)
+                    var date = call.arguments as String
 
                     runBlocking {
                         val wakeAlarm = dataFunctions.getWakeAlarm(date)
@@ -263,11 +259,7 @@ class MainActivity: FlutterActivity() {
                     }
                 }
                 "getSleepAlarm" -> {
-                    val jsonString = call.arguments as String
-                    val jsonObject = JSONObject(jsonString)
-
-                    val startTime = jsonObject.getString("startTime")
-                    val date = startTime.substring(0, 4) + startTime.substring(5, 7) + startTime.substring(8, 10)
+                    var date = call.arguments as String
 
                     runBlocking {
                         val sleepAlarm = dataFunctions.getSleepAlarm(date)
