@@ -29,6 +29,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import org.json.JSONObject
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -100,53 +101,121 @@ class MainActivity: FlutterActivity() {
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
             // This method is invoked on the main thread.
                 call, result ->
-            if (call.method == "kakaoLogin") {
-                FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        Log.w("tokennnn", "Fetching FCM registration token failed", task.exception)
-                        return@OnCompleteListener
+            when (call.method) {
+                "kakaoLogin" -> {
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                        if (!task.isSuccessful) {
+                            Log.w("tokennnn", "Fetching FCM registration token failed", task.exception)
+                            return@OnCompleteListener
+                        }
+
+                        // Get new FCM registration token
+                        val token = task.result
+
+                        // Log and toast
+                        val msg = token.toString()
+                        memberInfo = loginFunctions.kakaoLogin(msg)
+                        memberId = memberInfo.id
+
+                        // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
+                        // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
+                        dataFunctions.init(memberInfo)
+                        initLogin()
+                        Log.d("tokennnn", msg)
+        //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    })
+
+                }
+                "getData" -> {
+                    //
+                    runBlocking {
+                        val date = "20230811"
+                        val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
+                        flow.collect { data ->
+                            println("Received data: $data")
+                            // json으로 파싱하고 -> result.success로 보내기
+                        }
                     }
+        //                result.success(dataFunctions.runDailyPlansByDate("20230811"))
 
-                    // Get new FCM registration token
-                    val token = task.result
-
-                    // Log and toast
-                    val msg = token.toString()
-                    memberInfo = loginFunctions.kakaoLogin(msg)
-                    memberId = memberInfo.id
-
-                    // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
-                    // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
-                    dataFunctions.init(memberInfo)
-                    initLogin()
-                    Log.d("tokennnn", msg)
-//            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                })
-
-            }
-            else if (call.method == "getData") {
-                //
-                runBlocking {
-                    val date = "20230811"
-                    val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
-                    flow.collect { data ->
-                        println("Received data: $data")
-                        // json으로 파싱하고 -> result.success로 보내기
+                }
+                "testData" -> {
+                    Log.d("testData", "arguments : ${call.arguments}")
+                    result.success(Gson().toJson(mInfo).toString())
+                }
+                "showAlarmList" -> {
+                    val i = Intent(this, AlarmListActivity::class.java)
+                    startActivity(i)
+                }
+                "getAllDailyPlansByDate" -> {
+                    var date = call.arguments as String
+                    runBlocking {
+                        val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
+                        flow.collect { data ->
+                            println("Received data: $data")
+                            // json으로 파싱하고 -> result.success로 보내기
+                            result.success(Gson().toJson(data).toString())
+                        }
                     }
                 }
-//                result.success(dataFunctions.runDailyPlansByDate("20230811"))
+                "postTodoDataFunc" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
 
-            }
-            else if (call.method == "testData") {
-                Log.d("testData", "arguments : ${call.arguments}")
-                result.success(Gson().toJson(mInfo).toString())
-            }
-            else if (call.method == "showAlarmList") {
-                val i = Intent(this, AlarmListActivity::class.java)
-                startActivity(i)
-            }
-            else {
-                result.notImplemented()
+                    val title = jsonObject.getString("title")
+                    // status -> "C", "P", "F" 중 하나
+//                    val status = jsonObject.getString("status")
+                    val startTime = jsonObject.getString("startTime")
+                    val date = startTime.substring(0, 4) + startTime.substring(5, 7) + startTime.substring(8, 10)
+
+                    val endTime = jsonObject.getString("endTime")
+                    val cCode = jsonObject.getString("cCode")
+
+                    val isAlarm = jsonObject.getBoolean("isAlarm")
+                    // alarmType
+                    // 0: 무음, 1: 진동, 2: 소리
+                    val alarmType = jsonObject.getInt("alarmType")
+
+                    coroutineScope.launch(Dispatchers.IO) {
+                        val todo = ToDoData(0, title, "C", startTime, endTime, cCode)
+                        dataFunctions.postTodoDataFunc(date, todo, isAlarm)
+                        result.success("success")
+                    }
+                }
+                "editTodoDataFunc" -> {
+                    val jsonString = call.arguments as String
+
+                    val gson = Gson()
+                    val todoData: ToDoData = gson.fromJson(jsonString, ToDoData::class.java)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.editTodoDataFunc(todoData)
+                        result.success("success")
+                    }
+                }
+                "deleteTodoDataFunc" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.deleteTodoDataFunc(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
+                "completeTodoDataFunc" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.completeTodoDataFunc(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
+                "failureTodoDataFunc" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.failureTodoDataFunc(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
+                else -> {
+                    result.notImplemented()
+                }
             }
         }
     }

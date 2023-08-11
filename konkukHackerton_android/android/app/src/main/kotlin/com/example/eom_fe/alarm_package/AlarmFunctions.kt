@@ -62,19 +62,54 @@ class AlarmFunctions(private val context: Context){
         alarmManager.cancel(pendingIntent)
     }
 
-    private fun playSound() {
-        // private fun playSound(context: Context) { }
+    fun playSound(type: Int) {
+
+        /*
+        if type == 0 -> 무음
+        else if type == 1 -> 진동
+        else (type == 2) -> 소리
+         */
+
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT || audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
-                // 무음 모드나 진동 모드인 경우 해제하여 소리 울리게 하기
-                audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+            when (type) {
+                0 -> {
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE || audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+                        audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
+                    }
+                }
+                1 -> {
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL || audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT) {
+                        audioManager.ringerMode = AudioManager.RINGER_MODE_VIBRATE
+                    }
+                }
+                2 -> {
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT || audioManager.ringerMode == AudioManager.RINGER_MODE_VIBRATE) {
+                        // 무음 모드나 진동 모드인 경우 해제하여 소리 울리게 하기
+                        audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+                    }
+                }
             }
+
         } else {
-            if (audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT) {
-                // 무음 모드인 경우 해제하여 소리 울리게 하기
-                audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+            when (type) {
+                0 -> {
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+                        audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
+                    }
+                }
+                1 -> {
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+                        audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
+                    }
+                }
+                2 -> {
+                    if (audioManager.ringerMode == AudioManager.RINGER_MODE_SILENT) {
+                        // 무음 모드인 경우 해제하여 소리 울리게 하기
+                        audioManager.ringerMode = AudioManager.RINGER_MODE_NORMAL
+                    }
+                }
             }
         }
 
