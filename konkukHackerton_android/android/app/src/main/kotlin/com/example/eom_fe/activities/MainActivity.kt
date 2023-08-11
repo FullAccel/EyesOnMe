@@ -11,6 +11,7 @@ import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmService
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.data.ToDoData
+import com.example.eom_fe.data.ToDoFlutterData
 import com.example.eom_fe.follow.CustomMessageFactory
 import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
@@ -178,7 +179,7 @@ class MainActivity: FlutterActivity() {
 
                     coroutineScope.launch(Dispatchers.IO) {
                         val todo = ToDoData(0, title, "C", startTime, endTime, cCode)
-                        dataFunctions.postTodoDataFunc(date, todo, isAlarm)
+                        dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType)
                         result.success("success")
                     }
                 }
@@ -186,9 +187,9 @@ class MainActivity: FlutterActivity() {
                     val jsonString = call.arguments as String
 
                     val gson = Gson()
-                    val todoData: ToDoData = gson.fromJson(jsonString, ToDoData::class.java)
+                    val todoFData: ToDoFlutterData = gson.fromJson(jsonString, ToDoFlutterData::class.java)
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.editTodoDataFunc(todoData)
+                        dataFunctions.editTodoDataFunc(todoFData.toDoData, todoFData.isAlarm, todoFData.alarmType)
                         result.success("success")
                     }
                 }
@@ -212,6 +213,90 @@ class MainActivity: FlutterActivity() {
                         dataFunctions.failureTodoDataFunc(jsonString.toInt())
                         result.success("success")
                     }
+                }
+                "setWakeAlarm" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val startTime = jsonObject.getString("startTime")
+
+                    // alarmType
+                    // 0: 무음, 1: 진동, 2: 소리
+                    val alarmType = jsonObject.getInt("alarmType")
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.setWakeAlarm(startTime, alarmType)
+                        result.success("success")
+                    }
+                }
+                "setSleepAlarm" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val startTime = jsonObject.getString("startTime")
+
+                    // alarmType
+                    // 0: 무음, 1: 진동, 2: 소리
+                    val alarmType = jsonObject.getInt("alarmType")
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.setSleepAlarm(startTime, alarmType)
+                        result.success("success")
+                    }
+                }
+                "getWakeAlarm" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val startTime = jsonObject.getString("startTime")
+                    val date = startTime.substring(0, 4) + startTime.substring(5, 7) + startTime.substring(8, 10)
+
+                    runBlocking {
+                        val wakeAlarm = dataFunctions.getWakeAlarm(date)
+
+                        if (wakeAlarm != null) {
+                            println("Wake alarm found: $wakeAlarm")
+                            result.success(Gson().toJson(wakeAlarm).toString())
+                        } else {
+                            println("No wake alarm found for the date: $date")
+                        }
+                    }
+                }
+                "getSleepAlarm" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val startTime = jsonObject.getString("startTime")
+                    val date = startTime.substring(0, 4) + startTime.substring(5, 7) + startTime.substring(8, 10)
+
+                    runBlocking {
+                        val sleepAlarm = dataFunctions.getSleepAlarm(date)
+
+                        if (sleepAlarm != null) {
+                            println("Sleep alarm found: $sleepAlarm")
+                            result.success(Gson().toJson(sleepAlarm).toString())
+                        } else {
+                            println("No sleep alarm found for the date: $date")
+                        }
+                    }
+                }
+                "editWSAlarm" -> {
+                    // date: String, aType: Int, time: String
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val startTime = jsonObject.getString("startTime")
+                    val date = startTime.substring(0, 4) + startTime.substring(5, 7) + startTime.substring(8, 10)
+
+                    // alarmType
+                    // 0: 무음, 1: 진동, 2: 소리
+                    val alarmType = jsonObject.getInt("alarmType")
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.editWSAlarm(date, alarmType, startTime)
+                        result.success("success")
+                    }
+
                 }
                 else -> {
                     result.notImplemented()

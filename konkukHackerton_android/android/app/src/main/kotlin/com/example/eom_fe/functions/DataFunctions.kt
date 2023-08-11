@@ -2,6 +2,7 @@ package com.example.eom_fe.functions
 
 import android.content.Context
 import android.os.Build
+import android.text.TextUtils.substring
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.eom_fe.alarm_package.AlarmFunctions
@@ -210,7 +211,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
     // 실제 todo post
     @RequiresApi(Build.VERSION_CODES.M)
-    fun postTodoDataFunc(date: String, todo: ToDoData, alarm: Boolean) {
+    fun postTodoDataFunc(date: String, todo: ToDoData, alarm: Boolean, aType: Int) {
         Log.d("postTodoDataFunc", "postTodoDataFunc called")
         CoroutineScope(Dispatchers.IO).launch {
             Log.d("postTodoDataFunc", "Coroutine scope started")
@@ -226,7 +227,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
                             CoroutineScope(Dispatchers.IO).launch {
                                 setAlarm(code, content, time)
-                                db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
+                                db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content, aType))
                             }
                         }
                     }
@@ -242,7 +243,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                                     val content = todo.title
                                     CoroutineScope(Dispatchers.IO).launch {
                                         setAlarm(code, content, time)
-                                        db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
+                                        db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content, aType))
                                     }
 
                                 }
@@ -280,7 +281,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 Todo 수정으로 사용 가능
-    fun editTodoDataFunc(todo: ToDoData) {
+    fun editTodoDataFunc(todo: ToDoData, isAlarm: Boolean, aType: Int) {
         val editTodoDataBuilder = RetrofitBuilder.api.editTodoData(todo.id, todo)
         editTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             @RequiresApi(Build.VERSION_CODES.M)
@@ -300,14 +301,20 @@ class DataFunctions (context: Context, applicationContext: Context) {
                                 if (alarm.alarm_code == todo.id) {
                                     alarmFunctions.cancelAlarm(alarm.alarm_code)
                                     db.alarmDao().deleteAlarm(alarm.alarm_code)
-                                    setAlarm(todo.id, todo.title, todo.alarmStartTime)
-                                    db.alarmDao().addAlarm(AlarmDataModel(todo.id, todo.id, todo.alarmStartTime, todo.title))
-                                    // alarmEndTime은?...
+                                    if (isAlarm) {
+                                        setAlarm(todo.id, todo.title, todo.alarmStartTime)
+                                        db.alarmDao().addAlarm(AlarmDataModel(todo.id, todo.id, todo.alarmStartTime, todo.title, aType))
+                                    }
                                     return@launch
                                 }
                             }
+                            if (isAlarm) {
+                                setAlarm(todo.id, todo.title, todo.alarmStartTime)
+                                db.alarmDao().addAlarm(AlarmDataModel(todo.id, todo.id, todo.alarmStartTime, todo.title, aType))
+                                // alarmEndTime은?..
+                                return@launch
+                            }
                         }
-
                     }
                 }
             }
@@ -454,6 +461,88 @@ class DataFunctions (context: Context, applicationContext: Context) {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setAlarm(alarmCode : Int, content : String, time : String){
         alarmFunctions.callAlarm(time, alarmCode, content)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun setWakeAlarm(time: String, aType: Int) {
+//        val time = "2023-08-08 $hour:$minute:00" // 알람이 울리는 시간
+
+        val random = (-100000..-1) // -100000 ~ -1 범위에서 알람코드 랜덤으로 생성
+        var alarmCode = random.random()
+        // 기상 alarmCode는 홀수, 음수
+        if (alarmCode % 2 == 0) alarmCode++
+        setAlarm(alarmCode, "기상", time)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, "기상", aType))
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun setSleepAlarm(time: String, aType: Int) {
+        val random = (-100000..-2) // -100000 ~ -2 범위에서 알람코드 랜덤으로 생성
+        var alarmCode = random.random()
+        // 취침 alarmCode는 짝수, 음수
+        if (alarmCode % 2 != 0) alarmCode++
+        setAlarm(alarmCode, "취침", time)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, "취침", aType))
+        }
+    }
+
+    // date: yyyymmdd 형식
+    suspend fun getWakeAlarm(date: String): AlarmDataModel? {
+        return withContext(Dispatchers.IO) {
+            for (alarm in db.alarmDao().getAllAlarms()) {
+                val aDate = alarm.time.substring(0, 4) + alarm.time.substring(5, 7) + alarm.time.substring(8, 10)
+                if (aDate == date && alarm.alarm_code % 2 != 0) {
+                    return@withContext alarm
+                }
+            }
+            return@withContext null
+        }
+    }
+
+    suspend fun getSleepAlarm(date: String): AlarmDataModel? {
+        return withContext(Dispatchers.IO) {
+            for (alarm in db.alarmDao().getAllAlarms()) {
+                val aDate = alarm.time.substring(0, 4) + alarm.time.substring(5, 7) + alarm.time.substring(8, 10)
+                if (aDate == date && alarm.alarm_code % 2 == 0) {
+                    return@withContext alarm
+                }
+            }
+            return@withContext null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun editWSAlarm(date: String, aType: Int, time: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            for (alarm in db.alarmDao().getAllAlarms()) {
+                val aDate = alarm.time.substring(0, 4) + alarm.time.substring(5, 7) + alarm.time.substring(8, 10)
+                if (aDate == date) {
+                    val aCode = alarm.alarm_code
+                    alarmFunctions.cancelAlarm(aCode)
+                    db.alarmDao().deleteAlarm(aCode)
+                    if (aCode % 2 == 0) {
+                        // 취침
+                        setAlarm(aCode, "취침", time)
+                        db.alarmDao().addAlarm(AlarmDataModel(aCode, aCode, time, "취침", aType))
+                    }
+                    else {
+                        setAlarm(aCode, "기상", time)
+                        db.alarmDao().addAlarm(AlarmDataModel(aCode, aCode, time, "기상", aType))
+                    }
+                    return@launch
+                }
+            }
+
+            // alarmEndTime은?..
+
+        }
+
+
     }
 
 }
