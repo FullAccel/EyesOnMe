@@ -84,8 +84,4 @@ interface RetrofitService {
 
     @POST("todo/fail/{todoId}")
     fun failureTodoData(@Path("todoId") number: Int): Call<APIResponseData>
-
-
-
-
 }
