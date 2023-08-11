@@ -22,10 +22,13 @@ public enum ErrorCode {
 
     //Follow
     FOLLOW_ALREADY_EXIST(400, "F001", "이미 팔로우한 유저입니다."),
-    UNFOLLOW_FAIL(400, "F002", "팔로우하지 않은 유저는 언팔로우 할 수 없습니다."),
+    UNFOLLOW_FAIL(400, "F002", "팔로우하지 않은 유저와 언팔로우를 할 수 없습니다."),
     FOLLOW_MYSELF_FAIL(400, "F003", "자기 자신을 팔로우 할 수 없습니다."),
     UNFOLLOW_MYSELF_FAIL(400, "F004", "자기 자신을 언팔로우 할 수 없습니다."),
     FOLLOWER_DELETE_FAIL(400, "F005", "팔로워 삭제할 수 없는 대상입니다."),
+    FOLLOWING_NOT_FOUND(400, "F006", "팔로잉한 유저가 없습니다."),
+    FOLLOWER_NOT_FOUND(400, "F007", "팔로워가 없습니다."),
+
 
     //DailyPlan
     DAILYPLAN_ALREADY_EXIST(400, "D001", "이미 데일리 플랜을 작성하였습니다. PUT으로 update 해주세요"),
@@ -36,6 +39,12 @@ public enum ErrorCode {
     //ToDoList
     TODOLIST_NOT_FOUND(400, "T001", "존재 하지 않는 투두리스트입니다"),
 
+    //Category
+    CATEGORY_NOT_FOUND(400, "CT001", "존재 하지 않는 카테고리입니다"),
+
+    //Firebase
+    TOKEN_NOT_FOUND(400, "FB001", "해당 멤버의 토큰이 존재하지 않습니다"),
+    PUSH_NOTIFICATION_FAIL(400, "FB002", "알림 보내기를 실패하였습니다"),
     ;
 
     private final int status;

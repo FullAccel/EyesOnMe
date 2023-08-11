@@ -24,11 +24,11 @@ public class Follows extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FOLLOW_MEMBER_ID")
-    private Member followMember;
+    private Member followingMember;
 
     @Builder
-    public Follows(Member member, Member followMember) {
+    public Follows(Member member, Member followingMember) {
         this.member = member;
-        this.followMember = followMember;
+        this.followingMember = followingMember;
     }
 }

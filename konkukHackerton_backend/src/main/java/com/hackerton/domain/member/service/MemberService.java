@@ -1,5 +1,6 @@
 package com.hackerton.domain.member.service;
 
+import com.hackerton.domain.member.dto.MemberFirebaseTokenRequestDto;
 import com.hackerton.domain.member.entity.MemberRepository;
 import com.hackerton.domain.member.entity.Member;
 import com.hackerton.domain.member.dto.MemberRequestDto;
@@ -36,5 +37,13 @@ public class MemberService {
     public MemberResponseDto findMemberById(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 id의 유저가 없습니다 : " + id)).toMemberResponseDto();
+    }
+
+    @Transactional
+    public boolean saveOrUpdateFireBaseTokenByMemberId(Long memberId, MemberFirebaseTokenRequestDto requestDto) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 멤버가 존재하지 않습니다 : " + memberId));
+        member.setFirebaseToken(requestDto.getFirebaseToken());
+        return true;
     }
 }

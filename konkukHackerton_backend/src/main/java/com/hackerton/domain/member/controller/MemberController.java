@@ -1,5 +1,6 @@
 package com.hackerton.domain.member.controller;
 
+import com.hackerton.domain.member.dto.MemberFirebaseTokenRequestDto;
 import com.hackerton.domain.member.dto.MemberRequestDto;
 import com.hackerton.domain.member.dto.MemberResponseDto;
 import com.hackerton.domain.member.service.MemberService;
@@ -18,8 +19,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("")
-    public ResponseEntity<ResultResponse> saveOrUpdateMember(@RequestBody MemberRequestDto memberRequestDto)
-    {
+    public ResponseEntity<ResultResponse> saveOrUpdateMember(@RequestBody MemberRequestDto memberRequestDto) {
         MemberResponseDto memberResponseDto = memberService.saveOrUpdateMember(memberRequestDto);
         return ResponseEntity.ok(ResultResponse.of(MEMBER_SAVE_OR_UPDATE_SUCCESS, memberResponseDto));
     }
@@ -34,5 +34,12 @@ public class MemberController {
     public ResponseEntity<ResultResponse> getMemberByEmail(@PathVariable String email) {
         MemberResponseDto memberByEmail = memberService.findMemberByEmail(email);
         return ResponseEntity.ok(ResultResponse.of(GET_USERPROFILE_SUCCESS, memberByEmail));
+    }
+
+    @PostMapping("/firebaseToken/{memberId}")
+    public ResponseEntity<ResultResponse> saveOrUpdateFirebaseToken(@PathVariable Long memberId, @RequestBody MemberFirebaseTokenRequestDto requestDto) {
+        boolean isSave = memberService.saveOrUpdateFireBaseTokenByMemberId(memberId, requestDto);
+
+        return ResponseEntity.ok(ResultResponse.of(SAVE_OR_UPDATE_FIREBASE_TOKEN_SUCCESS, isSave));
     }
 }

@@ -27,6 +27,12 @@ dependencies {
     implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    //FCM
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
+
+    //logger
+    implementation('org.slf4j:jcl-over-slf4j')
+    implementation('ch.qos.logback:logback-classic')
 }
 
 test {

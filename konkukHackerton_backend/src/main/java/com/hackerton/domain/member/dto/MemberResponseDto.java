@@ -16,16 +16,20 @@ public class MemberResponseDto {
 
     private String profileUrl;
 
+    private String firebaseToken;
+
     private int planSuccessCount;
 
     private int challengeSuccessCount;
 
     @Builder
-    public MemberResponseDto(Long id, String name, String email, String profileUrl, int planSuccessCount, int challengeSuccessCount) {
+
+    public MemberResponseDto(Long id, String name, String email, String profileUrl, String firebaseToken, int planSuccessCount, int challengeSuccessCount) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.profileUrl = profileUrl;
+        this.firebaseToken = firebaseToken;
         this.planSuccessCount = planSuccessCount;
         this.challengeSuccessCount = challengeSuccessCount;
     }

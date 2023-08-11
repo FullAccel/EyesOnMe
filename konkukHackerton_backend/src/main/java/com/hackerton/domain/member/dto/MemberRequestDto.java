@@ -15,11 +15,14 @@ public class MemberRequestDto {
 
     private String profileUrl;
 
+    private String firebaseToken;
+
     @Builder
-    public MemberRequestDto(String name, String email, String profileUrl) {
+    public MemberRequestDto(String name, String email, String profileUrl, String firebaseToken) {
         this.name = name;
         this.email = email;
         this.profileUrl = profileUrl;
+        this.firebaseToken = firebaseToken;
     }
 
     public Member toEntity(){
@@ -27,6 +30,7 @@ public class MemberRequestDto {
                 .name(this.name)
                 .profileUrl(this.profileUrl)
                 .email(this.email)
+                .firebaseToken(this.firebaseToken)
                 .build();
     }
 }

@@ -1,7 +1,8 @@
 package com.hackerton.domain.member.entity;
 
 import com.hackerton.domain.BaseTimeEntity;
-import com.hackerton.domain.dailyPlan.entity.DailyPlan;
+import com.hackerton.domain.category.entity.Category;
+import com.hackerton.domain.dailyPlanGroup.dailyPlan.entity.DailyPlan;
 import com.hackerton.domain.follows.entity.Follows;
 import com.hackerton.domain.member.dto.MemberResponseDto;
 import jakarta.persistence.*;
@@ -36,23 +37,34 @@ public class Member extends BaseTimeEntity {
 
     private int challengeSuccessCount;
 
+    private String firebaseToken;
+
+
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member")
-    private List<Follows> followers = new ArrayList<>();
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Follows> followings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     @MapKey(name = "yearMonth")
     private Map<String,DailyPlan> dailyPlans = new HashMap<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<Category> categories = new ArrayList<>();
+
     @Builder
-    public Member(String name, String email, String profileUrl) {
+    public Member(String name, String email, String profileUrl, int planSuccessCount, int challengeSuccessCount, String firebaseToken) {
         this.name = name;
         this.email = email;
         this.profileUrl = profileUrl;
-        this.role = Role.USER;
+        this.planSuccessCount = planSuccessCount;
+        this.challengeSuccessCount = challengeSuccessCount;
+        this.firebaseToken = firebaseToken;
     }
+
+
 
     public Member update(String name, String picture){
         this.name = name;
@@ -75,4 +87,9 @@ public class Member extends BaseTimeEntity {
                 .challengeSuccessCount(this.challengeSuccessCount)
                 .build();
     }
+
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
+    }
+
 }
