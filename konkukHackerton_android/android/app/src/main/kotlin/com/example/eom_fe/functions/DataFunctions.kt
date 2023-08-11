@@ -1,15 +1,19 @@
 package com.example.eom_fe.functions
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.APIResponseData
 import com.example.eom_fe.data.DailyPlanData
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.data.ToDoData
+import com.example.eom_fe.roomDB.AlarmDB
+import com.example.eom_fe.roomDB.AlarmDataModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
@@ -28,6 +32,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
     var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0, "")
 
     private lateinit var eventChannel: EventChannel
+    val alarmFunctions = AlarmFunctions(context)
+    val db = AlarmDB.getDatabase(applicationContext)
 
     fun init(memberData: MemberData) {
 //        memberInfo initial 필요
@@ -35,7 +41,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     }
 
     // date : yyyymmdd 형식 (ex. 20230811)
-    fun addDailyPlanFunc(date: String) {
+    fun addDailyPlanFunc(date: String, callback: (Int?) -> Unit) {
         val addDailyPlanBuilder = RetrofitBuilder.api.addDailyPlan(memberInfo.id, date)
         addDailyPlanBuilder.enqueue(object: Callback<APIResponseData> {
             override fun onResponse(
@@ -48,10 +54,12 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<Int>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Int
+                    callback(result)
                 }
+                callback(null)
             }
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
-                // todo
+                callback(null)
             }
         }
         )
@@ -182,6 +190,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 사용 함수!
+    // 하루 모든 데일리플랜 얻기
     fun runDailyPlansByDate(date: String) = runBlocking {
         val date = date
         val flow: Flow<List<ToDoData>> = getDailyPlansByDate(date)
@@ -190,7 +199,42 @@ class DataFunctions (context: Context, applicationContext: Context) {
         }
     }
 
-    fun addTodoDataFunc(dailyPlanId: Int, todo: ToDoData) {
+
+    // 실제 todo post
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun postTodoDataFunc(date: String, todo: ToDoData, alarm: Boolean) {
+        findDailyPlanIdFunc(date) { dailyPlanId ->
+            if (dailyPlanId != null) {
+                // post 하기
+                addTodoDataFunc(dailyPlanId, todo) { code ->
+                    if (code != null && alarm) {
+                        val time = todo.alarmStartTime // 알람이 울리는 시간
+
+                        val content = todo.title
+                        setAlarm(code, content, time)
+                        db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
+                    }
+                }
+            } else {
+                // dailyPlanId가 없는 경우
+                addDailyPlanFunc(date) { dpId ->
+                    if (dpId != null) {
+                        addTodoDataFunc(dpId, todo) { code ->
+                            if (code != null && alarm) {
+                                val time = todo.alarmStartTime // 알람이 울리는 시간
+
+                                val content = todo.title
+                                setAlarm(code, content, time)
+                                db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun addTodoDataFunc(dailyPlanId: Int, todo: ToDoData, callback: (Int?) -> Unit) {
         val addTodoDataBuilder = RetrofitBuilder.api.addTodoData(dailyPlanId, todo)
         addTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
@@ -203,10 +247,13 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<Int>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Int
+                    callback(result)
                 }
+                callback(null)
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                callback(null)
             }
         }
         )
@@ -348,6 +395,11 @@ class DataFunctions (context: Context, applicationContext: Context) {
             }
         }
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun setAlarm(alarmCode : Int, content : String, time : String){
+        alarmFunctions.callAlarm(time, alarmCode, content)
     }
 
 }

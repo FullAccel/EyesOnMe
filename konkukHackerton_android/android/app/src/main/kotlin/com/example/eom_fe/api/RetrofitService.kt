@@ -1,6 +1,7 @@
 package com.example.eom_fe.api
 
 import com.example.eom_fe.data.APIResponseData
+import com.example.eom_fe.data.FirebaseToken
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.data.ToDoData
 import retrofit2.Call
@@ -17,6 +18,9 @@ interface RetrofitService {
 
     @GET("member/follow/{email}")
     fun findMemberData(@Path("email") email: String): Call<APIResponseData>
+
+    @POST("member/firebaseToken/{memberId}")
+    fun renewFirebaseToken(@Path("memberId") number: Int, @Body params: FirebaseToken): Call<APIResponseData>
 
 
     // Follow

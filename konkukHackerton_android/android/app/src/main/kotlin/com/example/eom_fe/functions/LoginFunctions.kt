@@ -3,6 +3,7 @@ package com.example.eom_fe.functions
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import com.example.eom_fe.activities.MainActivity
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.APIResponseData
 import com.example.eom_fe.data.MemberData
@@ -55,11 +56,15 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                                 createMemberInfo(memberData) { createdMemberInfo ->
 //                                    val i = Intent(this, AlarmListActivity::class.java)
 //                                    startActivity(i)
+                                    this.memberInfo = createdMemberInfo
+                                    MainActivity.mInfo = createdMemberInfo
                                 }
                             }
                             else {
 //                                val i = Intent(this, AlarmListActivity::class.java)
 //                                startActivity(i)
+                                this.memberInfo = memberInfo
+                                MainActivity.mInfo = memberInfo
                             }
 
                         }

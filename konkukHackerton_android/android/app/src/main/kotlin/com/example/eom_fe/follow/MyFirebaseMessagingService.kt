@@ -12,10 +12,19 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.example.eom_fe.R
 import com.example.eom_fe.activities.MainActivity
+import com.example.eom_fe.api.RetrofitBuilder
+import com.example.eom_fe.data.APIResponseData
+import com.example.eom_fe.data.FirebaseToken
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.reflect.Type
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val TAG = "FirebaseTest"
@@ -55,6 +64,28 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     // 새로운 토큰이 생성 될 때 호출
     override fun onNewToken(token: String) {
+        val mId = MainActivity.memberId
+        val renewTokenBuilder = mId?.let { RetrofitBuilder.api.renewFirebaseToken(it, FirebaseToken(token)) }
+        if (renewTokenBuilder != null) {
+            renewTokenBuilder.enqueue(object : Callback<APIResponseData> {
+                override fun onResponse(
+                    call: Call<APIResponseData>,
+                    response: Response<APIResponseData>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("onNewToken", "response : ${response.body()}")
+                        val temp = response.body() as APIResponseData
+                        val type: Type = object : TypeToken<Boolean>() {}.type
+                        val jsonResult = Gson().toJson(temp.data)
+                        val result = Gson().fromJson(jsonResult, type) as Boolean
+                    }
+                }
+
+                override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                }
+            }
+            )
+        }
         super.onNewToken(token)
 //        sendRegistrationToServer(token)
     }

@@ -17,6 +17,7 @@ import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import com.kakao.sdk.common.KakaoSdk
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -30,6 +31,12 @@ import kotlin.coroutines.suspendCoroutine
 
 
 class MainActivity: FlutterActivity() {
+
+    companion object {
+        var memberId: Int? = null
+        var mInfo: MemberData? = null
+    }
+
     private val CHANNEL = "samples.flutter.dev/battery"
 
     private val coroutineScope by lazy { CoroutineScope(Dispatchers.IO) }
@@ -101,6 +108,7 @@ class MainActivity: FlutterActivity() {
                     // Log and toast
                     val msg = token.toString()
                     memberInfo = loginFunctions.kakaoLogin(msg)
+                    memberId = memberInfo.id
 
                     // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
                     // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
@@ -123,6 +131,10 @@ class MainActivity: FlutterActivity() {
                 }
 //                result.success(dataFunctions.runDailyPlansByDate("20230811"))
 
+            }
+            else if (call.method == "testData") {
+                Log.d("testData", "arguments : ${call.arguments}")
+                result.success(Gson().toJson(mInfo).toString())
             }
             else if (call.method == "showAlarmList") {
                 val i = Intent(this, AlarmListActivity::class.java)

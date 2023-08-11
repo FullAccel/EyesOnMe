@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -114,6 +116,18 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future<void> _testData() async {
+    try {
+      final result = await platform.invokeMethod('testData', ["Raon", "29"]);
+      print("flutter : $result");
+
+      // await platform.invokeMethod('testData');
+
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
   Future<bool> permission() async {
     Map<Permission, PermissionStatus> status =
     await [Permission.systemAlertWindow].request(); // [] 권한배열에 권한을 작성
@@ -143,6 +157,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: _getBatteryLevel2,
               child: const Text('AlarmListActivity'),
+            ),
+            ElevatedButton(
+              onPressed: _testData,
+              child: const Text('Test Data'),
             ),
           ],
         ),
