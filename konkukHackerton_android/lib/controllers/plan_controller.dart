@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 
-import '../models/plan_model.dart';
-
 class PlanController extends GetxController {
   // static PlanController get to => Get.find();
   // var list = <Map<String, dynamic>>[].obs;
@@ -29,5 +27,4 @@ class PlanController extends GetxController {
   //     Future.delayed(Duration(milliseconds: 200), getPlans);
   //   }
   // }
-  final plan = PlanModel().obs;
 }
