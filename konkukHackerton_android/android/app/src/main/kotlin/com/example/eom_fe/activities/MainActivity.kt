@@ -88,7 +88,7 @@ class MainActivity: FlutterActivity() {
         Log.d("welcome", "initLogin()")
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 //        flutterEngine.platformViewsController
@@ -177,9 +177,11 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     coroutineScope.launch(Dispatchers.IO) {
                         val todo = ToDoData(0, title, "C", startTime, endTime, cCode)
-                        dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType)
+                        dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType, alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -189,7 +191,7 @@ class MainActivity: FlutterActivity() {
                     val gson = Gson()
                     val todoFData: ToDoFlutterData = gson.fromJson(jsonString, ToDoFlutterData::class.java)
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.editTodoDataFunc(todoFData.toDoData, todoFData.isAlarm, todoFData.alarmType)
+                        dataFunctions.editTodoDataFunc(todoFData.toDoData, todoFData.isAlarm, todoFData.alarmType, todoFData.alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -224,8 +226,10 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.setWakeAlarm(startTime, alarmType)
+                        dataFunctions.setWakeAlarm(startTime, alarmType, alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -239,8 +243,10 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.setSleepAlarm(startTime, alarmType)
+                        dataFunctions.setSleepAlarm(startTime, alarmType, alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -284,11 +290,19 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.editWSAlarm(date, alarmType, startTime)
+                        dataFunctions.editWSAlarm(date, alarmType, startTime, alarmRepeat)
                         result.success("success")
                     }
-
+                }
+                "delayAlarm" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.delayAlarm(jsonString.toInt())
+                        result.success("success")
+                    }
                 }
                 else -> {
                     result.notImplemented()

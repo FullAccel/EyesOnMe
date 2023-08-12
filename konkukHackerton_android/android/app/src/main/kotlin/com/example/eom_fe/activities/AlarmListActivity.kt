@@ -60,7 +60,7 @@ class AlarmListActivity : AppCompatActivity() {
             coroutineScope.launch(Dispatchers.IO) {
 //                db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, content))
                 val todo = ToDoData(0, content, "C", time, time, "C001")
-                dataFunctions.postTodoDataFunc("20230812", todo, true, 0)
+                dataFunctions.postTodoDataFunc("20230812", todo, true, 0, 10)
                 data = db.alarmDao().getAllAlarms() as ArrayList<AlarmDataModel>
                 Log.d("alarmNotification", "getAllAlarm (MainActivity) - ${data.size}")
                 launch(Dispatchers.Main) {
