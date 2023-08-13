@@ -65,9 +65,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 새로운 토큰이 생성 될 때 호출
     override fun onNewToken(token: String) {
         val mId = MainActivity.memberId
-        val renewTokenBuilder = mId?.let { RetrofitBuilder.api.renewFirebaseToken(it, FirebaseToken(token)) }
-        if (renewTokenBuilder != null) {
-            renewTokenBuilder.enqueue(object : Callback<APIResponseData> {
+        Log.d("onNewToken", "memberId: $mId")
+        mId?.let { RetrofitBuilder.api.renewFirebaseToken(it, FirebaseToken(token)) }
+            ?.enqueue(object : Callback<APIResponseData> {
                 override fun onResponse(
                     call: Call<APIResponseData>,
                     response: Response<APIResponseData>
@@ -78,6 +78,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         val type: Type = object : TypeToken<Boolean>() {}.type
                         val jsonResult = Gson().toJson(temp.data)
                         val result = Gson().fromJson(jsonResult, type) as Boolean
+                        Log.d("onNewToken", "result: $result")
                     }
                 }
 
@@ -85,7 +86,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 }
             }
             )
-        }
         super.onNewToken(token)
 //        sendRegistrationToServer(token)
     }

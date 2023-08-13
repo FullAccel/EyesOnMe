@@ -150,8 +150,6 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                                 Log.d("welcome", "memberInfo == null")
                                 val memberData = MemberData(0, name, email, profileUrl, 0, 0, memberToken)
                                 createMemberInfo(memberData) { createdMemberInfo ->
-//                                    val i = Intent(this, AlarmListActivity::class.java)
-//                                    startActivity(i)
                                     this.memberInfo = createdMemberInfo
                                     MainActivity.mInfo = createdMemberInfo
                                     dataFunctions.init(this.memberInfo)
@@ -220,10 +218,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                                 }
                                 )
                             }
-
                         }
-//                        finish()
-//                                    nickname.text = "닉네임: ${user?.kakaoAccount?.profile?.nickname}"
                     }
                 }
             }
@@ -253,7 +248,80 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                                 "welcome",
                                 "name : ${user?.kakaoAccount?.profile?.nickname}, 이메일 : ${user?.kakaoAccount?.email}"
                             )
-//                                    nickname.text = "닉네임: ${user?.kakaoAccount?.profile?.nickname}"
+                            val name: String = user?.kakaoAccount?.profile?.nickname.toString()
+                            val email: String = user?.kakaoAccount?.email.toString()
+                            val profileUrl: String = user?.kakaoAccount?.profile?.profileImageUrl.toString()
+                            findLoginInfoHttp(email) { memberInfo ->
+                                if (memberInfo == null) {
+                                    Log.d("welcome", "memberInfo == null")
+                                    val memberData = MemberData(0, name, email, profileUrl, 0, 0, memberToken)
+                                    createMemberInfo(memberData) { createdMemberInfo ->
+                                        this.memberInfo = createdMemberInfo
+                                        MainActivity.mInfo = createdMemberInfo
+                                        dataFunctions.init(this.memberInfo)
+                                        val firebaseTokenBuilder = RetrofitBuilder.api.renewFirebaseToken(this.memberInfo.id, FirebaseToken(memberToken))
+                                        firebaseTokenBuilder.enqueue(object : Callback<APIResponseData> {
+                                            override fun onResponse(
+                                                call: Call<APIResponseData>,
+                                                response: Response<APIResponseData>
+                                            ) {
+                                                Log.d("tokennnn", "firebaseTokenBuilder onResponse")
+                                                if (response.isSuccessful) {
+                                                    Log.d("tokennnn", "firebaseTokenBuilder isSuccessful")
+
+                                                    Log.d("tokennnn", "response : ${response.body()}")
+                                                    val temp = response.body() as APIResponseData
+                                                    val type: Type = object : TypeToken<Boolean>() {}.type
+                                                    val jsonResult = Gson().toJson(temp.data)
+                                                    val result = Gson().fromJson(jsonResult, type) as Boolean
+                                                }
+                                                else {
+                                                    Log.d("tokennnn", "firebaseTokenBuilder !Successful")
+
+                                                }
+                                            }
+
+                                            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                                                Log.d("tokennnn", "firebaseTokenBuilder onFailure")
+                                            }
+                                        }
+                                        )
+                                    }
+                                }
+                                else {
+                                    this.memberInfo = memberInfo
+                                    MainActivity.mInfo = memberInfo
+                                    dataFunctions.init(this.memberInfo)
+                                    val firebaseTokenBuilder = RetrofitBuilder.api.renewFirebaseToken(memberInfo.id, FirebaseToken(memberToken))
+                                    firebaseTokenBuilder.enqueue(object : Callback<APIResponseData> {
+                                        override fun onResponse(
+                                            call: Call<APIResponseData>,
+                                            response: Response<APIResponseData>
+                                        ) {
+                                            Log.d("tokennnn", "firebaseTokenBuilder onResponse")
+                                            if (response.isSuccessful) {
+                                                Log.d("tokennnn", "firebaseTokenBuilder isSuccessful")
+
+                                                Log.d("tokennnn", "response : ${response.body()}")
+                                                val temp = response.body() as APIResponseData
+                                                val type: Type = object : TypeToken<Boolean>() {}.type
+                                                val jsonResult = Gson().toJson(temp.data)
+                                                val result = Gson().fromJson(jsonResult, type) as Boolean
+                                            }
+                                            else {
+                                                Log.d("tokennnn", "firebaseTokenBuilder !Successful")
+
+                                            }
+                                        }
+
+                                        override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                                            Log.d("tokennnn", "firebaseTokenBuilder onFailure")
+
+                                        }
+                                    }
+                                    )
+                                }
+                            }
                         }
                     }
 //                    finish()

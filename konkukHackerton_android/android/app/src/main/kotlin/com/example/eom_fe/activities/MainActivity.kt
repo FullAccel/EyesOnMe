@@ -95,12 +95,6 @@ class MainActivity: FlutterActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-//        flutterEngine.platformViewsController
-//            .registry
-//            .registerViewFactory(
-//                "CustomMessageFactory",
-//                CustomMessageFactory(activity, MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL))
-//            )
         GeneratedPluginRegistrant.registerWith(flutterEngine)
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
@@ -116,64 +110,14 @@ class MainActivity: FlutterActivity() {
 
                         // Get new FCM registration token
                         val token = task.result
-
-//                        runBlocking {
-//                            val msg = token.toString()
-//                            memberInfo = loginFunctions.kakaoLogin2(msg)
-//                            memberId = memberInfo.id
-//                            // memberInfo를 사용하여 원하는 작업 수행
-//                            Log.d("tokennn", "before memberId: $memberId")
-//                            Log.d("tokennn", "before memberInfo: $memberInfo")
-//                            val firebaseTokenBuilder = RetrofitBuilder.api.renewFirebaseToken(memberInfo.id, FirebaseToken(msg))
-//                            firebaseTokenBuilder.enqueue(object : Callback<APIResponseData> {
-//                                override fun onResponse(
-//                                    call: Call<APIResponseData>,
-//                                    response: Response<APIResponseData>
-//                                ) {
-//                                    Log.d("tokennnn", "firebaseTokenBuilder onResponse")
-//                                    if (response.isSuccessful) {
-//                                        Log.d("tokennnn", "firebaseTokenBuilder isSuccessful")
-//
-//                                        Log.d("tokennnn", "response : ${response.body()}")
-//                                        val temp = response.body() as APIResponseData
-//                                        val type: Type = object : TypeToken<Boolean>() {}.type
-//                                        val jsonResult = Gson().toJson(temp.data)
-//                                        val result = Gson().fromJson(jsonResult, type) as Boolean
-//                                    }
-//                                    else {
-//                                        Log.d("tokennnn", "firebaseTokenBuilder !Successful")
-//
-//                                    }
-//                                }
-//
-//                                override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
-//                                    Log.d("tokennnn", "firebaseTokenBuilder onFailure")
-//
-//                                }
-//                            }
-//                            )
-//                            Log.d("tokennnn", msg)
-//                            dataFunctions.init(memberInfo)
-//                            Log.d("tokennnn", "afterDataFunctions init memberInfo: $memberInfo")
-//                            initLogin()
-//                            Log.d("tokennnn", "memberId: $memberId")
-//                        }
-
                         val msg = token.toString()
                         loginFunctions.kakaoLogin(msg)
-//                            memberId = memberInfo.id
 
                         Log.d("tokennnn", msg)
-//                        dataFunctions.init(memberInfo)
-//                        Log.d("tokennnn", "afterDataFunctions init memberInfo: $memberInfo")
                         initLogin()
-                        Log.d("tokennnn", "memberId: $memberId")
 
                         // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
                         // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
-
-
-//        //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     })
 
                 }
