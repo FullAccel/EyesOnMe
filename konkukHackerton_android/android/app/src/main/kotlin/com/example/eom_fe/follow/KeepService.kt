@@ -25,7 +25,7 @@ class KeepService: Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent?) {
-        Log.d("welcome", "KeepService - onTaskRemoved called")
+        Log.d("eyesonme-KS", "KeepService - onTaskRemoved called")
         val restartServiceIntent = Intent(applicationContext, this.javaClass)
         restartServiceIntent.setPackage(packageName)
 
@@ -47,7 +47,7 @@ class KeepService: Service() {
         val i = Intent(applicationContext, BackgroundActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         applicationContext.startActivity(i)
-        Log.d("welcome", "KeepService - onStartCommand called")
+        Log.d("eyesonme-KS", "KeepService - onStartCommand called")
 
         return super.onStartCommand(intent, flags, startId)
 

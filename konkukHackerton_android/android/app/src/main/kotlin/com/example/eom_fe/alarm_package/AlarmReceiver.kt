@@ -36,7 +36,7 @@ class AlarmReceiver() : BroadcastReceiver() {
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        Log.d("welcome", "onReceived called...")
+        Log.d("eyesonme-AR", "onReceived called...")
 
         val serviceIntent = Intent(context, KeepService::class.java)
         context?.startService(serviceIntent)

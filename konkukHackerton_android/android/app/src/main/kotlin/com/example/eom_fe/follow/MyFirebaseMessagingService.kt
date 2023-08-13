@@ -36,9 +36,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     // 메세지가 수신되면 호출
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d("welcome", "onMessageReceived")
+        Log.d("eyesonme-MFMS", "onMessageReceived")
         if(!remoteMessage.notification?.title.isNullOrBlank()){
-            Log.d("welcome", "onMessageReceived - isNotEmpty()")
+            Log.d("eyesonme-MFMS", "onMessageReceived - isNotEmpty()")
             sendNotification(remoteMessage.notification?.title,
                 remoteMessage.notification?.body!!)
         }
@@ -65,7 +65,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 새로운 토큰이 생성 될 때 호출
     override fun onNewToken(token: String) {
         val mId = MainActivity.memberId
-        Log.d("onNewToken", "memberId: $mId")
+        Log.d("eyesonme-MFMS", "memberId: $mId")
         mId?.let { RetrofitBuilder.api.renewFirebaseToken(it, FirebaseToken(token)) }
             ?.enqueue(object : Callback<APIResponseData> {
                 override fun onResponse(
@@ -73,12 +73,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     response: Response<APIResponseData>
                 ) {
                     if (response.isSuccessful) {
-                        Log.d("onNewToken", "response : ${response.body()}")
+                        Log.d("eyesonme-MFMS", "response : ${response.body()}")
                         val temp = response.body() as APIResponseData
                         val type: Type = object : TypeToken<Boolean>() {}.type
                         val jsonResult = Gson().toJson(temp.data)
                         val result = Gson().fromJson(jsonResult, type) as Boolean
-                        Log.d("onNewToken", "result: $result")
+                        Log.d("eyesonme-MFMS", "result: $result")
                     }
                 }
 
@@ -123,7 +123,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun sendRegistrationToServer(token: String){
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                Log.w("eyesonme-MFMS", "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
 
@@ -132,7 +132,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             // Log and toast
             val msg = token.toString()
-            Log.d(TAG, msg)
+            Log.d("eyesonme-MFMS", msg)
             Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
         })
     }

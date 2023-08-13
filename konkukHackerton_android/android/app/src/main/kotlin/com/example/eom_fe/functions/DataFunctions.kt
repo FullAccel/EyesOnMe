@@ -42,13 +42,13 @@ class DataFunctions (context: Context, applicationContext: Context) {
     fun init(memberData: MemberData) {
 //        memberInfo initial 필요
         memberInfo = memberData
-        Log.d("dataFunctions", "init: $memberInfo")
+        Log.d("eyesonme-DF", "init: $memberInfo")
     }
 
     // date : yyyymmdd 형식 (ex. 20230811)
     fun addDailyPlanFunc(date: String, callback: (Int?) -> Unit) {
-        Log.d("addDailyPlanFunc", "addDailyPlanFunc called")
-        Log.d("addDailyPlanFunc", "memberInfo: $memberInfo")
+        Log.d("eyesonme-DF", "addDailyPlanFunc called")
+        Log.d("eyesonme-DF", "memberInfo: $memberInfo")
         val addDailyPlanBuilder = RetrofitBuilder.api.addDailyPlan(memberInfo.id, date)
         addDailyPlanBuilder.enqueue(object: Callback<APIResponseData> {
             override fun onResponse(
@@ -56,18 +56,18 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Int>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Int
                     callback(result)
                 }
-                Log.d("addDailyPlanFunc", "addDailyPlanFunc null (1)")
+                Log.d("eyesonme-DF", "addDailyPlanFunc null (1)")
                 callback(null)
             }
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
-                Log.d("addDailyPlanFunc", "addDailyPlanFunc null (2)")
+                Log.d("eyesonme-DF", "addDailyPlanFunc null (2)")
                 callback(null)
             }
         }
@@ -82,7 +82,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<DailyPlanData>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -105,7 +105,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -121,7 +121,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     }
 
     fun getMonthlyPlanFunc(yearMonth: String, callback: (List<DailyPlanData>?) -> Unit) {
-        Log.d("getMonthlyPlanFunc", "getMonthlyPlanFunc started")
+        Log.d("eyesonme-DF", "getMonthlyPlanFunc started")
         val getMonthlyPlanBuilder = RetrofitBuilder.api.getMontlyPlan(memberInfo.id, yearMonth)
         getMonthlyPlanBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
@@ -129,19 +129,19 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<List<DailyPlanData>>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as List<DailyPlanData>
                     callback(result)
                 }
-                Log.d("getMonthlyPlanFunc", "getMonthlyPlanFunc null (1)")
+                Log.d("eyesonme-DF", "getMonthlyPlanFunc null (1)")
                 callback(null)
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
-                Log.d("getMonthlyPlanFunc", "getMonthlyPlanFunc null (2)")
+                Log.d("eyesonme-DF", "getMonthlyPlanFunc null (2)")
                 callback(null)
             }
         }
@@ -153,12 +153,13 @@ class DataFunctions (context: Context, applicationContext: Context) {
     fun findDailyPlanIdFunc(date: String, callback: (Int?) -> Unit) {
         val fyearMonth: String = date.take(6)
         val fdate: Int = date.takeLast(2).toInt()
-        Log.d("findDailyPlanIdFunc", "fYM: $fyearMonth, fdate: $fdate")
+        Log.d("eyesonme-DF", "findDailyPlanIdFunc : fYM: $fyearMonth, fdate: $fdate")
         getMonthlyPlanFunc(fyearMonth) { result ->
             if (result != null) {
                 // 작업 결과 사용
                 for (day in result) {
-                    if (day.yearMonth == fyearMonth && day.date == fdate) {
+                    if (day.yearMonth.toInt() == fyearMonth.toInt() && day.date.toInt() == fdate) {
+                        Log.d("eyesonme-DF", "findDailyPlanIdFunc : found it! ${day.yearMonth}, ${day.date.toInt()}")
                         callback(day.dailyPlanId)
                         return@getMonthlyPlanFunc
                     }
@@ -216,13 +217,13 @@ class DataFunctions (context: Context, applicationContext: Context) {
     // 실제 todo post
     @RequiresApi(Build.VERSION_CODES.M)
     fun postTodoDataFunc(date: String, todo: ToDoData, alarm: Boolean, aType: Int, aRepeat: Int) {
-        Log.d("postTodoDataFunc", "postTodoDataFunc called")
+        Log.d("eyesonme-DF", "postTodoDataFunc called")
         CoroutineScope(Dispatchers.IO).launch {
-            Log.d("postTodoDataFunc", "Coroutine scope started")
+            Log.d("eyesonme-DF", "postTodoDataFunc : Coroutine scope started")
             findDailyPlanIdFunc(date) { dailyPlanId ->
                 if (dailyPlanId != null) {
                     // post 하기
-                    Log.d("postTodoDataFunc", "dailyPlanId != null")
+                    Log.d("eyesonme-DF", "postTodoDataFunc : dailyPlanId != null")
                     addTodoDataFunc(dailyPlanId, todo) { code ->
                         if (code != null && alarm) {
                             val time = todo.alarmStartTime // 알람이 울리는 시간
@@ -230,6 +231,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                             val content = todo.title
 
                             CoroutineScope(Dispatchers.IO).launch {
+                                Log.d("eyesonme-DF", "postTodoDataFunc : !!CoroutineScope")
                                 setAlarm(code, content, time)
                                 db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content, aType, aRepeat))
                             }
@@ -237,7 +239,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     }
                 } else {
                     // dailyPlanId가 없는 경우
-                    Log.d("postTodoDataFunc", "dailyPlanId == null")
+                    Log.d("eyesonme-DF", "postTodoDataFunc : dailyPlanId == null")
                     addDailyPlanFunc(date) { dpId ->
                         if (dpId != null) {
                             addTodoDataFunc(dpId, todo) { code ->
@@ -246,6 +248,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
                                     val content = todo.title
                                     CoroutineScope(Dispatchers.IO).launch {
+                                        Log.d("eyesonme-DF", "postTodoDataFunc : CoroutineScope")
                                         setAlarm(code, content, time)
                                         db.alarmDao().addAlarm(AlarmDataModel(code, code, time, content, aType, aRepeat))
                                     }
@@ -267,7 +270,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Int>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -294,7 +297,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -337,7 +340,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<ToDoData>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -361,7 +364,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -396,7 +399,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     response: Response<APIResponseData>
                 ) {
                     if (response.isSuccessful) {
-                        Log.d("dataFunctions", "response : ${response.body()}")
+                        Log.d("eyesonme-DF", "response : ${response.body()}")
                         val temp = response.body() as APIResponseData
                         val type: Type = object : TypeToken<List<ToDoData>>() {}.type
                         val jsonResult = Gson().toJson(temp.data)
@@ -423,7 +426,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
@@ -447,7 +450,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 response: Response<APIResponseData>
             ) {
                 if (response.isSuccessful) {
-                    Log.d("dataFunctions", "response : ${response.body()}")
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
                     val temp = response.body() as APIResponseData
                     val type: Type = object : TypeToken<Boolean>() {}.type
                     val jsonResult = Gson().toJson(temp.data)

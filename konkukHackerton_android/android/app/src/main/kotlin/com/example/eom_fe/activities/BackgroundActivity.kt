@@ -24,16 +24,17 @@ class BackgroundActivity : FlutterActivity() {
     // 플러터 엔진을 초기화하고 YourTargetScreen.dart를 불러오는 로직 추가
     private val CHANNEL1 = "samples.flutter.dev/battery"  // 원하는 채널명으로 변경
     lateinit var serviceIntent: Intent
+    var isFinished: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("welcome", "BackgroundActivity called")
+        Log.d("eyesonme-BA", "BackgroundActivity called")
         flutterEngine?.dartExecutor?.binaryMessenger?.let {
             MethodChannel(it, CHANNEL1).apply {
                 invokeMethod("showExtraScreen", null)
             }
         }
 
-        Log.d("welcome", "serviceIntent started w/ onCreate()")
+        Log.d("eyesonme-BA", "serviceIntent started w/ onCreate()")
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -44,11 +45,17 @@ class BackgroundActivity : FlutterActivity() {
             }
         }
 
-        Log.d("welcome", "serviceIntent started w/ onNewIntent()")
+        Log.d("eyesonme-BA", "serviceIntent started w/ onNewIntent()")
     }
 
     private val CHANNEL2 = "samples.flutter.dev/accomplish"  // 원하는 채널명으로 변경
 
+//    override fun onBackPressed() {
+////        super.onBackPressed()
+////        if (isFinished) {
+////            finish()
+////        }
+//    }
     @RequiresApi(Build.VERSION_CODES.M)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -61,8 +68,9 @@ class BackgroundActivity : FlutterActivity() {
                 if (mBound) {
                     mService.stopService()
                 }
+                isFinished = true
 
-                Log.d("welcome", "serviceIntent stopped")
+                Log.d("eyesonme-BA", "serviceIntent stopped")
 
             }
             else {
@@ -72,7 +80,9 @@ class BackgroundActivity : FlutterActivity() {
     }
 
     override fun onBackPressed() {
-
+        if (isFinished) {
+            finish()
+        }
     }
 
     private lateinit var mService: KeepService

@@ -80,16 +80,16 @@ class MainActivity: FlutterActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 //        super.onWindowFocusChanged(hasFocus)
 
-        Log.d("welcome", "Focus changed !");
+        Log.d("eyesonme-MA", "Focus changed !");
 
         if (!hasFocus) {
-            Log.d("welcome", "Lost focus !");
+            Log.d("eyesonme-MA", "Lost focus !");
 
         }
     }
 
     private fun initLogin() {
-        Log.d("welcome", "initLogin()")
+        Log.d("eyesonme-MA", "initLogin()")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -104,7 +104,7 @@ class MainActivity: FlutterActivity() {
                 "kakaoLogin" -> {
                     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                         if (!task.isSuccessful) {
-                            Log.w("tokennnn", "Fetching FCM registration token failed", task.exception)
+                            Log.w("eyesonme-MA", "Fetching FCM registration token failed", task.exception)
                             return@OnCompleteListener
                         }
 
@@ -113,7 +113,7 @@ class MainActivity: FlutterActivity() {
                         val msg = token.toString()
                         loginFunctions.kakaoLogin(msg)
 
-                        Log.d("tokennnn", msg)
+                        Log.d("eyesonme-MA", msg)
                         initLogin()
 
                         // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
@@ -135,7 +135,7 @@ class MainActivity: FlutterActivity() {
 
                 }
                 "testData" -> {
-                    Log.d("testData", "arguments : ${call.arguments}")
+                    Log.d("eyesonme-MA", "arguments : ${call.arguments}")
                     result.success(Gson().toJson(mInfo).toString())
                 }
                 "showAlarmList" -> {
