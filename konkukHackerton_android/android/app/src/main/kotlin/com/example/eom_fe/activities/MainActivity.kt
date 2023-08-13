@@ -9,9 +9,8 @@ import androidx.annotation.RequiresApi
 import com.example.eom_fe.R
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmService
-import com.example.eom_fe.data.MemberData
-import com.example.eom_fe.data.ToDoData
-import com.example.eom_fe.data.ToDoFlutterData
+import com.example.eom_fe.api.RetrofitBuilder
+import com.example.eom_fe.data.*
 import com.example.eom_fe.follow.CustomMessageFactory
 import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
@@ -21,6 +20,7 @@ import com.facebook.stetho.Stetho
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kakao.sdk.common.KakaoSdk
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -31,6 +31,10 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.reflect.Type
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -113,17 +117,63 @@ class MainActivity: FlutterActivity() {
                         // Get new FCM registration token
                         val token = task.result
 
-                        // Log and toast
+//                        runBlocking {
+//                            val msg = token.toString()
+//                            memberInfo = loginFunctions.kakaoLogin2(msg)
+//                            memberId = memberInfo.id
+//                            // memberInfo를 사용하여 원하는 작업 수행
+//                            Log.d("tokennn", "before memberId: $memberId")
+//                            Log.d("tokennn", "before memberInfo: $memberInfo")
+//                            val firebaseTokenBuilder = RetrofitBuilder.api.renewFirebaseToken(memberInfo.id, FirebaseToken(msg))
+//                            firebaseTokenBuilder.enqueue(object : Callback<APIResponseData> {
+//                                override fun onResponse(
+//                                    call: Call<APIResponseData>,
+//                                    response: Response<APIResponseData>
+//                                ) {
+//                                    Log.d("tokennnn", "firebaseTokenBuilder onResponse")
+//                                    if (response.isSuccessful) {
+//                                        Log.d("tokennnn", "firebaseTokenBuilder isSuccessful")
+//
+//                                        Log.d("tokennnn", "response : ${response.body()}")
+//                                        val temp = response.body() as APIResponseData
+//                                        val type: Type = object : TypeToken<Boolean>() {}.type
+//                                        val jsonResult = Gson().toJson(temp.data)
+//                                        val result = Gson().fromJson(jsonResult, type) as Boolean
+//                                    }
+//                                    else {
+//                                        Log.d("tokennnn", "firebaseTokenBuilder !Successful")
+//
+//                                    }
+//                                }
+//
+//                                override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+//                                    Log.d("tokennnn", "firebaseTokenBuilder onFailure")
+//
+//                                }
+//                            }
+//                            )
+//                            Log.d("tokennnn", msg)
+//                            dataFunctions.init(memberInfo)
+//                            Log.d("tokennnn", "afterDataFunctions init memberInfo: $memberInfo")
+//                            initLogin()
+//                            Log.d("tokennnn", "memberId: $memberId")
+//                        }
+
                         val msg = token.toString()
-                        memberInfo = loginFunctions.kakaoLogin(msg)
-                        memberId = memberInfo.id
+                        loginFunctions.kakaoLogin(msg)
+//                            memberId = memberInfo.id
+
+                        Log.d("tokennnn", msg)
+//                        dataFunctions.init(memberInfo)
+//                        Log.d("tokennnn", "afterDataFunctions init memberInfo: $memberInfo")
+                        initLogin()
+                        Log.d("tokennnn", "memberId: $memberId")
 
                         // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
                         // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
-                        dataFunctions.init(memberInfo)
-                        initLogin()
-                        Log.d("tokennnn", msg)
-        //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+
+
+//        //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     })
 
                 }

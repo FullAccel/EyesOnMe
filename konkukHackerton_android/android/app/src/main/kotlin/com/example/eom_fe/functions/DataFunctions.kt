@@ -42,6 +42,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     fun init(memberData: MemberData) {
 //        memberInfo initial 필요
         memberInfo = memberData
+        Log.d("dataFunctions", "init: $memberInfo")
     }
 
     // date : yyyymmdd 형식 (ex. 20230811)

@@ -16,6 +16,6 @@ interface AlarmDao { // 재부팅 시 관리되어야 하는 알람 저장용 �
     @Query("DELETE FROM active_alarms WHERE alarm_code = :alarm_code") // 알람 코드로 삭제
     fun deleteAlarm(alarm_code: Int)
 
-    @Query("SELECT * FROM alarm_table WHERE alarm_code = :alarmCode")
+    @Query("SELECT * FROM active_alarms WHERE alarm_code = :alarmCode")
     fun getSingleAlarm(alarmCode: Int): AlarmDataModel
 }
