@@ -145,14 +145,14 @@ class MainActivity: FlutterActivity() {
                 }
                 "getData" -> {
                     //
-                    runBlocking {
-                        val date = "20230811"
-                        val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
-                        flow.collect { data ->
-                            println("Received data: $data")
-                            // json으로 파싱하고 -> result.success로 보내기
-                        }
-                    }
+//                    runBlocking {
+//                        val date = "20230811"
+//                        val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
+//                        flow.collect { data ->
+//                            println("Received data: $data")
+//                            // json으로 파싱하고 -> result.success로 보내기
+//                        }
+//                    }
         //                result.success(dataFunctions.runDailyPlansByDate("20230811"))
 
                 }
@@ -166,14 +166,14 @@ class MainActivity: FlutterActivity() {
                 }
                 "getAllDailyPlansByDate" -> {
                     var date = call.arguments as String
-                    runBlocking {
-                        val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
-                        flow.collect { data ->
-                            println("Received data: $data")
-                            // json으로 파싱하고 -> result.success로 보내기
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.getDailyPlansByDate(date) { data ->
+                            // data를 사용하여 원하는 작업 수행
                             result.success(Gson().toJson(data).toString())
+
                         }
                     }
+
                 }
                 "postTodoDataFunc" -> {
                     val jsonString = call.arguments as String

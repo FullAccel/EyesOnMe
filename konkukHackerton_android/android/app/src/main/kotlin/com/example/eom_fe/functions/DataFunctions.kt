@@ -185,9 +185,25 @@ class DataFunctions (context: Context, applicationContext: Context) {
         return deferred
     }
 
+
+    suspend fun getDailyPlansByDate(date: String, callback: (List<ToDoData>) -> Unit) {
+        findDailyPlanIdFunc(date) { dailyPlanId ->
+            if (dailyPlanId != null) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val data = getDailyTodoDataFunc(dailyPlanId)
+                    if (data != null) {
+                        callback(data)
+                    }
+                }
+            }
+            // dailyPlanId가 없는 경우에는 아무 작업도 하지 않음
+        }
+    }
+
+
     // getDailyPlansByDate
     // date : yyyymmdd 형식 (ex. "20230811")
-    fun getDailyPlansByDate(date: String): Flow<List<ToDoData>> = callbackFlow {
+    fun getDailyPlansByDate2(date: String): Flow<List<ToDoData>> = callbackFlow {
         findDailyPlanIdFunc(date) { dailyPlanId ->
             if (dailyPlanId != null) {
                 GlobalScope.launch {
@@ -210,13 +226,13 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
     // 실제 사용 함수!
     // 하루 모든 데일리플랜 얻기
-    fun runDailyPlansByDate(date: String) = runBlocking {
-        val date = date
-        val flow: Flow<List<ToDoData>> = getDailyPlansByDate(date)
-        flow.collect { data ->
-            println("Received data: $data")
-        }
-    }
+//    fun runDailyPlansByDate(date: String) = runBlocking {
+//        val date = date
+//        val flow: Flow<List<ToDoData>> = getDailyPlansByDate(date)
+//        flow.collect { data ->
+//            println("Received data: $data")
+//        }
+//    }
 
     fun calculateMidTime(time1: String, time2: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.getDefault())
