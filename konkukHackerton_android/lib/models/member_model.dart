@@ -9,13 +9,15 @@ class MemberModel {
   // var firebaseToken: String = ""
   // )
 
+  MemberModel(this.id, this.planSuccessCount, this.challengeSuccessCount, this.name, this.email, this.profileUrl, this.firebaseToken);
+
   final int id, planSuccessCount, challengeSuccessCount;
   final String name, email, profileUrl, firebaseToken;
 
   MemberModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
+      : id = json["id"],
         name = json["name"],
-        email = json['email'],
+        email = json["email"],
         profileUrl = json["profileUrl"],
         planSuccessCount = json["planSuccessCount"],
         challengeSuccessCount = json["challengeSuccessCount"],

@@ -21,7 +21,7 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 
-  late MemberModel memberData;
+  MemberModel memberData = MemberModel(0, 0, 0, "", "", "", "");
 
   Future<void> _getMemberData() async {
     print("_getMemberData called");
@@ -33,9 +33,10 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       print("Error: ${e.message}");
     }
     setState(() {
+      print("setState: $s");
       memberData = MemberModel.fromJson(jsonDecode(s));
+      print("memberData : ${memberData.email}");
     });
-    //return MemberModel.fromJson(jsonDecode(s));
   }
 
   @override
@@ -47,7 +48,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(memberData);
+    // print(memberData);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
