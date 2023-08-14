@@ -608,38 +608,17 @@ class DataFunctions (context: Context, applicationContext: Context) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun delayAlarm(pId: Int)  {
         CoroutineScope(Dispatchers.IO).launch {
-            val scode = pId * 10
-            val mcode = pId * 10 + 1
             val ecode = pId * 10 + 2
-            val preSAlarm = db.alarmDao().getSingleAlarm(scode)
-            val preMAlarm = db.alarmDao().getSingleAlarm(mcode)
             val preEAlarm = db.alarmDao().getSingleAlarm(ecode)
-            alarmFunctions.cancelAlarm(scode)
-            alarmFunctions.cancelAlarm(mcode)
             alarmFunctions.cancelAlarm(ecode)
-            db.alarmDao().deleteAlarm(scode)
-            db.alarmDao().deleteAlarm(mcode)
             db.alarmDao().deleteAlarm(ecode)
 
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm:ss")
-            var parsedTime = LocalDateTime.parse(preSAlarm.time, formatter)
-            var newTime = parsedTime.plusMinutes(preSAlarm.repeat.toLong())
-            var nTime = newTime.format(formatter)
-            var nAlarm = AlarmDataModel(scode, scode, nTime, preSAlarm.content, preSAlarm.type, preSAlarm.repeat)
-            setAlarm(scode, preSAlarm.content, nTime)
-            db.alarmDao().addAlarm(nAlarm)
 
-            parsedTime = LocalDateTime.parse(preMAlarm.time, formatter)
-            newTime = parsedTime.plusMinutes(preMAlarm.repeat.toLong())
-            nTime = newTime.format(formatter)
-            nAlarm = AlarmDataModel(mcode, mcode, nTime, preMAlarm.content, preMAlarm.type, preMAlarm.repeat)
-            setAlarm(mcode, preMAlarm.content, nTime)
-            db.alarmDao().addAlarm(nAlarm)
-
-            parsedTime = LocalDateTime.parse(preEAlarm.time, formatter)
-            newTime = parsedTime.plusMinutes(preEAlarm.repeat.toLong())
-            nTime = newTime.format(formatter)
-            nAlarm = AlarmDataModel(ecode, ecode, nTime, preEAlarm.content, preEAlarm.type, preEAlarm.repeat)
+            val parsedTime = LocalDateTime.parse(preEAlarm.time, formatter)
+            val newTime = parsedTime.plusMinutes(preEAlarm.repeat.toLong())
+            val nTime = newTime.format(formatter)
+            val nAlarm = AlarmDataModel(ecode, ecode, nTime, preEAlarm.content, preEAlarm.type, preEAlarm.repeat)
             setAlarm(ecode, preEAlarm.content, nTime)
             db.alarmDao().addAlarm(nAlarm)
         }

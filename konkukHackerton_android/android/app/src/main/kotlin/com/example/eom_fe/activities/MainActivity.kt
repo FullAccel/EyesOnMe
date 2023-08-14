@@ -59,7 +59,7 @@ class MainActivity: FlutterActivity() {
     val alarmFunctions = AlarmFunctions(this)
 //    val dataFunctions = DataFunctions(this, )
 
-    lateinit var memberInfo: MemberData
+//    lateinit var memberInfo: MemberData
     lateinit var loginFunctions: LoginFunctions
     lateinit var dataFunctions: DataFunctions
     lateinit var challengeFuntions: ChallengeFunctions
@@ -127,7 +127,7 @@ class MainActivity: FlutterActivity() {
 
                 }
                 "getMemberData" -> {
-                    result.success(mInfo)
+                    result.success(Gson().toJson(mInfo).toString())
                 }
                 "getData" -> {
                     //
@@ -309,7 +309,7 @@ class MainActivity: FlutterActivity() {
                 "delayWSAlarm" -> {
                     val jsonString = call.arguments as String
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.delayWSAlarm(jsonString.toInt())
+                        dataFunctions.delayWSAlarm(jsonString)
                         result.success("success")
                     }
                 }
