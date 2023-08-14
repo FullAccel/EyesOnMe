@@ -29,7 +29,7 @@ public final class AlarmDao_Impl implements AlarmDao {
     this.__insertionAdapterOfAlarmDataModel = new EntityInsertionAdapter<AlarmDataModel>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `active_alarms` (`serialNum`,`alarm_code`,`time`,`content`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT OR REPLACE INTO `active_alarms` (`serialNum`,`alarm_code`,`time`,`content`,`type`,`repeat`) VALUES (nullif(?, 0),?,?,?,?,?)";
       }
 
       @Override
@@ -46,6 +46,8 @@ public final class AlarmDao_Impl implements AlarmDao {
         } else {
           stmt.bindString(4, value.getContent());
         }
+        stmt.bindLong(5, value.getType());
+        stmt.bindLong(6, value.getRepeat());
       }
     };
     this.__preparedStmtOfDeleteAlarm = new SharedSQLiteStatement(__db) {
@@ -96,6 +98,8 @@ public final class AlarmDao_Impl implements AlarmDao {
       final int _cursorIndexOfAlarmCode = CursorUtil.getColumnIndexOrThrow(_cursor, "alarm_code");
       final int _cursorIndexOfTime = CursorUtil.getColumnIndexOrThrow(_cursor, "time");
       final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+      final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
+      final int _cursorIndexOfRepeat = CursorUtil.getColumnIndexOrThrow(_cursor, "repeat");
       final List<AlarmDataModel> _result = new ArrayList<AlarmDataModel>(_cursor.getCount());
       while(_cursor.moveToNext()) {
         final AlarmDataModel _item;
@@ -115,8 +119,60 @@ public final class AlarmDao_Impl implements AlarmDao {
         } else {
           _tmpContent = _cursor.getString(_cursorIndexOfContent);
         }
-        _item = new AlarmDataModel(_tmpSerialNum,_tmpAlarm_code,_tmpTime,_tmpContent);
+        final int _tmpType;
+        _tmpType = _cursor.getInt(_cursorIndexOfType);
+        final int _tmpRepeat;
+        _tmpRepeat = _cursor.getInt(_cursorIndexOfRepeat);
+        _item = new AlarmDataModel(_tmpSerialNum,_tmpAlarm_code,_tmpTime,_tmpContent,_tmpType,_tmpRepeat);
         _result.add(_item);
+      }
+      return _result;
+    } finally {
+      _cursor.close();
+      _statement.release();
+    }
+  }
+
+  @Override
+  public AlarmDataModel getSingleAlarm(final int alarmCode) {
+    final String _sql = "SELECT * FROM active_alarms WHERE alarm_code = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, alarmCode);
+    __db.assertNotSuspendingTransaction();
+    final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+    try {
+      final int _cursorIndexOfSerialNum = CursorUtil.getColumnIndexOrThrow(_cursor, "serialNum");
+      final int _cursorIndexOfAlarmCode = CursorUtil.getColumnIndexOrThrow(_cursor, "alarm_code");
+      final int _cursorIndexOfTime = CursorUtil.getColumnIndexOrThrow(_cursor, "time");
+      final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+      final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
+      final int _cursorIndexOfRepeat = CursorUtil.getColumnIndexOrThrow(_cursor, "repeat");
+      final AlarmDataModel _result;
+      if(_cursor.moveToFirst()) {
+        final int _tmpSerialNum;
+        _tmpSerialNum = _cursor.getInt(_cursorIndexOfSerialNum);
+        final int _tmpAlarm_code;
+        _tmpAlarm_code = _cursor.getInt(_cursorIndexOfAlarmCode);
+        final String _tmpTime;
+        if (_cursor.isNull(_cursorIndexOfTime)) {
+          _tmpTime = null;
+        } else {
+          _tmpTime = _cursor.getString(_cursorIndexOfTime);
+        }
+        final String _tmpContent;
+        if (_cursor.isNull(_cursorIndexOfContent)) {
+          _tmpContent = null;
+        } else {
+          _tmpContent = _cursor.getString(_cursorIndexOfContent);
+        }
+        final int _tmpType;
+        _tmpType = _cursor.getInt(_cursorIndexOfType);
+        final int _tmpRepeat;
+        _tmpRepeat = _cursor.getInt(_cursorIndexOfRepeat);
+        _result = new AlarmDataModel(_tmpSerialNum,_tmpAlarm_code,_tmpTime,_tmpContent,_tmpType,_tmpRepeat);
+      } else {
+        _result = null;
       }
       return _result;
     } finally {

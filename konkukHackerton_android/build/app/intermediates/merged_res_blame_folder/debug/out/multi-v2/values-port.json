@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.eom_fe.app-mergeDebugResources-20:/values-port/values-port.xml",
+            "outputFile": "com.example.eom_fe.app-mergeDebugResources-42:/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "/Users/kimseyeon/.gradle/caches/transforms-3/cff0a11f4a56844f86a75bb945a75ae2/transformed/appcompat-1.1.0/res/values-port/values-port.xml",
+                    "source": "/Users/kimseyeon/.gradle/caches/transforms-3/5f0ad372327de02c707f7430e51961d6/transformed/appcompat-1.6.1/res/values-port/values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

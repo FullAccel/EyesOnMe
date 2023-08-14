@@ -2,7 +2,7 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.example.eom_fe"
 4    android:versionCode="1"
-5    android:versionName="1.0" >
+5    android:versionName="1.0.0" >
 6
 7    <uses-sdk
 8        android:minSdkVersion="19"
@@ -13,150 +13,403 @@
 13         to allow setting breakpoints, to provide hot reload, etc.
 14    -->
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:6:5-67
-15-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:6:22-64
+15-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:7:5-67
+15-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:7:22-64
 16    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-16-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:3:5-77
-16-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:3:22-74
+16-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:4:5-77
+16-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:4:22-74
 17    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-17-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:4:5-79
-17-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:4:22-76
+17-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:5:5-79
+17-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:5:22-76
 18    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-18-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:5:5-81
-18-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:5:22-78
-19
-20    <queries>
-20-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:11:5-19:15
-21        <package android:name="com.kakao.talk" />
-21-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:12:9-50
-21-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:12:18-47
-22        <package android:name="com.kakao.talk.alpha" />
-22-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:13:9-56
-22-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:13:18-53
-23        <package android:name="com.kakao.talk.sandbox" />
-23-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:14:9-58
-23-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:14:18-55
-24        <package android:name="com.kakao.onetalk" />
-24-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:15:9-53
-24-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:15:18-50
-25        <package android:name="com.android.chrome" />
-25-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:16:9-54
-25-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:16:18-51
-26        <package android:name="com.chrome.beta" />
-26-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:17:9-51
-26-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:17:18-48
-27        <package android:name="com.chrome.dev" />
-27-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:18:9-50
-27-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/555204f30c2f8f479dede2be0da5e342/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:18:18-47
-28    </queries>
-29
-30    <application
-31        android:name="android.app.Application"
-32        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-32-->[androidx.core:core:1.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/7e9df2ac2213a6bd3cef0f2f27870d79/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
-33        android:debuggable="true"
-34        android:icon="@mipmap/ic_launcher"
-35        android:label="eom_fe"
-36        android:testOnly="true" >
-37        <activity
-38            android:name="com.example.eom_fe.activities.MainActivity"
-39            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-40            android:exported="true"
-41            android:hardwareAccelerated="true"
-42            android:launchMode="singleTop"
-43            android:theme="@style/LaunchTheme"
-44            android:windowSoftInputMode="adjustResize" >
-45
-46            <!--
-47                 Specifies an Android theme to apply to this Activity as soon as
-48                 the Android process has started. This theme is visible to the user
-49                 while the Flutter UI initializes. After that, this theme continues
-50                 to determine the Window background behind the Flutter UI.
-51            -->
-52            <meta-data
-53                android:name="io.flutter.embedding.android.NormalTheme"
-54                android:resource="@style/NormalTheme" />
-55
-56            <intent-filter>
-57                <action android:name="android.intent.action.MAIN" />
-58
-59                <category android:name="android.intent.category.LAUNCHER" />
-60            </intent-filter>
-61        </activity>
-62
-63        <receiver
-64            android:name="com.example.eom_fe.alarm_package.AlarmReceiver"
-65            android:enabled="true"
-66            android:exported="false" />
-67        <receiver
-68            android:name="com.example.eom_fe.alarm_package.RestartAlarmReceiver"
-69            android:enabled="true"
-70            android:exported="false" >
-71            <intent-filter>
-72                <action android:name="android.intent.action.BOOT_COMPLETED" />
-73            </intent-filter>
-74        </receiver>
+18-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:6:5-81
+18-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:6:22-78
+19    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+19-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:8:5-78
+19-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:8:22-75
+20    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+20-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:9:5-77
+20-->/Users/kimseyeon/study/konkuk-hack/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:9:22-74
+21    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+21-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:22:5-79
+21-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:22:22-76
+22    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+22-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:24:5-68
+22-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:24:22-65
+23    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+23-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:26:5-82
+23-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:26:22-79
+24    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+24-->[com.google.android.gms:play-services-measurement-api:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/5a04a59768dbef76c9a94429546de2a1/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:25:5-79
+24-->[com.google.android.gms:play-services-measurement-api:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/5a04a59768dbef76c9a94429546de2a1/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:25:22-76
+25    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+25-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:26:5-110
+25-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:26:22-107
+26
+27    <queries>
+27-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:11:5-19:15
+28        <package android:name="com.kakao.talk" />
+28-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:12:9-50
+28-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:12:18-47
+29        <package android:name="com.kakao.talk.alpha" />
+29-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:13:9-56
+29-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:13:18-53
+30        <package android:name="com.kakao.talk.sandbox" />
+30-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:14:9-58
+30-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:14:18-55
+31        <package android:name="com.kakao.onetalk" />
+31-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:15:9-53
+31-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:15:18-50
+32        <package android:name="com.android.chrome" />
+32-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:16:9-54
+32-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:16:18-51
+33        <package android:name="com.chrome.beta" />
+33-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:17:9-51
+33-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:17:18-48
+34        <package android:name="com.chrome.dev" />
+34-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:18:9-50
+34-->[com.kakao.sdk:v2-common:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/246b2967a5d58cbfd7afa792afa8f959/transformed/jetified-v2-common-2.6.0/AndroidManifest.xml:18:18-47
+35    </queries>
+36
+37    <permission
+37-->[androidx.core:core:1.9.0] /Users/kimseyeon/.gradle/caches/transforms-3/5d74e95fb0075f60337058ab4b4b1813/transformed/core-1.9.0/AndroidManifest.xml:22:5-24:47
+38        android:name="com.example.eom_fe.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+38-->[androidx.core:core:1.9.0] /Users/kimseyeon/.gradle/caches/transforms-3/5d74e95fb0075f60337058ab4b4b1813/transformed/core-1.9.0/AndroidManifest.xml:23:9-81
+39        android:protectionLevel="signature" />
+39-->[androidx.core:core:1.9.0] /Users/kimseyeon/.gradle/caches/transforms-3/5d74e95fb0075f60337058ab4b4b1813/transformed/core-1.9.0/AndroidManifest.xml:24:9-44
+40
+41    <uses-permission android:name="com.example.eom_fe.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+41-->[androidx.core:core:1.9.0] /Users/kimseyeon/.gradle/caches/transforms-3/5d74e95fb0075f60337058ab4b4b1813/transformed/core-1.9.0/AndroidManifest.xml:26:5-97
+41-->[androidx.core:core:1.9.0] /Users/kimseyeon/.gradle/caches/transforms-3/5d74e95fb0075f60337058ab4b4b1813/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
+42
+43    <application
+44        android:name="android.app.Application"
+45        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+45-->[androidx.core:core:1.9.0] /Users/kimseyeon/.gradle/caches/transforms-3/5d74e95fb0075f60337058ab4b4b1813/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+46        android:debuggable="true"
+47        android:icon="@mipmap/ic_launcher"
+48        android:label="eom_fe" >
+49        <activity
+50            android:name="com.example.eom_fe.activities.AlarmListActivity"
+51            android:exported="true"
+52            android:theme="@style/Theme.AppCompat.Light" />
+53        <activity
+54            android:name="com.example.eom_fe.activities.BackgroundActivity"
+55            android:exported="true" >
+56        </activity>
+57        <activity
+58            android:name="com.example.eom_fe.activities.MainActivity"
+59            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+60            android:exported="true"
+61            android:hardwareAccelerated="true"
+62            android:launchMode="singleTop"
+63            android:theme="@style/LaunchTheme"
+64            android:windowSoftInputMode="adjustResize" >
+65
+66            <!--
+67                 Specifies an Android theme to apply to this Activity as soon as
+68                 the Android process has started. This theme is visible to the user
+69                 while the Flutter UI initializes. After that, this theme continues
+70                 to determine the Window background behind the Flutter UI.
+71            -->
+72            <meta-data
+73                android:name="io.flutter.embedding.android.NormalTheme"
+74                android:resource="@style/NormalTheme" />
 75
-76        <activity
-77            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
-78            android:exported="true"
-79            android:launchMode="singleTask"
-79-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:19:13-44
-80            android:theme="@style/TransparentCompat" >
-80-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:20:13-53
-81            <intent-filter>
-82                <action android:name="android.intent.action.VIEW" />
-83
-84                <category android:name="android.intent.category.DEFAULT" />
-85                <category android:name="android.intent.category.BROWSABLE" />
-86
-87                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-88                <data
-89                    android:host="oauth"
-90                    android:scheme="kakao64b112780c39b7057081cfb547fddd35" />
-91            </intent-filter>
-92        </activity>
-93
-94        <!--
-95             Don't delete the meta-data below.
-96             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-97        -->
-98        <meta-data
-99            android:name="flutterEmbedding"
-100            android:value="2" />
-101
+76            <intent-filter>
+77                <action android:name="android.intent.action.MAIN" />
+78
+79                <category android:name="android.intent.category.LAUNCHER" />
+80            </intent-filter>
+81        </activity>
+82
+83        <receiver
+84            android:name="com.example.eom_fe.alarm_package.AlarmReceiver"
+85            android:enabled="true"
+86            android:exported="true" />
+87        <receiver
+88            android:name="com.example.eom_fe.alarm_package.RestartAlarmReceiver"
+89            android:enabled="true"
+90            android:exported="true" >
+91            <intent-filter>
+92                <action android:name="android.intent.action.BOOT_COMPLETED" />
+93            </intent-filter>
+94        </receiver>
+95
+96        <service
+97            android:name="com.example.eom_fe.alarm_package.AlarmService"
+98            android:enabled="true" /> <!-- 기타 속성들 -->
+99        <service
+100            android:name="com.example.eom_fe.follow.KeepService"
+101            android:enabled="true" />
 102        <service
-102-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/ccee5890294f5285386f924286890a05/transformed/room-runtime-2.5.2/AndroidManifest.xml:24:9-28:63
-103            android:name="androidx.room.MultiInstanceInvalidationService"
-103-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/ccee5890294f5285386f924286890a05/transformed/room-runtime-2.5.2/AndroidManifest.xml:25:13-74
-104            android:directBootAware="true"
-104-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/ccee5890294f5285386f924286890a05/transformed/room-runtime-2.5.2/AndroidManifest.xml:26:13-43
-105            android:exported="false" />
-105-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/ccee5890294f5285386f924286890a05/transformed/room-runtime-2.5.2/AndroidManifest.xml:27:13-37
-106
-107        <uses-library
-107-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
-108            android:name="androidx.window.extensions"
-108-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
-109            android:required="false" />
-109-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
-110        <uses-library
-110-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
-111            android:name="androidx.window.sidecar"
-111-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
-112            android:required="false" />
-112-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/25cee5f028ac2a6b79fd6278ff5b59e2/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
-113
-114        <activity
-114-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:12:9-16:56
-115            android:name="com.kakao.sdk.auth.TalkAuthCodeActivity"
-115-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:13:13-67
-116            android:exported="false"
-116-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:14:13-37
-117            android:launchMode="singleTask"
-117-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:15:13-44
-118            android:theme="@style/TransparentCompat" />
-118-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/b5f34273b32e96550177665266ae3ea1/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:16:13-53
-119    </application>
-120
-121</manifest>
+103            android:name="com.example.eom_fe.follow.MyFirebaseMessagingService"
+104            android:enabled="true"
+105            android:exported="true" >
+106            <intent-filter>
+106-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:46:13-48:29
+107                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+107-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:47:17-78
+107-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:47:25-75
+108            </intent-filter>
+109        </service>
+110
+111        <activity
+112            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+113            android:exported="true"
+114            android:launchMode="singleTask"
+114-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:19:13-44
+115            android:theme="@style/TransparentCompat" >
+115-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:20:13-53
+116            <intent-filter>
+117                <action android:name="android.intent.action.VIEW" />
+118
+119                <category android:name="android.intent.category.DEFAULT" />
+120                <category android:name="android.intent.category.BROWSABLE" />
+121
+122                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+123                <data
+124                    android:host="oauth"
+125                    android:scheme="kakao64b112780c39b7057081cfb547fddd35" />
+126            </intent-filter>
+127        </activity>
+128        <!--
+129 Don't delete the meta-data below.
+130             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+131        -->
+132        <meta-data
+133            android:name="flutterEmbedding"
+134            android:value="2" />
+135
+136        <service
+136-->[com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:8:9-14:19
+137            android:name="com.google.firebase.components.ComponentDiscoveryService"
+137-->[com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:9:13-84
+138            android:directBootAware="true"
+138-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:34:13-43
+139            android:exported="false" >
+139-->[com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:10:13-37
+140            <meta-data
+140-->[com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:11:13-13:85
+141                android:name="com.google.firebase.components:com.google.firebase.analytics.ktx.FirebaseAnalyticsKtxRegistrar"
+141-->[com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:12:17-126
+142                android:value="com.google.firebase.components.ComponentRegistrar" />
+142-->[com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:13:17-82
+143            <meta-data
+143-->[com.google.firebase:firebase-messaging-ktx:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/0a9fcc341e425958e173b58cf6aa3522/transformed/jetified-firebase-messaging-ktx-23.2.1/AndroidManifest.xml:26:13-28:85
+144                android:name="com.google.firebase.components:com.google.firebase.messaging.ktx.FirebaseMessagingKtxRegistrar"
+144-->[com.google.firebase:firebase-messaging-ktx:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/0a9fcc341e425958e173b58cf6aa3522/transformed/jetified-firebase-messaging-ktx-23.2.1/AndroidManifest.xml:27:17-126
+145                android:value="com.google.firebase.components.ComponentRegistrar" />
+145-->[com.google.firebase:firebase-messaging-ktx:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/0a9fcc341e425958e173b58cf6aa3522/transformed/jetified-firebase-messaging-ktx-23.2.1/AndroidManifest.xml:28:17-82
+146            <meta-data
+146-->[com.google.firebase:firebase-common-ktx:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/f8c6dbd7258a0e84828989ab0f9c5bd3/transformed/jetified-firebase-common-ktx-20.3.3/AndroidManifest.xml:14:13-16:85
+147                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonKtxRegistrar"
+147-->[com.google.firebase:firebase-common-ktx:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/f8c6dbd7258a0e84828989ab0f9c5bd3/transformed/jetified-firebase-common-ktx-20.3.3/AndroidManifest.xml:15:17-113
+148                android:value="com.google.firebase.components.ComponentRegistrar" />
+148-->[com.google.firebase:firebase-common-ktx:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/f8c6dbd7258a0e84828989ab0f9c5bd3/transformed/jetified-firebase-common-ktx-20.3.3/AndroidManifest.xml:16:17-82
+149            <meta-data
+149-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:53:13-55:85
+150                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+150-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:54:17-119
+151                android:value="com.google.firebase.components.ComponentRegistrar" />
+151-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:55:17-82
+152            <meta-data
+152-->[com.google.android.gms:play-services-measurement-api:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/5a04a59768dbef76c9a94429546de2a1/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:31:13-33:85
+153                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+153-->[com.google.android.gms:play-services-measurement-api:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/5a04a59768dbef76c9a94429546de2a1/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:32:17-139
+154                android:value="com.google.firebase.components.ComponentRegistrar" />
+154-->[com.google.android.gms:play-services-measurement-api:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/5a04a59768dbef76c9a94429546de2a1/transformed/jetified-play-services-measurement-api-21.3.0/AndroidManifest.xml:33:17-82
+155            <meta-data
+155-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/kimseyeon/.gradle/caches/transforms-3/b7e8a2b8dfcc6e63342ab44b2dbe8c44/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:27:13-29:85
+156                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+156-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/kimseyeon/.gradle/caches/transforms-3/b7e8a2b8dfcc6e63342ab44b2dbe8c44/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:28:17-115
+157                android:value="com.google.firebase.components.ComponentRegistrar" />
+157-->[com.google.firebase:firebase-datatransport:18.1.7] /Users/kimseyeon/.gradle/caches/transforms-3/b7e8a2b8dfcc6e63342ab44b2dbe8c44/transformed/jetified-firebase-datatransport-18.1.7/AndroidManifest.xml:29:17-82
+158            <meta-data
+158-->[com.google.firebase:firebase-installations:17.1.4] /Users/kimseyeon/.gradle/caches/transforms-3/51961d0f48d06c0a9f8ee9ae13f69c7a/transformed/jetified-firebase-installations-17.1.4/AndroidManifest.xml:15:13-17:85
+159                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+159-->[com.google.firebase:firebase-installations:17.1.4] /Users/kimseyeon/.gradle/caches/transforms-3/51961d0f48d06c0a9f8ee9ae13f69c7a/transformed/jetified-firebase-installations-17.1.4/AndroidManifest.xml:16:17-127
+160                android:value="com.google.firebase.components.ComponentRegistrar" />
+160-->[com.google.firebase:firebase-installations:17.1.4] /Users/kimseyeon/.gradle/caches/transforms-3/51961d0f48d06c0a9f8ee9ae13f69c7a/transformed/jetified-firebase-installations-17.1.4/AndroidManifest.xml:17:17-82
+161        </service>
+162        <service
+162-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/9e516d292b16b77e0613b577209c6c83/transformed/room-runtime-2.5.2/AndroidManifest.xml:24:9-28:63
+163            android:name="androidx.room.MultiInstanceInvalidationService"
+163-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/9e516d292b16b77e0613b577209c6c83/transformed/room-runtime-2.5.2/AndroidManifest.xml:25:13-74
+164            android:directBootAware="true"
+164-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/9e516d292b16b77e0613b577209c6c83/transformed/room-runtime-2.5.2/AndroidManifest.xml:26:13-43
+165            android:exported="false" />
+165-->[androidx.room:room-runtime:2.5.2] /Users/kimseyeon/.gradle/caches/transforms-3/9e516d292b16b77e0613b577209c6c83/transformed/room-runtime-2.5.2/AndroidManifest.xml:27:13-37
+166
+167        <activity
+167-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:12:9-16:56
+168            android:name="com.kakao.sdk.auth.TalkAuthCodeActivity"
+168-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:13:13-67
+169            android:exported="false"
+169-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:14:13-37
+170            android:launchMode="singleTask"
+170-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:15:13-44
+171            android:theme="@style/TransparentCompat" />
+171-->[com.kakao.sdk:v2-auth:2.6.0] /Users/kimseyeon/.gradle/caches/transforms-3/53c4fa47786ea9cd0c15143cee599fd2/transformed/jetified-v2-auth-2.6.0/AndroidManifest.xml:16:13-53
+172
+173        <receiver
+173-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:29:9-36:20
+174            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+174-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:30:13-78
+175            android:exported="true"
+175-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:31:13-36
+176            android:permission="com.google.android.c2dm.permission.SEND" >
+176-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:32:13-73
+177            <intent-filter>
+177-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:33:13-35:29
+178                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+178-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:34:17-81
+178-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:34:25-78
+179            </intent-filter>
+180        </receiver>
+181        <!--
+182             FirebaseMessagingService performs security checks at runtime,
+183             but set to not exported to explicitly avoid allowing another app to call it.
+184        -->
+185        <service
+185-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:42:9-49:19
+186            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+186-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:43:13-82
+187            android:directBootAware="true"
+187-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:44:13-43
+188            android:exported="false" >
+188-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:45:13-37
+189            <intent-filter android:priority="-500" >
+189-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:46:13-48:29
+189-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:46:28-51
+190                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+190-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:47:17-78
+190-->[com.google.firebase:firebase-messaging:23.2.1] /Users/kimseyeon/.gradle/caches/transforms-3/842d49315d7f9e4a6106246239144de6/transformed/jetified-firebase-messaging-23.2.1/AndroidManifest.xml:47:25-75
+191            </intent-filter>
+192        </service>
+193
+194        <provider
+194-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:25:9-30:39
+195            android:name="com.google.firebase.provider.FirebaseInitProvider"
+195-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:26:13-77
+196            android:authorities="com.example.eom_fe.firebaseinitprovider"
+196-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:27:13-72
+197            android:directBootAware="true"
+197-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:28:13-43
+198            android:exported="false"
+198-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:29:13-37
+199            android:initOrder="100" />
+199-->[com.google.firebase:firebase-common:20.3.3] /Users/kimseyeon/.gradle/caches/transforms-3/97ba536cb97715cf3a6afeff735547bd/transformed/jetified-firebase-common-20.3.3/AndroidManifest.xml:30:13-36
+200
+201        <receiver
+201-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:29:9-33:20
+202            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+202-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:30:13-85
+203            android:enabled="true"
+203-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:31:13-35
+204            android:exported="false" >
+204-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:32:13-37
+205        </receiver>
+206
+207        <service
+207-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:35:9-38:40
+208            android:name="com.google.android.gms.measurement.AppMeasurementService"
+208-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:36:13-84
+209            android:enabled="true"
+209-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:37:13-35
+210            android:exported="false" />
+210-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:38:13-37
+211        <service
+211-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:39:9-43:72
+212            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+212-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:40:13-87
+213            android:enabled="true"
+213-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:41:13-35
+214            android:exported="false"
+214-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:42:13-37
+215            android:permission="android.permission.BIND_JOB_SERVICE" />
+215-->[com.google.android.gms:play-services-measurement:21.3.0] /Users/kimseyeon/.gradle/caches/transforms-3/b00981f9f6519a10f9b5d1ffa94b525e/transformed/jetified-play-services-measurement-21.3.0/AndroidManifest.xml:43:13-69
+216
+217        <activity
+217-->[com.google.android.gms:play-services-base:18.0.1] /Users/kimseyeon/.gradle/caches/transforms-3/f253648b0be692c533908993735bbd2e/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+218            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+218-->[com.google.android.gms:play-services-base:18.0.1] /Users/kimseyeon/.gradle/caches/transforms-3/f253648b0be692c533908993735bbd2e/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+219            android:exported="false"
+219-->[com.google.android.gms:play-services-base:18.0.1] /Users/kimseyeon/.gradle/caches/transforms-3/f253648b0be692c533908993735bbd2e/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+220            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+220-->[com.google.android.gms:play-services-base:18.0.1] /Users/kimseyeon/.gradle/caches/transforms-3/f253648b0be692c533908993735bbd2e/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+221
+222        <meta-data
+222-->[com.google.android.gms:play-services-basement:18.1.0] /Users/kimseyeon/.gradle/caches/transforms-3/5eaba1f028ac62aaabee71faac8d9308/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:21:9-23:69
+223            android:name="com.google.android.gms.version"
+223-->[com.google.android.gms:play-services-basement:18.1.0] /Users/kimseyeon/.gradle/caches/transforms-3/5eaba1f028ac62aaabee71faac8d9308/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:22:13-58
+224            android:value="@integer/google_play_services_version" />
+224-->[com.google.android.gms:play-services-basement:18.1.0] /Users/kimseyeon/.gradle/caches/transforms-3/5eaba1f028ac62aaabee71faac8d9308/transformed/jetified-play-services-basement-18.1.0/AndroidManifest.xml:23:13-66
+225
+226        <uses-library
+226-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/003a22a5515e1f77f89701a46efbc2ec/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+227            android:name="androidx.window.extensions"
+227-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/003a22a5515e1f77f89701a46efbc2ec/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+228            android:required="false" />
+228-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/003a22a5515e1f77f89701a46efbc2ec/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+229        <uses-library
+229-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/003a22a5515e1f77f89701a46efbc2ec/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+230            android:name="androidx.window.sidecar"
+230-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/003a22a5515e1f77f89701a46efbc2ec/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+231            android:required="false" />
+231-->[androidx.window:window:1.0.0-beta04] /Users/kimseyeon/.gradle/caches/transforms-3/003a22a5515e1f77f89701a46efbc2ec/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+232
+233        <service
+233-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/caef097eb0c2cd1082e8114d49c41ec0/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:28:9-34:19
+234            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+234-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/caef097eb0c2cd1082e8114d49c41ec0/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:29:13-103
+235            android:exported="false" >
+235-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/caef097eb0c2cd1082e8114d49c41ec0/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:30:13-37
+236            <meta-data
+236-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/caef097eb0c2cd1082e8114d49c41ec0/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:31:13-33:39
+237                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+237-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/caef097eb0c2cd1082e8114d49c41ec0/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:32:17-94
+238                android:value="cct" />
+238-->[com.google.android.datatransport:transport-backend-cct:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/caef097eb0c2cd1082e8114d49c41ec0/transformed/jetified-transport-backend-cct-3.1.8/AndroidManifest.xml:33:17-36
+239        </service>
+240        <service
+240-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:26:9-30:19
+241            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+241-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:27:13-117
+242            android:exported="false"
+242-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:28:13-37
+243            android:permission="android.permission.BIND_JOB_SERVICE" >
+243-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:29:13-69
+244        </service>
+245
+246        <receiver
+246-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:32:9-34:40
+247            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+247-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:33:13-132
+248            android:exported="false" />
+248-->[com.google.android.datatransport:transport-runtime:3.1.8] /Users/kimseyeon/.gradle/caches/transforms-3/d97736817588d35e875979bb74338a17/transformed/jetified-transport-runtime-3.1.8/AndroidManifest.xml:34:13-37
+249
+250        <provider
+250-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+251            android:name="androidx.startup.InitializationProvider"
+251-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+252            android:authorities="com.example.eom_fe.androidx-startup"
+252-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+253            android:exported="false" >
+253-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+254            <meta-data
+254-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+255                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+255-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+256                android:value="androidx.startup" />
+256-->[androidx.emoji2:emoji2:1.2.0] /Users/kimseyeon/.gradle/caches/transforms-3/da24b2c9b78ceeb51433bb8918b899ac/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+257            <meta-data
+257-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/kimseyeon/.gradle/caches/transforms-3/055031bdb69c33450f3f18da9fd058a0/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+258                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+258-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/kimseyeon/.gradle/caches/transforms-3/055031bdb69c33450f3f18da9fd058a0/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+259                android:value="androidx.startup" />
+259-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/kimseyeon/.gradle/caches/transforms-3/055031bdb69c33450f3f18da9fd058a0/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+260        </provider>
+261    </application>
+262
+263</manifest>

@@ -98,6 +98,24 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "permission_handler",
+      "rootUri": "file:///Users/kimseyeon/.pub-cache/hosted/pub.dev/permission_handler-8.3.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "permission_handler_platform_interface",
+      "rootUri": "file:///Users/kimseyeon/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-3.11.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "rootUri": "file:///Users/kimseyeon/.pub-cache/hosted/pub.dev/plugin_platform_interface-2.1.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///Users/kimseyeon/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -152,7 +170,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-04T18:29:37.721205Z",
+  "generated": "2023-08-09T15:30:43.866637Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }
