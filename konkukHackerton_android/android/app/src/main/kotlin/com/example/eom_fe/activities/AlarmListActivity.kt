@@ -17,6 +17,9 @@ import com.example.eom_fe.functions.DataFunctions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AlarmListActivity : AppCompatActivity() {
     lateinit var listBinding: ActivityAlarmListBinding
@@ -52,7 +55,7 @@ class AlarmListActivity : AppCompatActivity() {
         listBinding.addAlarmBtn.setOnClickListener() {
             val hour = listBinding.timePicker.hour.toString()
             val minute = listBinding.timePicker.minute.toString()
-            val time = "2023-08-13 $hour:$minute:00" // 알람이 울리는 시간
+            val time = "2023-08-15 $hour:$minute:00" // 알람이 울리는 시간
 
             val content = listBinding.alarmText.text.toString()
 //            setAlarm(alarmCode, content, time)
@@ -60,7 +63,7 @@ class AlarmListActivity : AppCompatActivity() {
             coroutineScope.launch(Dispatchers.IO) {
 //                db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, content))
                 val todo = ToDoData(0, content, "C", time, time, "C001")
-                dataFunctions.postTodoDataFunc("20230813", todo, true, 0, 10)
+                dataFunctions.postTodoDataFunc("20230815", todo, true, 0, 10)
                 data = db.alarmDao().getAllAlarms() as ArrayList<AlarmDataModel>
                 Log.d("eyesonme-ALA", "getAllAlarm (MainActivity) - ${data.size}")
                 launch(Dispatchers.Main) {

@@ -1,5 +1,6 @@
 package com.example.eom_fe.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -44,6 +45,7 @@ class MainActivity: FlutterActivity() {
     companion object {
         var memberId: Int? = null
         var mInfo: MemberData? = null
+        @SuppressLint("StaticFieldLeak")
         var mContext: Context? = null
 
     }
@@ -76,7 +78,7 @@ class MainActivity: FlutterActivity() {
         // AlarmService : 앱 강종해도 종료되지 않고 계속 실행되도록 하는 서비스
         val fi = Intent(context, AlarmService::class.java)
         fi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context?.startForegroundService(fi)
+        context.startForegroundService(fi)
 
     }
 
@@ -123,6 +125,9 @@ class MainActivity: FlutterActivity() {
                         // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
                     })
 
+                }
+                "getMemberData" -> {
+                    result.success(mInfo)
                 }
                 "getData" -> {
                     //
@@ -301,6 +306,13 @@ class MainActivity: FlutterActivity() {
                         result.success("success")
                     }
                 }
+                "delayWSAlarm" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.delayWSAlarm(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
 
                 // 여기서부터 챌린지 함수
                 "getAllChallenges" -> {
@@ -323,6 +335,7 @@ class MainActivity: FlutterActivity() {
                         result.success(challenge) // 결과 출력 또는 처리
                     }
                 }
+
 
 
                 else -> {

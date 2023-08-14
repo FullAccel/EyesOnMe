@@ -24,18 +24,20 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     val mainContext = context
     val applicationContext = applicationContext
 
-    var memberInfo: MemberData = MainActivity.mInfo!!
+//    var memberInfo: MemberData = MainActivity.mInfo!!
+
+    var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0, "")
 
     private lateinit var eventChannel: EventChannel
     val alarmFunctions = AlarmFunctions(context)
     val db = AlarmDB.getDatabase(applicationContext)
 
-//    fun init(memberData: MemberData) {
-////        memberInfo initial 필요
-//        memberInfo = memberData
-//        Log.d("eyesonme-CF", "init: $memberInfo")
-//    }
-//
+    fun init(memberData: MemberData) {
+//        memberInfo initial 필요
+        memberInfo = memberData
+        Log.d("eyesonme-CF", "init: $memberInfo")
+    }
+
 //    fun init2() {
 //        memberInfo = MainActivity.mInfo!!
 //    }
@@ -57,12 +59,6 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         }
     }
 
-
-    // 실제 : 챌린지 하나의 정보 가져오기
-    fun getSingleChallenge() {
-
-    }
-
     // 실제 : 검증자 추가하기
     fun addValidatior() {
 
@@ -78,13 +74,21 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
 
     }
 
-    // 실제 : 검증 버튼 (미달성, 보류, 달성)
+    // 실제 : 검증 버튼 (미달성, 달성)
     fun requestValidation() {
 
     }
 
     // 실제 : 특정 챌린지에 개선점 POST (줄글만)
     fun uploadImprovement() {
+
+    }
+
+//    - [ ]  챌린지 만들기
+//    - [ ]  챌린지 수정하기
+
+    // addChallengeDataFunc
+    fun addChallengeData() {
 
     }
 
@@ -158,6 +162,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         )
     }
 
+    // 실제 : 챌린지 하나의 정보 가져오기
     suspend fun getChallengeDataFunc(cId: Int): ChallengeData? {
         return try {
             val getChallengeDataBuilder = RetrofitBuilder.api.getChallengeData(cId)
