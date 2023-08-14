@@ -16,6 +16,7 @@ import com.example.eom_fe.R
 import com.example.eom_fe.follow.KeepService
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -28,24 +29,49 @@ class BackgroundActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("eyesonme-BA", "BackgroundActivity called")
-        flutterEngine?.dartExecutor?.binaryMessenger?.let {
-            MethodChannel(it, CHANNEL1).apply {
-                invokeMethod("showExtraScreen", null)
+
+        val intent = intent
+        if (intent != null) {
+            val alarmCode = intent.getIntExtra("alarm_code", 0)
+            if (alarmCode != 0) {
+                // alarmCode를 사용하여 필요한 작업 수행
+                val arguments = HashMap<String, Any>()
+                arguments["alarmCode"] = alarmCode // 정수 값을 추가
+
+                val gson = Gson()
+                val jsonString = gson.toJson(arguments) // 맵을 JSON 문자열로 변환
+
+                Log.d("eyesonme-BA", "serviceIntent started w/ onCreate()")
+                flutterEngine?.dartExecutor?.binaryMessenger?.let {
+                    MethodChannel(it, CHANNEL1).apply {
+                        invokeMethod("showExtraScreen", jsonString)
+                    }
+                }
             }
         }
-
-        Log.d("eyesonme-BA", "serviceIntent started w/ onCreate()")
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        flutterEngine?.dartExecutor?.binaryMessenger?.let {
-            MethodChannel(it, CHANNEL1).apply {
-                invokeMethod("showExtraScreen", null)
+        val intent = intent
+        if (intent != null) {
+            val alarmCode = intent.getIntExtra("alarm_code", 0)
+            if (alarmCode != 0) {
+                // alarmCode를 사용하여 필요한 작업 수행
+                val arguments = HashMap<String, Any>()
+                arguments["alarmCode"] = alarmCode // 정수 값을 추가
+
+                val gson = Gson()
+                val jsonString = gson.toJson(arguments) // 맵을 JSON 문자열로 변환
+
+                Log.d("eyesonme-BA", "serviceIntent started w/ onCreate()")
+                flutterEngine?.dartExecutor?.binaryMessenger?.let {
+                    MethodChannel(it, CHANNEL1).apply {
+                        invokeMethod("showExtraScreen", jsonString)
+                    }
+                }
             }
         }
-
-        Log.d("eyesonme-BA", "serviceIntent started w/ onNewIntent()")
     }
 
     private val CHANNEL2 = "samples.flutter.dev/accomplish"  // 원하는 채널명으로 변경

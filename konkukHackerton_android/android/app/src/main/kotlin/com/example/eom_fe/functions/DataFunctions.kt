@@ -226,13 +226,13 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
     // 실제 사용 함수!
     // 하루 모든 데일리플랜 얻기
-//    fun runDailyPlansByDate(date: String) = runBlocking {
-//        val date = date
-//        val flow: Flow<List<ToDoData>> = getDailyPlansByDate(date)
-//        flow.collect { data ->
-//            println("Received data: $data")
-//        }
-//    }
+    fun runDailyPlansByDate(date: String) = runBlocking {
+        val date = date
+        val flow: Flow<List<ToDoData>> = getDailyPlansByDate2(date)
+        flow.collect { data ->
+            println("Received data: $data")
+        }
+    }
 
     fun calculateMidTime(time1: String, time2: String): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.getDefault())
@@ -480,7 +480,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                         val result = Gson().fromJson(jsonResult, type) as List<ToDoData>
                         continuation.resume(result, null)
                     }
-                    continuation.resume(null, null)
+                    else continuation.resume(null, null)
                 }
 
                 override fun onFailure(call: Call<APIResponseData>, t: Throwable) {

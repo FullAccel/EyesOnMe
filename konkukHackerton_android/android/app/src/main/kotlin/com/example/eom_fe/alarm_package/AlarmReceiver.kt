@@ -39,7 +39,15 @@ class AlarmReceiver() : BroadcastReceiver() {
         Log.d("eyesonme-AR", "onReceived called...")
 
         val serviceIntent = Intent(context, KeepService::class.java)
-        context?.startService(serviceIntent)
+        if (intent != null) {
+            val alarmRqCode = intent.getIntExtra("alarm_rqCode", 0)
+            if (alarmRqCode != 0) {
+                // alarmRqCode를 사용하여 필요한 작업 수행
+                serviceIntent.putExtra("alarm_code", alarmRqCode)
+                context?.startService(serviceIntent)
+            }
+        }
+
 //        val i = Intent(context, BackgroundActivity::class.java)
 //        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 //        context?.startActivity(i)
