@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final MethodChannel platform = MethodChannel('samples.flutter.dev/battery');
+  static const platform = MethodChannel('samples.flutter.dev/battery');
 
   late List<PlanModel> todaysPlan = [];
   final DateTime today = DateTime.now();
@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     setState(() {
       List<PlanModel> todaysPlan =
-          (json.decode(s) as List).map((e) => PlanModel.fromJson(e)).toList();
+          (jsonDecode(s) as List).map((e) => PlanModel.fromJson(e)).toList();
     });
     //return MemberModel.fromJson(jsonDecode(s));
     print("todaysPlan : $todaysPlan");
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //_getTodaysPlan("20230814");
+    _getTodaysPlan("20230814");
   }
 
   @override
