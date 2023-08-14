@@ -145,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
-          home: HomeScreen(),
+          //home: LoginScreen(),
           initialRoute: '/login',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
@@ -154,17 +154,6 @@ class _MyHomePageState extends State<MyHomePage> {
             GetPage(
               name: '/login',
               page: () => LoginScreen(),
-              // page: () => LoginScreen(
-              //     onPressedKakao: () {
-              //       Future<String> val = _kakaologin();
-              //       val.then(
-              //         (value) {
-              //           print(value);
-              //           Get.offAllNamed("/");
-              //         },
-              //       );
-              //     },
-              //     onPressedGoogle: () {}),
             ),
             GetPage(
               name: '/profile',

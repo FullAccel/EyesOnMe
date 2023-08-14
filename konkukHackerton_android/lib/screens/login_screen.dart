@@ -37,6 +37,15 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
+  Future<void> canGoNext() async {
+    String? val;
+    while (val != "success") {
+      val = await _kakaologin();
+    }
+    print("after login $val");
+    Get.offAllNamed("/");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 0.8.sw,
                     child: TextButton(
                       onPressed: () {
-                        _kakaologin();
-                        Get.offAllNamed('/');
+                        //_kakaologin();
+                        canGoNext();
+                        //Get.offAllNamed("/");
                       },
                       child: Row(
                         children: [
