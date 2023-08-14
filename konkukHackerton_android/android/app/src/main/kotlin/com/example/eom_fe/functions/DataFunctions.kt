@@ -127,6 +127,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     fun getMonthlyPlanFunc(yearMonth: String, callback: (List<DailyPlanData>?) -> Unit) {
         Log.d("eyesonme-DF", "getMonthlyPlanFunc started")
         val getMonthlyPlanBuilder = RetrofitBuilder.api.getMontlyPlan(memberInfo.id, yearMonth)
+        Log.d("eyesonme-DF", "getMonthlyPlanFunc - ${memberInfo} -> $yearMonth")
         getMonthlyPlanBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,

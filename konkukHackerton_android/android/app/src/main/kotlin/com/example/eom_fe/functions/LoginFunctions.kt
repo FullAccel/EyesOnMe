@@ -122,8 +122,12 @@ class LoginFunctions(context: Context, applicationContext: Context) {
         }
     }
 
+    interface KakaoLoginCallback {
+        fun onLoginComplete(memberInfo: MemberData)
+        fun onLoginFailure(error: Throwable)
+    }
 
-    fun kakaoLogin(memberToken: String): MemberData {
+    fun kakaoLogin(memberToken: String, callback: KakaoLoginCallback): MemberData {
 
         // 로그인 조합 예제
         Log.e("eyesonme-LF", "카카오 로그인 호출")
@@ -168,24 +172,23 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                                                 val type: Type = object : TypeToken<Boolean>() {}.type
                                                 val jsonResult = Gson().toJson(temp.data)
                                                 val result = Gson().fromJson(jsonResult, type) as Boolean
+                                                callback.onLoginComplete(createdMemberInfo)
                                             }
                                             else {
                                                 Log.d("eyesonme-LF", "firebaseTokenBuilder !Successful")
-
+                                                callback.onLoginComplete(createdMemberInfo)
                                             }
                                         }
 
                                         override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                                             Log.d("eyesonme-LF", "firebaseTokenBuilder onFailure")
-
+                                            callback.onLoginFailure(t)
                                         }
                                     }
                                     )
                                 }
                             }
                             else {
-//                                val i = Intent(this, AlarmListActivity::class.java)
-//                                startActivity(i)
                                 this.memberInfo = memberInfo
                                 MainActivity.mInfo = memberInfo
                                 dataFunctions.init(this.memberInfo)
@@ -204,16 +207,17 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                                             val type: Type = object : TypeToken<Boolean>() {}.type
                                             val jsonResult = Gson().toJson(temp.data)
                                             val result = Gson().fromJson(jsonResult, type) as Boolean
+                                            callback.onLoginComplete(memberInfo)
                                         }
                                         else {
                                             Log.d("eyesonme-LF", "firebaseTokenBuilder !Successful")
-
+                                            callback.onLoginComplete(memberInfo)
                                         }
                                     }
 
                                     override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                                         Log.d("eyesonme-LF", "firebaseTokenBuilder onFailure")
-
+                                        callback.onLoginFailure(t)
                                     }
                                 }
                                 )
