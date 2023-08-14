@@ -1,9 +1,14 @@
+import 'package:eom_fe/plan_progressing_screen.dart';
 import 'package:eom_fe/screens/entire_plan.dart';
 import 'package:eom_fe/screens/home_screen.dart';
 import 'package:eom_fe/screens/intro_screen1.dart';
+import 'package:eom_fe/screens/intro_screen2.dart';
 import 'package:eom_fe/screens/login_screen.dart';
+import 'package:eom_fe/screens/plan_add_screen.dart';
 import 'package:eom_fe/screens/plan_delete/plan_delete1.dart';
 import 'package:eom_fe/screens/plan_delete/plan_delete2.dart';
+import 'package:eom_fe/screens/plan_finish/plan_finish1.dart';
+import 'package:eom_fe/screens/plan_finish/plan_finish2.dart';
 import 'package:eom_fe/screens/plan_putoff/plan_putoff1.dart';
 import 'package:eom_fe/screens/plan_putoff/plan_putoff2.dart';
 import 'package:eom_fe/screens/plan_putoff/plan_putoff3.dart';
@@ -16,9 +21,7 @@ import 'package:eom_fe/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:get/get_navigation/src/routes/transitions_type.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'extra_screen.dart';
@@ -37,13 +40,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey, // navigatorKey를 MaterialApp에 추가
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Eyes On Me'),
       routes: {
         '/extraScreen': (context) =>
             const ExtraScreen(), // Define route for ExtraScreen
@@ -85,12 +89,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<void> _kakaologin() async {
+  Future<String> _kakaologin() async {
+    String value;
     try {
-      await platform.invokeMethod('kakaoLogin');
+      value = await platform.invokeMethod('kakaoLogin');
+      if (value != null) return "success";
     } on PlatformException catch (e) {
-      // batteryLevel = "Failed to get battery level: '${e.message}'.";
+      value = "Falied get member data";
     }
+    return value;
   }
 
   Future<void> _getBatteryLevel2() async {
@@ -115,7 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
       print("flutter : $result");
 
       // await platform.invokeMethod('testData');
-
     } on PlatformException catch (e) {
       print("Error: ${e.message}");
     }
@@ -141,17 +147,25 @@ class _MyHomePageState extends State<MyHomePage> {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          // You can use the library anywhere in the app even in theme
-          initialRoute: '/plan/start',
+          home: HomeScreen(),
+          initialRoute: '/login',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),
-            GetPage(name: '/intro2', page: () => HomeScreen()),
+            GetPage(name: '/intro2', page: () => IntroScreen2()),
             GetPage(
               name: '/login',
               page: () => LoginScreen(
-                  onPressedKakao: _kakaologin, onPressedGoogle: () {}),
+                  onPressedKakao: () {
+                    Future<String> val = _kakaologin();
+                    val.then(
+                      (value) {
+                        print(value);
+                        Get.toNamed("/");
+                      },
+                    );
+                  },
+                  onPressedGoogle: () {}),
             ),
             GetPage(name: '/profile', page: () => UserProfileScreen()),
             GetPage(name: '/plan/tomorrow', page: () => SleepTimeScreen()),
@@ -190,6 +204,25 @@ class _MyHomePageState extends State<MyHomePage> {
             GetPage(
               name: "/plan/delete2",
               page: () => PlanDelete2(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/plan/add",
+              page: () => PlanAddScreen(),
+              transition: Transition.rightToLeftWithFade,
+            ),
+            GetPage(
+              name: "/plan/progressing",
+              page: () => PlanProgressingScreen(),
+              transition: Transition.rightToLeftWithFade,
+            ),
+            GetPage(
+              name: "/plan/finish1",
+              page: () => PlanFinish1(),
+            ),
+            GetPage(
+              name: "/plan/finish2",
+              page: () => PlanFinish2(),
               transition: Transition.rightToLeft,
             ),
           ],

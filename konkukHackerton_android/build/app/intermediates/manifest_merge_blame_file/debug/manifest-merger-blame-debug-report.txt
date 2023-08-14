@@ -96,52 +96,52 @@
 53        <activity
 54            android:name="com.example.eom_fe.activities.BackgroundActivity"
 55            android:exported="true" >
-56            <intent-filter>
-57                <category android:name="android.intent.category.LAUNCHER" />
-58            </intent-filter>
-59        </activity>
-60        <activity
-61            android:name="com.example.eom_fe.activities.MainActivity"
-62            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-63            android:exported="true"
-64            android:hardwareAccelerated="true"
-65            android:launchMode="singleTop"
-66            android:theme="@style/LaunchTheme"
-67            android:windowSoftInputMode="adjustResize" >
-68
-69            <!--
-70                 Specifies an Android theme to apply to this Activity as soon as
-71                 the Android process has started. This theme is visible to the user
-72                 while the Flutter UI initializes. After that, this theme continues
-73                 to determine the Window background behind the Flutter UI.
-74            -->
-75            <meta-data
-76                android:name="io.flutter.embedding.android.NormalTheme"
-77                android:resource="@style/NormalTheme" />
+56        </activity>
+57        <activity
+58            android:name="com.example.eom_fe.activities.MainActivity"
+59            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+60            android:exported="true"
+61            android:hardwareAccelerated="true"
+62            android:launchMode="singleTop"
+63            android:theme="@style/LaunchTheme"
+64            android:windowSoftInputMode="adjustResize" >
+65
+66            <!--
+67                 Specifies an Android theme to apply to this Activity as soon as
+68                 the Android process has started. This theme is visible to the user
+69                 while the Flutter UI initializes. After that, this theme continues
+70                 to determine the Window background behind the Flutter UI.
+71            -->
+72            <meta-data
+73                android:name="io.flutter.embedding.android.NormalTheme"
+74                android:resource="@style/NormalTheme" />
+75
+76            <intent-filter>
+77                <action android:name="android.intent.action.MAIN" />
 78
-79            <intent-filter>
-80                <action android:name="android.intent.action.MAIN" />
-81
-82                <category android:name="android.intent.category.LAUNCHER" />
-83            </intent-filter>
-84        </activity>
-85
-86        <receiver
-87            android:name="com.example.eom_fe.alarm_package.AlarmReceiver"
-88            android:enabled="true"
-89            android:exported="true" />
-90        <receiver
-91            android:name="com.example.eom_fe.alarm_package.RestartAlarmReceiver"
-92            android:enabled="true"
-93            android:exported="true" >
-94            <intent-filter>
-95                <action android:name="android.intent.action.BOOT_COMPLETED" />
-96            </intent-filter>
-97        </receiver>
-98
+79                <category android:name="android.intent.category.LAUNCHER" />
+80            </intent-filter>
+81        </activity>
+82
+83        <receiver
+84            android:name="com.example.eom_fe.alarm_package.AlarmReceiver"
+85            android:enabled="true"
+86            android:exported="true" />
+87        <receiver
+88            android:name="com.example.eom_fe.alarm_package.RestartAlarmReceiver"
+89            android:enabled="true"
+90            android:exported="true" >
+91            <intent-filter>
+92                <action android:name="android.intent.action.BOOT_COMPLETED" />
+93            </intent-filter>
+94        </receiver>
+95
+96        <service
+97            android:name="com.example.eom_fe.alarm_package.AlarmService"
+98            android:enabled="true" /> <!-- 기타 속성들 -->
 99        <service
-100            android:name="com.example.eom_fe.alarm_package.AlarmService"
-101            android:enabled="true" /> <!-- 기타 속성들 -->
+100            android:name="com.example.eom_fe.follow.KeepService"
+101            android:enabled="true" />
 102        <service
 103            android:name="com.example.eom_fe.follow.MyFirebaseMessagingService"
 104            android:enabled="true"

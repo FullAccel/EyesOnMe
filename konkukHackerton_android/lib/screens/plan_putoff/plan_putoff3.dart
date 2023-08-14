@@ -42,8 +42,6 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
 
   @override
   Widget build(BuildContext context) {
-    //Future<List<PlanModel>> planList = Get.arguments;
-
     return Scaffold(
       appBar: AppbarWidget(
         title: "플랜 미루기",
@@ -102,20 +100,15 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
   }
 
   ListView makeList(AsyncSnapshot<List<PlanModel>> snapshot) {
+    List<PlanModel> pl = List.of(snapshot.data!);
+    pl = ApiService.sortDailyPlans(ApiService.deleteLastPlans(pl));
+
     return ListView.builder(
       shrinkWrap: true,
       itemCount: snapshot.data!.length,
       itemBuilder: (BuildContext context, int index) {
-        List<PlanModel> pl = List.of(snapshot.data!);
-
-        //원래는 DateTime.now().milli~~로.
-        pl.removeWhere((element) =>
-            DateTime.parse(element.alarmEndTime).millisecondsSinceEpoch <=
-            DateTime.parse("2023-08-11 02:30:00").millisecondsSinceEpoch);
-
-        pl.sort((a, b) => a.alarmStartTime.compareTo(b.alarmStartTime));
-        PlanModel plan = snapshot.data![index];
-        //print(plan.title);
+        //List<PlanModel> pl = List.of(snapshot.data!);
+        PlanModel plan = pl[index];
 
         return index == 0
             ? Container(

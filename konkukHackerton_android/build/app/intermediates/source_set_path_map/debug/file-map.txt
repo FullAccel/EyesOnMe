@@ -44,5 +44,6 @@ com.example.eom_fe.app-mergeDebugResources-42 /Users/seojm/StudioProjects/EyesOn
 com.example.eom_fe.app-mergeDebugResources-43 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/app/intermediates/incremental/debug/mergeDebugResources/stripped.dir
 com.example.eom_fe.app-merged_res-44 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/app/intermediates/merged_res/debug
 com.example.eom_fe.app-packaged_res-45 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/fluttertoast/intermediates/packaged_res/debug
-com.example.eom_fe.app-packaged_res-46 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/permission_handler/intermediates/packaged_res/debug
-com.example.eom_fe.app-packaged_res-47 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/shared_preferences_android/intermediates/packaged_res/debug
+com.example.eom_fe.app-packaged_res-46 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/path_provider_android/intermediates/packaged_res/debug
+com.example.eom_fe.app-packaged_res-47 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/permission_handler/intermediates/packaged_res/debug
+com.example.eom_fe.app-packaged_res-48 /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/shared_preferences_android/intermediates/packaged_res/debug

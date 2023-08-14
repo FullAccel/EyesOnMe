@@ -53,9 +53,6 @@
         <activity
             android:name="com.example.eom_fe.activities.BackgroundActivity"
             android:exported="true" >
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.eom_fe.activities.MainActivity"
@@ -99,6 +96,9 @@
         <service
             android:name="com.example.eom_fe.alarm_package.AlarmService"
             android:enabled="true" /> <!-- 기타 속성들 -->
+        <service
+            android:name="com.example.eom_fe.follow.KeepService"
+            android:enabled="true" />
         <service
             android:name="com.example.eom_fe.follow.MyFirebaseMessagingService"
             android:enabled="true"

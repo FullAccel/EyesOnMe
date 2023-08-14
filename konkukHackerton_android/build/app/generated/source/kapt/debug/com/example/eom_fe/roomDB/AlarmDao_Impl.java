@@ -29,7 +29,7 @@ public final class AlarmDao_Impl implements AlarmDao {
     this.__insertionAdapterOfAlarmDataModel = new EntityInsertionAdapter<AlarmDataModel>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `active_alarms` (`serialNum`,`alarm_code`,`time`,`content`) VALUES (nullif(?, 0),?,?,?)";
+        return "INSERT OR REPLACE INTO `active_alarms` (`serialNum`,`alarm_code`,`time`,`content`,`type`) VALUES (nullif(?, 0),?,?,?,?)";
       }
 
       @Override
@@ -46,6 +46,7 @@ public final class AlarmDao_Impl implements AlarmDao {
         } else {
           stmt.bindString(4, value.getContent());
         }
+        stmt.bindLong(5, value.getType());
       }
     };
     this.__preparedStmtOfDeleteAlarm = new SharedSQLiteStatement(__db) {
@@ -96,6 +97,7 @@ public final class AlarmDao_Impl implements AlarmDao {
       final int _cursorIndexOfAlarmCode = CursorUtil.getColumnIndexOrThrow(_cursor, "alarm_code");
       final int _cursorIndexOfTime = CursorUtil.getColumnIndexOrThrow(_cursor, "time");
       final int _cursorIndexOfContent = CursorUtil.getColumnIndexOrThrow(_cursor, "content");
+      final int _cursorIndexOfType = CursorUtil.getColumnIndexOrThrow(_cursor, "type");
       final List<AlarmDataModel> _result = new ArrayList<AlarmDataModel>(_cursor.getCount());
       while(_cursor.moveToNext()) {
         final AlarmDataModel _item;
@@ -115,7 +117,9 @@ public final class AlarmDao_Impl implements AlarmDao {
         } else {
           _tmpContent = _cursor.getString(_cursorIndexOfContent);
         }
-        _item = new AlarmDataModel(_tmpSerialNum,_tmpAlarm_code,_tmpTime,_tmpContent);
+        final int _tmpType;
+        _tmpType = _cursor.getInt(_cursorIndexOfType);
+        _item = new AlarmDataModel(_tmpSerialNum,_tmpAlarm_code,_tmpTime,_tmpContent,_tmpType);
         _result.add(_item);
       }
       return _result;

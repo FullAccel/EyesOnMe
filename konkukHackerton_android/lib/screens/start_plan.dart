@@ -113,7 +113,9 @@ class _StartPlanState extends State<StartPlan> {
                         width: 15,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed("/plan");
+                        },
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(110, 110),
                           shape: CircleBorder(),

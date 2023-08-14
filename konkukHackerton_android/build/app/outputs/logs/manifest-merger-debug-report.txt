@@ -1,6 +1,10 @@
 -- Merging decision tree log ---
 application
-INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:11:5-99:19
+INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:11:5-100:19
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40d6d8b2ef24cae960a66b96e3ee5a96/transformed/jetified-stetho-okhttp3-1.5.1/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40d6d8b2ef24cae960a66b96e3ee5a96/transformed/jetified-stetho-okhttp3-1.5.1/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40f3ef53bab3e8fac0d89d5074e0c509/transformed/jetified-stetho-1.5.1/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.stetho:stetho:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40f3ef53bab3e8fac0d89d5074e0c509/transformed/jetified-stetho-1.5.1/AndroidManifest.xml:11:5-20
 MERGED from [com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/seojm/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:7:5-15:19
 MERGED from [com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/seojm/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:7:5-15:19
 MERGED from [androidx.room:room-runtime:2.5.2] /Users/seojm/.gradle/caches/transforms-3/9e516d292b16b77e0613b577209c6c83/transformed/room-runtime-2.5.2/AndroidManifest.xml:23:5-29:19
@@ -70,15 +74,18 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /Users/seoj
 	android:name
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml
 manifest
-ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
-INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
-INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
-INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
-MERGED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
+ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
+INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
+INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
+INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
+MERGED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
 MERGED from [:shared_preferences_android] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:fluttertoast] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:path_provider_android] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:permission_handler] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/permission_handler/intermediates/merged_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.databinding:viewbinding:7.3.0] /Users/seojm/.gradle/caches/transforms-3/254d911aaf1a4fda75a29478e42cab09/transformed/jetified-viewbinding-7.3.0/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40d6d8b2ef24cae960a66b96e3ee5a96/transformed/jetified-stetho-okhttp3-1.5.1/AndroidManifest.xml:2:1-13:12
+MERGED from [com.facebook.stetho:stetho:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40f3ef53bab3e8fac0d89d5074e0c509/transformed/jetified-stetho-1.5.1/AndroidManifest.xml:2:1-13:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/seojm/.gradle/caches/transforms-3/21513f382a2cb911afbfd9752dabba47/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/seojm/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:2:1-17:12
 MERGED from [androidx.room:room-ktx:2.5.1] /Users/seojm/.gradle/caches/transforms-3/77ebe1fa5d30f9e0c2b432751bfa89c5/transformed/jetified-room-ktx-2.5.1/AndroidManifest.xml:17:1-22:12
@@ -168,15 +175,15 @@ INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/andro
 INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/debug/AndroidManifest.xml:1:1-7:12
 	package
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
+		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
+		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-101:12
+		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:1-102:12
 		INJECTED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/android/app/src/main/AndroidManifest.xml:2:11-69
@@ -230,10 +237,16 @@ MERGED from [:shared_preferences_android] /Users/seojm/StudioProjects/EyesOnMe/k
 MERGED from [:shared_preferences_android] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/shared_preferences_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:fluttertoast] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:fluttertoast] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/fluttertoast/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:path_provider_android] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:path_provider_android] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/path_provider_android/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:permission_handler] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/permission_handler/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:permission_handler] /Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android/build/permission_handler/intermediates/merged_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.databinding:viewbinding:7.3.0] /Users/seojm/.gradle/caches/transforms-3/254d911aaf1a4fda75a29478e42cab09/transformed/jetified-viewbinding-7.3.0/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.databinding:viewbinding:7.3.0] /Users/seojm/.gradle/caches/transforms-3/254d911aaf1a4fda75a29478e42cab09/transformed/jetified-viewbinding-7.3.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40d6d8b2ef24cae960a66b96e3ee5a96/transformed/jetified-stetho-okhttp3-1.5.1/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho-okhttp3:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40d6d8b2ef24cae960a66b96e3ee5a96/transformed/jetified-stetho-okhttp3-1.5.1/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40f3ef53bab3e8fac0d89d5074e0c509/transformed/jetified-stetho-1.5.1/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.stetho:stetho:1.5.1] /Users/seojm/.gradle/caches/transforms-3/40f3ef53bab3e8fac0d89d5074e0c509/transformed/jetified-stetho-1.5.1/AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/seojm/.gradle/caches/transforms-3/21513f382a2cb911afbfd9752dabba47/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/seojm/.gradle/caches/transforms-3/21513f382a2cb911afbfd9752dabba47/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [com.google.firebase:firebase-analytics-ktx:21.3.0] /Users/seojm/.gradle/caches/transforms-3/0ea85b99a798b95213d2ffb4988fd4b4/transformed/jetified-firebase-analytics-ktx-21.3.0/AndroidManifest.xml:5:5-44

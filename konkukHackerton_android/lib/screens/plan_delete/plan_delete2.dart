@@ -35,7 +35,6 @@ class _PlanDelete2State extends State<PlanDelete2> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     planList = ApiService.getPlans();
   }

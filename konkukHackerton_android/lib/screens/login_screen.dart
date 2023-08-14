@@ -1,6 +1,7 @@
 import 'package:eom_fe/widgets/oval_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   final onPressedKakao, onPressedGoogle;
@@ -78,7 +79,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     width: 0.8.sw,
                     child: TextButton(
-                      onPressed: widget.onPressedKakao,
+                      onPressed: () {
+                        widget.onPressedKakao;
+                        Get.toNamed('/');
+                      },
                       child: Row(
                         children: [
                           Image(

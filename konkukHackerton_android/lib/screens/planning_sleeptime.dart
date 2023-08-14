@@ -7,6 +7,8 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/setplan_service.dart';
+
 class PlanningSleepTime extends StatefulWidget {
   const PlanningSleepTime({super.key});
 
@@ -124,7 +126,7 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
     Picker(
         cancelText: "",
         adapter: PickerDataAdapter<String>(
-          pickerData: JsonDecoder().convert(repeats),
+          pickerData: JsonDecoder().convert(SetPlanService.repeats),
           isArray: true,
         ),
         hideHeader: true,
@@ -453,7 +455,15 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
                 ),
                 SizedBox(height: 0.1.sh),
                 FilledButton(
-                  onPressed: () => Get.toNamed('/plan/finish'),
+                  onPressed: () => Get.toNamed(
+                    '/plan/finish',
+                    arguments: sleepTime.then(
+                      (value) {
+                        Get.arguments.add(value);
+                      },
+                    ),
+                    //arguments: Get.arguments.add(sleepTime),
+                  ),
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),
                     textStyle: TextStyle(fontWeight: FontWeight.bold),

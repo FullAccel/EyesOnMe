@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserInfoWidget extends StatefulWidget {
-  const UserInfoWidget({super.key});
+  final memberData;
+  UserInfoWidget({
+    super.key,
+    required this.memberData,
+  });
 
   @override
   State<UserInfoWidget> createState() => _UserInfoWrapperState();
@@ -13,6 +17,7 @@ class _UserInfoWrapperState extends State<UserInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.memberData);
     return Container(
       height: 0.235.sh,
       decoration: BoxDecoration(

@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../models/member_model.dart';
 import '../widgets/user_info_widget.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -13,8 +17,31 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  static const platform = MethodChannel("samples.flutter.dev/battery");
+  String s = "";
+  late MemberModel memberData;
+
+  Future<void> _getMemberData() async {
+    try {
+      s = await platform.invokeMethod('getMemberData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+    setState(() {
+      memberData = jsonDecode(s);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getMemberData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getMemberData();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
@@ -53,7 +80,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                 ],
               ),
-              UserInfoWidget(),
+              UserInfoWidget(
+                memberData: memberData,
+              ),
             ],
           ),
         ),
@@ -107,6 +136,58 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 painter: Doughnut2(),
               ),
             ],
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Get.offAllNamed("/");
+              break;
+            case 1:
+              Get.offAllNamed("/plan");
+              break;
+            case 2:
+              // TODO: challenge screen
+              break;
+            case 3:
+              Get.offAllNamed("/profile");
+              break;
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.calendar_month,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.star,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_3_rounded,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
           ),
         ],
       ),

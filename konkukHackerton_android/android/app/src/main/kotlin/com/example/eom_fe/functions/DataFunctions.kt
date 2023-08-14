@@ -24,6 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
+import com.example.eom_fe.activities.MainActivity
 
 class DataFunctions (context: Context, applicationContext: Context) {
 
@@ -31,6 +32,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     val applicationContext = applicationContext
 
     var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0, "")
+    //var memberInfo = MainActivity.mInfo!!
 
     private lateinit var eventChannel: EventChannel
     val alarmFunctions = AlarmFunctions(context)

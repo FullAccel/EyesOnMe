@@ -75,7 +75,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///opt/homebrew/Caskroom/flutter/3.10.5/flutter/packages/flutter",
+      "rootUri": "file:///Users/seojm/development/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -105,7 +105,7 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///opt/homebrew/Caskroom/flutter/3.10.5/flutter/packages/flutter_test",
+      "rootUri": "file:///Users/seojm/development/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -117,7 +117,7 @@
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///opt/homebrew/Caskroom/flutter/3.10.5/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///Users/seojm/development/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -297,7 +297,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///opt/homebrew/Caskroom/flutter/3.10.5/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///Users/seojm/development/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -374,7 +374,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-08-11T19:53:28.406638Z",
+  "generated": "2023-08-14T09:49:23.150277Z",
   "generator": "pub",
-  "generatorVersion": "3.0.6"
+  "generatorVersion": "3.0.1"
 }

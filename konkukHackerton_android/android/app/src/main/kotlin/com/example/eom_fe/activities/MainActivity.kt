@@ -12,7 +12,6 @@ import com.example.eom_fe.alarm_package.AlarmService
 import com.example.eom_fe.data.MemberData
 import com.example.eom_fe.data.ToDoData
 import com.example.eom_fe.data.ToDoFlutterData
-import com.example.eom_fe.follow.CustomMessageFactory
 import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
@@ -140,6 +139,10 @@ class MainActivity: FlutterActivity() {
         //                result.success(dataFunctions.runDailyPlansByDate("20230811"))
 
                 }
+                "getMemberData" -> {
+                    result.success(memberInfo)
+                }
+
                 "testData" -> {
                     Log.d("testData", "arguments : ${call.arguments}")
                     result.success(Gson().toJson(mInfo).toString())
