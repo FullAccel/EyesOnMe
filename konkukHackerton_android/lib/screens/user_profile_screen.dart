@@ -10,26 +10,32 @@ import '../models/member_model.dart';
 import '../widgets/user_info_widget.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  UserProfileScreen({
+    super.key,
+  });
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  static const platform = MethodChannel("samples.flutter.dev/battery");
-  String s = "";
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+
   late MemberModel memberData;
 
   Future<void> _getMemberData() async {
+    print("_getMemberData called");
+    String s = "";
     try {
       s = await platform.invokeMethod('getMemberData');
+      print("raw value : $s");
     } on PlatformException catch (e) {
       print("Error: ${e.message}");
     }
     setState(() {
-      memberData = jsonDecode(s);
+      memberData = MemberModel.fromJson(jsonDecode(s));
     });
+    //return MemberModel.fromJson(jsonDecode(s));
   }
 
   @override
@@ -41,7 +47,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _getMemberData();
+    print(memberData);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(

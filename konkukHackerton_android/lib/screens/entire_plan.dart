@@ -250,10 +250,10 @@ class _EntirePlanState extends State<EntirePlan> {
             PlanWidget(
               id: pl[index].id,
               title: pl[index].title,
+              toDoStatusCode: pl[index].toDoStatusCode,
               alarmStartTime: pl[index].alarmStartTime,
               alarmEndTime: pl[index].alarmEndTime,
               categoryCode: pl[index].categoryCode,
-              complete: pl[index].complete,
               curRoute: Get.currentRoute,
             ),
           ],

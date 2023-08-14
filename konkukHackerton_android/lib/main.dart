@@ -1,4 +1,3 @@
-import 'package:eom_fe/plan_progressing_screen.dart';
 import 'package:eom_fe/screens/entire_plan.dart';
 import 'package:eom_fe/screens/home_screen.dart';
 import 'package:eom_fe/screens/intro_screen1.dart';
@@ -9,16 +8,17 @@ import 'package:eom_fe/screens/plan_delete/plan_delete1.dart';
 import 'package:eom_fe/screens/plan_delete/plan_delete2.dart';
 import 'package:eom_fe/screens/plan_finish/plan_finish1.dart';
 import 'package:eom_fe/screens/plan_finish/plan_finish2.dart';
+import 'package:eom_fe/screens/plan_progressing_screen.dart';
 import 'package:eom_fe/screens/plan_putoff/plan_putoff1.dart';
 import 'package:eom_fe/screens/plan_putoff/plan_putoff2.dart';
 import 'package:eom_fe/screens/plan_putoff/plan_putoff3.dart';
 import 'package:eom_fe/screens/planning_finish.dart';
 import 'package:eom_fe/screens/planning_sleeptime.dart';
 import 'package:eom_fe/screens/planning_wakeuptime.dart';
+import 'package:eom_fe/screens/show_plan_screen.dart';
 import 'package:eom_fe/screens/sleep_time_screen.dart';
 import 'package:eom_fe/screens/start_plan.dart';
 import 'package:eom_fe/screens/user_profile_screen.dart';
-import 'package:eom_fe/show_plan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,9 +68,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
-
-  // Get battery level.
-  String _batteryLevel = 'Unknown battery level.';
 
   @override
   void initState() {
@@ -169,7 +166,10 @@ class _MyHomePageState extends State<MyHomePage> {
               //     },
               //     onPressedGoogle: () {}),
             ),
-            GetPage(name: '/profile', page: () => UserProfileScreen()),
+            GetPage(
+              name: '/profile',
+              page: () => UserProfileScreen(),
+            ),
             GetPage(name: '/plan/tomorrow', page: () => SleepTimeScreen()),
             GetPage(
               name: '/plan/finish',

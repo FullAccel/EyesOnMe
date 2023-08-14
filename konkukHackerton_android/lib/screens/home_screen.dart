@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../models/plan_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +15,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final MethodChannel platform = MethodChannel('samples.flutter.dev/battery');
+
+  late List<PlanModel> todaysPlan = [];
+  final DateTime today = DateTime.now();
+
+  Future<void> _getTodaysPlan(String yyyymmdd) async {
+    print("_getTodaysPlan called");
+    String s = "";
+    try {
+      s = await platform.invokeMethod('getAllDailyPlansByDate', yyyymmdd);
+      print("raw value : $s");
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+    setState(() {
+      List<PlanModel> todaysPlan =
+          (json.decode(s) as List).map((e) => PlanModel.fromJson(e)).toList();
+    });
+    //return MemberModel.fromJson(jsonDecode(s));
+    print("todaysPlan : $todaysPlan");
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //_getTodaysPlan("20230814");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,14 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
           Positioned(
             top: -10,
             child: Container(
-              height: 50,
-              width: 100,
+              height: 150,
+              width: 300,
               decoration: BoxDecoration(
                 color: Color(0xFF17D864),
                 borderRadius: BorderRadius.all(
-                  Radius.elliptical(100, 50),
+                  Radius.elliptical(200, 50),
                 ),
               ),
+              child: Text(""),
             ),
           ),
         ],
