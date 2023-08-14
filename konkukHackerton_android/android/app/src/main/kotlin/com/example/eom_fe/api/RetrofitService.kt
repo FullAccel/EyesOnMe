@@ -97,7 +97,7 @@ interface RetrofitService {
     fun getAllChallenges(@Path("memberId") number: Int): Call<APIResponseData>
 
     @PUT("challenge/{challengeId}")
-    fun editChallengeData(@Path("challengeId") number: Int): Call<APIResponseData>
+    fun editChallengeData(@Path("challengeId") number: Int, @Body params: ChallengeRequestData): Call<APIResponseData>
 
     @DELETE("challenge/{challengeId}")
     fun deleteChallengeData(@Path("challengeId") number: Int): Call<APIResponseData>

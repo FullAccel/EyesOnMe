@@ -60,8 +60,11 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 : 검증자 추가하기
-    fun addValidatior() {
-
+    fun addValidatior(cId: Int, vld: List<String>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val validatorList = ValidatorListData(vld)
+            addValidatorDataFunc(cId, validatorList)
+        }
     }
 
     // 실제 : 재검증 요청하기
@@ -79,22 +82,33 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
 
     }
 
-    // 실제 : 특정 챌린지에 개선점 POST (줄글만)
-    fun uploadImprovement() {
+    // 실제 : 챌린지 만들기 (검증자와 함께)
+    fun makeChallengeWithValidator(cd: ChallengeRequestData, vld: List<String>) {
+        addChallengeDataFunc(cd) { challengeId ->
+            if (challengeId != null) {
+                // 결과 값인 challengeId를 사용하여 다른 작업 수행
+                CoroutineScope(Dispatchers.IO).launch {
+                    val validatorList = ValidatorListData(vld)
+                    addValidatorDataFunc(challengeId, validatorList)
+                }
+            } else {
+                // 실패한 경우 처리
+            }
+        }
+    }
+
+    // 실제 : 챌린지 수정하기
+    fun editChallenge(cd: ChallengeRequestData) {
+//        CoroutineScope()
 
     }
 
-//    - [ ]  챌린지 만들기
+
 //    - [ ]  챌린지 수정하기
-
-    // addChallengeDataFunc
-    fun addChallengeData() {
-
-    }
 
 
     // from RetrofitService
-    fun addChallengeDataFunc(cd: ChallengeRequestData) {
+    fun addChallengeDataFunc(cd: ChallengeRequestData, callback: (Int?) -> Unit) {
         val addChallengeDataBuilder = RetrofitBuilder.api.addChallengeData(memberInfo.id, cd)
         addChallengeDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
@@ -108,17 +122,19 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Int
                     // result == challengeId
+                    callback(result) // 결과 값을 콜백 함수로 전달
                 }
+                callback(null)
             }
-
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                callback(null) // 실패 시에도 콜백 호출, 결과 값은 null
             }
-        }
-        )
+        })
     }
 
-    fun addValidatorDataFunc(vld: ValidatorListData) {
-        val addValidatorDataBuilder = RetrofitBuilder.api.addValidatorData(memberInfo.id, vld)
+
+    fun addValidatorDataFunc(cId: Int, vld: ValidatorListData) {
+        val addValidatorDataBuilder = RetrofitBuilder.api.addValidatorData(cId, vld)
         addValidatorDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
@@ -202,8 +218,8 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         }
     }
 
-    fun editChallengeDataFunc(cId: Int) {
-        val editChallengeDataBuilder = RetrofitBuilder.api.editChallengeData(cId)
+    fun editChallengeDataFunc(cId: Int, cd: ChallengeRequestData) {
+        val editChallengeDataBuilder = RetrofitBuilder.api.editChallengeData(cId, cd)
         editChallengeDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,

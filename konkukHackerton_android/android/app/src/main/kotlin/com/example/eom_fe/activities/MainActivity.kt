@@ -48,8 +48,6 @@ class MainActivity: FlutterActivity() {
         @SuppressLint("StaticFieldLeak")
         var mContext: Context? = null
 
-        //var dataFunctions: DataFunctions
-
     }
 
     private val CHANNEL = "samples.flutter.dev/battery"
@@ -97,6 +95,7 @@ class MainActivity: FlutterActivity() {
 
     private fun initLogin() {
         Log.d("eyesonme-MA", "initLogin()")
+        mInfo?.let { dataFunctions.init(it) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -115,13 +114,23 @@ class MainActivity: FlutterActivity() {
                             return@OnCompleteListener
                         }
 
-                        // Get new FCM registration token
                         val token = task.result
                         val msg = token.toString()
-                        loginFunctions.kakaoLogin(msg)
+//                        loginFunctions.kakaoLogin(msg)
+                        loginFunctions.kakaoLogin(msg, object : LoginFunctions.KakaoLoginCallback {
+                            override fun onLoginComplete(memberInfo: MemberData) {
+                                Log.d("eyesonme-MA", msg)
+                                initLogin()
+                                result.success("success")
+                            }
 
-                        Log.d("eyesonme-MA", msg)
-                        initLogin()
+                            override fun onLoginFailure(error: Throwable) {
+                                // 로그인 실패 처리
+                            }
+                        })
+
+                        // Get new FCM registration token
+
 
                         // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
                         // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
@@ -129,11 +138,10 @@ class MainActivity: FlutterActivity() {
 
                 }
                 "getMemberData" -> {
-                    CoroutineScope(Dispatchers.IO).launch{
-                        mInfo?.let{dataFunctions.init(it)}
+                    CoroutineScope(Dispatchers.IO).launch {
+                        mInfo?.let { dataFunctions.init(it) }
                         result.success(Gson().toJson(mInfo).toString())
                     }
-
                 }
                 "getData" -> {
                     //
@@ -158,7 +166,6 @@ class MainActivity: FlutterActivity() {
                 }
                 "getAllDailyPlansByDate" -> {
                     var date = call.arguments as String
-                    println("datatatatataa: $date")
                     runBlocking {
                         val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
                         flow.collect { data ->
