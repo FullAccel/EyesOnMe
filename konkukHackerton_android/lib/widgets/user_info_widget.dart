@@ -1,8 +1,9 @@
+import 'package:eom_fe/models/member_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UserInfoWidget extends StatefulWidget {
-  final memberData;
+  final MemberModel memberData;
   UserInfoWidget({
     super.key,
     required this.memberData,
@@ -17,7 +18,7 @@ class _UserInfoWrapperState extends State<UserInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.memberData);
+    print("widget.memberData : ${widget.memberData}");
     return Container(
       height: 0.235.sh,
       decoration: BoxDecoration(
@@ -35,13 +36,14 @@ class _UserInfoWrapperState extends State<UserInfoWidget> {
           Flexible(
             flex: 2,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                SizedBox(width: 0.1.sw),
                 Image.asset(
                   "assets/images/dummy_profile_image.png",
                   scale: 0.85,
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: 0.1.sw),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,54 +51,15 @@ class _UserInfoWrapperState extends State<UserInfoWidget> {
                     Row(
                       children: [
                         Text(
-                          "김이름",
+                          widget.memberData.name,
                           style: TextStyle(
                             fontSize: 26.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(width: 8),
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 4,
-                            ),
-                            Icon(Icons.settings),
-                          ],
-                        )
                       ],
                     ),
-                    SizedBox(height: 5),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: Text(
-                            "100",
-                            style: TextStyle(fontSize: 16.sp),
-                          ),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          "팔로잉",
-                          style: TextStyle(fontSize: 16.sp),
-                        ),
-                        SizedBox(width: 24),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 3),
-                          child: Text(
-                            "100",
-                            style: TextStyle(fontSize: 16.sp),
-                          ),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          "팔로워",
-                          style: TextStyle(fontSize: 16.sp),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 0.03.sh),
                   ],
                 ),
                 SizedBox(

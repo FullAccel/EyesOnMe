@@ -1,5 +1,6 @@
 package com.example.eom_fe.activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -9,9 +10,10 @@ import androidx.annotation.RequiresApi
 import com.example.eom_fe.R
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmService
-import com.example.eom_fe.data.MemberData
-import com.example.eom_fe.data.ToDoData
-import com.example.eom_fe.data.ToDoFlutterData
+import com.example.eom_fe.api.RetrofitBuilder
+import com.example.eom_fe.data.*
+import com.example.eom_fe.follow.CustomMessageFactory
+import com.example.eom_fe.functions.ChallengeFunctions
 import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
@@ -20,6 +22,7 @@ import com.facebook.stetho.Stetho
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kakao.sdk.common.KakaoSdk
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -30,6 +33,10 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.reflect.Type
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -38,7 +45,10 @@ class MainActivity: FlutterActivity() {
     companion object {
         var memberId: Int? = null
         var mInfo: MemberData? = null
+        @SuppressLint("StaticFieldLeak")
         var mContext: Context? = null
+
+        //var dataFunctions: DataFunctions
 
     }
 
@@ -51,9 +61,10 @@ class MainActivity: FlutterActivity() {
     val alarmFunctions = AlarmFunctions(this)
 //    val dataFunctions = DataFunctions(this, )
 
-    lateinit var memberInfo: MemberData
+//    lateinit var memberInfo: MemberData
     lateinit var loginFunctions: LoginFunctions
     lateinit var dataFunctions: DataFunctions
+    lateinit var challengeFuntions: ChallengeFunctions
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
@@ -64,38 +75,33 @@ class MainActivity: FlutterActivity() {
         KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         loginFunctions = LoginFunctions(this, applicationContext)
         dataFunctions = DataFunctions(this, applicationContext)
+        challengeFuntions = ChallengeFunctions(this, applicationContext)
         mContext = context
         // AlarmService : 앱 강종해도 종료되지 않고 계속 실행되도록 하는 서비스
         val fi = Intent(context, AlarmService::class.java)
         fi.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context?.startForegroundService(fi)
+        context.startForegroundService(fi)
 
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
 //        super.onWindowFocusChanged(hasFocus)
 
-        Log.d("welcome", "Focus changed !");
+        Log.d("eyesonme-MA", "Focus changed !");
 
         if (!hasFocus) {
-            Log.d("welcome", "Lost focus !");
+            Log.d("eyesonme-MA", "Lost focus !");
 
         }
     }
 
     private fun initLogin() {
-        Log.d("welcome", "initLogin()")
+        Log.d("eyesonme-MA", "initLogin()")
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-//        flutterEngine.platformViewsController
-//            .registry
-//            .registerViewFactory(
-//                "CustomMessageFactory",
-//                CustomMessageFactory(activity, MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL))
-//            )
         GeneratedPluginRegistrant.registerWith(flutterEngine)
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
@@ -105,25 +111,28 @@ class MainActivity: FlutterActivity() {
                 "kakaoLogin" -> {
                     FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                         if (!task.isSuccessful) {
-                            Log.w("tokennnn", "Fetching FCM registration token failed", task.exception)
+                            Log.w("eyesonme-MA", "Fetching FCM registration token failed", task.exception)
                             return@OnCompleteListener
                         }
 
                         // Get new FCM registration token
                         val token = task.result
-
-                        // Log and toast
                         val msg = token.toString()
-                        memberInfo = loginFunctions.kakaoLogin(msg)
-                        memberId = memberInfo.id
+                        loginFunctions.kakaoLogin(msg)
+
+                        Log.d("eyesonme-MA", msg)
+                        initLogin()
 
                         // 앱을 껐다 켜도 이 memberInfo가 유지되어야 함....
                         // 아니면 필요할 때마다 dataFunctions 만들고 init(memberInfo)로 초기화해도 똑같이 사용 가능
-                        dataFunctions.init(memberInfo)
-                        initLogin()
-                        Log.d("tokennnn", msg)
-        //            Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     })
+
+                }
+                "getMemberData" -> {
+                    CoroutineScope(Dispatchers.IO).launch{
+                        mInfo?.let{dataFunctions.init(it)}
+                        result.success(Gson().toJson(mInfo).toString())
+                    }
 
                 }
                 "getData" -> {
@@ -139,12 +148,8 @@ class MainActivity: FlutterActivity() {
         //                result.success(dataFunctions.runDailyPlansByDate("20230811"))
 
                 }
-                "getMemberData" -> {
-                    result.success(memberInfo)
-                }
-
                 "testData" -> {
-                    Log.d("testData", "arguments : ${call.arguments}")
+                    Log.d("eyesonme-MA", "arguments : ${call.arguments}")
                     result.success(Gson().toJson(mInfo).toString())
                 }
                 "showAlarmList" -> {
@@ -153,6 +158,7 @@ class MainActivity: FlutterActivity() {
                 }
                 "getAllDailyPlansByDate" -> {
                     var date = call.arguments as String
+                    println("datatatatataa: $date")
                     runBlocking {
                         val flow: Flow<List<ToDoData>> = dataFunctions.getDailyPlansByDate(date)
                         flow.collect { data ->
@@ -180,9 +186,11 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     coroutineScope.launch(Dispatchers.IO) {
                         val todo = ToDoData(0, title, "C", startTime, endTime, cCode)
-                        dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType)
+                        dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType, alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -192,7 +200,7 @@ class MainActivity: FlutterActivity() {
                     val gson = Gson()
                     val todoFData: ToDoFlutterData = gson.fromJson(jsonString, ToDoFlutterData::class.java)
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.editTodoDataFunc(todoFData.toDoData, todoFData.isAlarm, todoFData.alarmType)
+                        dataFunctions.editTodoDataFunc(todoFData.toDoData, todoFData.isAlarm, todoFData.alarmType, todoFData.alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -227,8 +235,10 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.setWakeAlarm(startTime, alarmType)
+                        dataFunctions.setWakeAlarm(startTime, alarmType, alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -242,8 +252,10 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.setSleepAlarm(startTime, alarmType)
+                        dataFunctions.setSleepAlarm(startTime, alarmType, alarmRepeat)
                         result.success("success")
                     }
                 }
@@ -287,12 +299,52 @@ class MainActivity: FlutterActivity() {
                     // 0: 무음, 1: 진동, 2: 소리
                     val alarmType = jsonObject.getInt("alarmType")
 
+                    val alarmRepeat = jsonObject.getInt("alarmRepeat")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        dataFunctions.editWSAlarm(date, alarmType, startTime)
+                        dataFunctions.editWSAlarm(date, alarmType, startTime, alarmRepeat)
                         result.success("success")
                     }
-
                 }
+                "delayAlarm" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.delayAlarm(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
+                "delayWSAlarm" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.delayWSAlarm(jsonString)
+                        result.success("success")
+                    }
+                }
+
+                // 여기서부터 챌린지 함수
+                "getAllChallenges" -> {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val challengesList = challengeFuntions.getAllChallengesFunc() // suspend 함수 호출
+                        result.success(challengesList) // 결과 출력 또는 처리
+                    }
+                }
+                "getAllValidators" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val validatorList = challengeFuntions.getAllValidators(jsonString.toInt())
+                        result.success(validatorList)
+                    }
+                }
+                "getSingleChallenge" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val challenge = challengeFuntions.getChallengeDataFunc(jsonString.toInt()) // suspend 함수 호출
+                        result.success(challenge) // 결과 출력 또는 처리
+                    }
+                }
+
+
+
                 else -> {
                     result.notImplemented()
                 }

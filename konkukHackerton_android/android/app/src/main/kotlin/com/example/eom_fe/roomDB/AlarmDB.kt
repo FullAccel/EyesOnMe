@@ -27,7 +27,7 @@ abstract class AlarmDB: RoomDatabase(){
                 return tempInstance
             }
 
-            Log.d("alarmNotification", "getDatabase excuted")
+            Log.d("eyesonme-ADB", "getDatabase excuted")
 
             val instance = Room.databaseBuilder(
                 context,

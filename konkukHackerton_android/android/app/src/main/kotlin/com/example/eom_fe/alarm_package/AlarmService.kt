@@ -37,7 +37,7 @@ class AlarmService: Service() {
             return START_STICKY
         }
         else {
-            Log.d("welcome", "onStartCommand called")
+            Log.d("eyesonme-AS", "onStartCommand called")
         }
         return super.onStartCommand(intent, flags, startId)
     }

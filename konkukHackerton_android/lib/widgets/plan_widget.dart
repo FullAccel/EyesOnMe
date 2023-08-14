@@ -7,19 +7,19 @@ class PlanWidget extends StatelessWidget {
   static const platform = MethodChannel("samples.flutter.dev/battery");
   final id,
       title,
+      toDoStatusCode,
       alarmStartTime,
       alarmEndTime,
       categoryCode,
-      complete,
       curRoute;
   const PlanWidget({
     super.key,
     required this.id,
     required this.title,
+    required this.toDoStatusCode,
     required this.alarmStartTime,
     required this.alarmEndTime,
     required this.categoryCode,
-    required this.complete,
     required this.curRoute,
   });
 

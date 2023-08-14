@@ -1,3 +1,4 @@
 <resources>
+    <string name="app_name">FlutterTest</string>
     <string name="kakao_hash_key">64b112780c39b7057081cfb547fddd35</string>
 </resources>
