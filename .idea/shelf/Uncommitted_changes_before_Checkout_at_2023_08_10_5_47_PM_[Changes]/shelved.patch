@@ -1,0 +1,110 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"NONE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"cddce819-d09b-4830-bfd0-7e83341bf360\" name=\"Changes\" comment=\"\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/dartpad/web_plugin_registrant.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/dartpad/web_plugin_registrant.dart\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config.json\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config_subset\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config_subset\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/version\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/.dart_tool/version\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Debug.xcconfig\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Debug.xcconfig\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Release.xcconfig\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Release.xcconfig\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/lib/main.dart\" beforeDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Debug.xcconfig\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Debug.xcconfig\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Release.xcconfig\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Release.xcconfig\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/GeneratedPluginRegistrant.swift\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/GeneratedPluginRegistrant.swift\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/pubspec.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/pubspec.lock\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/konkukHackerton_android/pubspec.yaml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/konkukHackerton_android/pubspec.yaml\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"2TVR2n2V8iXP9qKao7ehnltx5BJ\" />\n  <component name=\"ProjectLevelVcsManager\">\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\"><![CDATA[{\n  \"keyToString\": {\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\n    \"RunOnceActivity.cidr.known.project.marker\": \"true\",\n    \"WebServerToolWindowFactoryState\": \"false\",\n    \"cidr.known.project.marker\": \"true\",\n    \"dart.analysis.tool.window.visible\": \"false\",\n    \"last_opened_file_path\": \"/Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android\",\n    \"node.js.detected.package.eslint\": \"true\",\n    \"node.js.detected.package.tslint\": \"true\",\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\n    \"settings.editor.selected.configurable\": \"flutter.settings\",\n    \"show.migrate.to.gradle.popup\": \"false\",\n    \"vue.rearranger.settings.migration\": \"true\"\n  }\n}]]></component>\n  <component name=\"RecentsManager\">\n    <key name=\"CopyFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/konkukHackerton_android\" />\n      <recent name=\"$PROJECT_DIR$\" />\n    </key>\n    <key name=\"MoveFile.RECENT_KEYS\">\n      <recent name=\"$PROJECT_DIR$/konkukHackerton_android\" />\n    </key>\n  </component>\n  <component name=\"RunManager\">\n    <configuration default=\"true\" type=\"JetRunConfigurationType\">\n      <module name=\"konkukHackerton\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration default=\"true\" type=\"KotlinStandaloneScriptRunConfigurationType\">\n      <module name=\"konkukHackerton\" />\n      <option name=\"filePath\" />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"cddce819-d09b-4830-bfd0-7e83341bf360\" name=\"Changes\" comment=\"\" />\n      <created>1691126057239</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1691126057239</updated>\n      <workItem from=\"1691126058552\" duration=\"402000\" />\n      <workItem from=\"1691126474825\" duration=\"10000\" />\n      <workItem from=\"1691126497426\" duration=\"61000\" />\n      <workItem from=\"1691126571810\" duration=\"67000\" />\n    </task>\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State>\n              <option name=\"FILTERS\">\n                <map>\n                  <entry key=\"branch\">\n                    <value>\n                      <list>\n                        <option value=\"flutter\" />\n                      </list>\n                    </value>\n                  </entry>\n                </map>\n              </option>\n            </State>\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d8971aa14f8b0425708de1bdf329a27bbb86bfc9)
++++ b/.idea/workspace.xml	(date 1691657235363)
+@@ -4,21 +4,7 @@
+     <option name="autoReloadType" value="NONE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="cddce819-d09b-4830-bfd0-7e83341bf360" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/dartpad/web_plugin_registrant.dart" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/dartpad/web_plugin_registrant.dart" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/package_config_subset" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/version" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/.dart_tool/version" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Debug.xcconfig" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/ios/Flutter/Release.xcconfig" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/lib/main.dart" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Debug.xcconfig" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/Flutter-Release.xcconfig" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/pubspec.lock" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/konkukHackerton_android/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/konkukHackerton_android/pubspec.yaml" afterDir="false" />
+-    </list>
++    <list default="true" id="cddce819-d09b-4830-bfd0-7e83341bf360" name="Changes" comment="add: flutter screens" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -37,24 +23,24 @@
+   <component name="ProjectViewState">
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "RunOnceActivity.cidr.known.project.marker": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "cidr.known.project.marker": "true",
+-    "dart.analysis.tool.window.visible": "false",
+-    "last_opened_file_path": "/Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "settings.editor.selected.configurable": "flutter.settings",
+-    "show.migrate.to.gradle.popup": "false",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
++    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;/Users/seojm/StudioProjects/EyesOnMe/konkukHackerton_android&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
++    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="CopyFile.RECENT_KEYS">
+       <recent name="$PROJECT_DIR$/konkukHackerton_android" />
+@@ -92,6 +78,14 @@
+       <workItem from="1691126497426" duration="61000" />
+       <workItem from="1691126571810" duration="67000" />
+     </task>
++    <task id="LOCAL-00001" summary="add: flutter screens">
++      <created>1691657171068</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1691657171069</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -120,4 +114,18 @@
+       </map>
+     </option>
+   </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="add: flutter screens" />
++    <option name="LAST_COMMIT_MESSAGE" value="add: flutter screens" />
++  </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="Dart">
++          <url>file://$PROJECT_DIR$/lib/screens/planning_sleeptime.dart</url>
++          <option name="timeStamp" value="1" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++  </component>
+ </project>
+\ No newline at end of file
