@@ -6,21 +6,21 @@ import java.lang.System;
 public final class CustomMessage implements io.flutter.plugin.platform.PlatformView {
     private final android.view.View view = null;
     
-    public CustomMessage(@org.jetbrains.annotations.NotNull()
-    android.app.Activity activity, @org.jetbrains.annotations.NotNull()
-    io.flutter.plugin.common.MethodChannel channel, @org.jetbrains.annotations.NotNull()
-    android.content.Context context, int id, @org.jetbrains.annotations.NotNull()
+    public CustomMessage(@org.jetbrains.annotations.NotNull
+    android.app.Activity activity, @org.jetbrains.annotations.NotNull
+    io.flutter.plugin.common.MethodChannel channel, @org.jetbrains.annotations.NotNull
+    android.content.Context context, int id, @org.jetbrains.annotations.NotNull
     java.util.Map<java.lang.String, java.lang.String> creationParams) {
         super();
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
     public android.view.View getView() {
         return null;
     }
     
-    @java.lang.Override()
+    @java.lang.Override
     public void dispose() {
     }
 }

@@ -39,7 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> canGoNext() async {
     String? val;
-    while (val != "success") {}
+    while (val != "success") {
+      val = await _kakaologin();
+    }
+    print("after login $val");
+    Get.offAllNamed("/");
   }
 
   @override
@@ -101,7 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       onPressed: () {
                         //_kakaologin();
                         canGoNext();
-                        Get.offAllNamed("/");
                         //Get.offAllNamed("/");
                       },
                       child: Row(

@@ -7,16 +7,16 @@ public final class CustomMessageFactory extends io.flutter.plugin.platform.Platf
     private final android.app.Activity activity = null;
     private final io.flutter.plugin.common.MethodChannel channel = null;
     
-    public CustomMessageFactory(@org.jetbrains.annotations.NotNull()
-    android.app.Activity activity, @org.jetbrains.annotations.NotNull()
+    public CustomMessageFactory(@org.jetbrains.annotations.NotNull
+    android.app.Activity activity, @org.jetbrains.annotations.NotNull
     io.flutter.plugin.common.MethodChannel channel) {
         super(null);
     }
     
-    @org.jetbrains.annotations.NotNull()
-    @java.lang.Override()
-    public io.flutter.plugin.platform.PlatformView create(@org.jetbrains.annotations.NotNull()
-    android.content.Context context, int viewId, @org.jetbrains.annotations.Nullable()
+    @org.jetbrains.annotations.NotNull
+    @java.lang.Override
+    public io.flutter.plugin.platform.PlatformView create(@org.jetbrains.annotations.NotNull
+    android.content.Context context, int viewId, @org.jetbrains.annotations.Nullable
     java.lang.Object args) {
         return null;
     }
