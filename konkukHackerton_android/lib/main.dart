@@ -18,6 +18,7 @@ import 'package:eom_fe/screens/planning_wakeuptime.dart';
 import 'package:eom_fe/screens/sleep_time_screen.dart';
 import 'package:eom_fe/screens/start_plan.dart';
 import 'package:eom_fe/screens/user_profile_screen.dart';
+import 'package:eom_fe/show_plan_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,16 +90,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<String> _kakaologin() async {
-    String value;
-    try {
-      value = await platform.invokeMethod('kakaoLogin');
-      if (value != null) return "success";
-    } on PlatformException catch (e) {
-      value = "Falied get member data";
-    }
-    return value;
-  }
+  // Future<String> _kakaologin() async {
+  //   String value;
+  //   try {
+  //     value = await platform.invokeMethod('kakaoLogin');
+  //     if (value != null) return "success";
+  //   } on PlatformException catch (e) {
+  //     value = "Falied get member data";
+  //   }
+  //   return value;
+  // }
 
   Future<void> _getBatteryLevel2() async {
     try {
@@ -155,17 +156,18 @@ class _MyHomePageState extends State<MyHomePage> {
             GetPage(name: '/intro2', page: () => IntroScreen2()),
             GetPage(
               name: '/login',
-              page: () => LoginScreen(
-                  onPressedKakao: () {
-                    Future<String> val = _kakaologin();
-                    val.then(
-                      (value) {
-                        print(value);
-                        Get.toNamed("/");
-                      },
-                    );
-                  },
-                  onPressedGoogle: () {}),
+              page: () => LoginScreen(),
+              // page: () => LoginScreen(
+              //     onPressedKakao: () {
+              //       Future<String> val = _kakaologin();
+              //       val.then(
+              //         (value) {
+              //           print(value);
+              //           Get.offAllNamed("/");
+              //         },
+              //       );
+              //     },
+              //     onPressedGoogle: () {}),
             ),
             GetPage(name: '/profile', page: () => UserProfileScreen()),
             GetPage(name: '/plan/tomorrow', page: () => SleepTimeScreen()),
@@ -205,6 +207,11 @@ class _MyHomePageState extends State<MyHomePage> {
               name: "/plan/delete2",
               page: () => PlanDelete2(),
               transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/plan/show",
+              page: () => ShowPlanScreen(),
+              transition: Transition.rightToLeftWithFade,
             ),
             GetPage(
               name: "/plan/add",

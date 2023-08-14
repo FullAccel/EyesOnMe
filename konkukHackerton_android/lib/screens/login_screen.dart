@@ -1,15 +1,16 @@
 import 'package:eom_fe/widgets/oval_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
-  final onPressedKakao, onPressedGoogle;
+  //final onPressedKakao, onPressedGoogle;
 
   const LoginScreen({
     super.key,
-    required this.onPressedKakao,
-    required this.onPressedGoogle,
+    // required this.onPressedKakao,
+    // required this.onPressedGoogle,
   });
 
   @override
@@ -17,6 +18,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+
+  Future<String> _kakaologin() async {
+    String value;
+    try {
+      value = await platform.invokeMethod('kakaoLogin');
+      if (value != null) return "success";
+    } on PlatformException catch (e) {
+      value = "Falied get member data";
+    }
+    return value;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -53,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     width: 0.8.sw,
                     child: TextButton(
-                      onPressed: widget.onPressedGoogle,
+                      onPressed: () {},
                       child: Row(
                         children: [
                           Image(
@@ -80,8 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 0.8.sw,
                     child: TextButton(
                       onPressed: () {
-                        widget.onPressedKakao;
-                        Get.toNamed('/');
+                        _kakaologin();
+                        Get.offAllNamed('/');
                       },
                       child: Row(
                         children: [

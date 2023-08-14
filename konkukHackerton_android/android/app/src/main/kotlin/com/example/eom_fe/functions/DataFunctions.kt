@@ -73,6 +73,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
     }
 
     fun getDailyPlanFunc(dailyPlanId: Int) {
+        //init();
         val getDailyPlanBuilder = RetrofitBuilder.api.getDailyPlan(dailyPlanId)
         getDailyPlanBuilder.enqueue(object: Callback<APIResponseData> {
             override fun onResponse(

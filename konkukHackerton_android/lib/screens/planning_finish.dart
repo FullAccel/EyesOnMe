@@ -72,7 +72,7 @@ class _PlanningFinishState extends State<PlanningFinish> {
           Positioned(
             bottom: 0.05.sh,
             child: FilledButton(
-              onPressed: () => Get.toNamed('/plan/finish'),
+              onPressed: () => Get.offAllNamed('/'),
               style: FilledButton.styleFrom(
                 backgroundColor: Color(0xFF3BDE7C),
                 textStyle: TextStyle(fontWeight: FontWeight.bold),

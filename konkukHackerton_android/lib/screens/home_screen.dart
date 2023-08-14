@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Icon(
                   Icons.notifications,
                   color: Color(0xFF8A8A8A),
-                  size: 32.sp,
+                  size: 30.sp,
                 ),
               ),
             ],
@@ -65,16 +65,16 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (int index) {
           switch (index) {
             case 0:
-              Get.toNamed("/");
+              Get.offAllNamed("/");
               break;
             case 1:
-              Get.toNamed("/plan");
+              Get.offAllNamed("/plan");
               break;
             case 2:
               // TODO: challenge screen
               break;
             case 3:
-              Get.toNamed("/profile");
+              Get.offAllNamed("/profile");
               break;
           }
         },

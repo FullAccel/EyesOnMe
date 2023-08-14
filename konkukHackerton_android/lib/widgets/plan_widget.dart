@@ -5,7 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PlanWidget extends StatelessWidget {
   static const platform = MethodChannel("samples.flutter.dev/battery");
-  final id, title, alarmStartTime, alarmEndTime, categoryCode, complete;
+  final id,
+      title,
+      alarmStartTime,
+      alarmEndTime,
+      categoryCode,
+      complete,
+      curRoute;
   const PlanWidget({
     super.key,
     required this.id,
@@ -14,6 +20,7 @@ class PlanWidget extends StatelessWidget {
     required this.alarmEndTime,
     required this.categoryCode,
     required this.complete,
+    required this.curRoute,
   });
 
   Future<void> _deletePlan() async {
@@ -132,17 +139,19 @@ class PlanWidget extends StatelessWidget {
                           // Color
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.remove_circle), // Icon
-                        color: Colors.white,
-                        iconSize: 40.sp,
-                        style: IconButton.styleFrom(
-                          backgroundColor: Colors.white,
-                        ),
-                        onPressed: () {
-                          _deletePlan();
-                        },
-                      ),
+                      curRoute.contains("show")
+                          ? IconButton(
+                              icon: Icon(Icons.remove_circle), // Icon
+                              color: Colors.white,
+                              iconSize: 40.sp,
+                              style: IconButton.styleFrom(
+                                backgroundColor: Colors.white,
+                              ),
+                              onPressed: () {
+                                _deletePlan();
+                              },
+                            )
+                          : SizedBox.shrink(),
                     ],
                   ),
                 )

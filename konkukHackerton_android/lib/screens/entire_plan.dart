@@ -62,19 +62,33 @@ class _EntirePlanState extends State<EntirePlan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0.08.sh,
-        title: Text(
-          "전체 플랜",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 24.sp,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0.08.sh),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 15.sp),
+                child: Text(
+                  "Planner",
+                  style: TextStyle(
+                    color: Color(0xFF3BDE7C),
+                  ),
+                ),
+              ),
+              Container(
+                  margin: EdgeInsets.only(right: 10.sp, top: 15.sp),
+                  child: Icon(
+                    Icons.notifications,
+                    color: Color(0xFF8A8A8A),
+                    size: 28.sp,
+                  )),
+            ],
           ),
         ),
-        centerTitle: true,
-        elevation: 1,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
       ),
       body: FutureBuilder(
         future: datas,
@@ -127,34 +141,6 @@ class _EntirePlanState extends State<EntirePlan> {
                     ),
                   ],
                 ),
-                Positioned(
-                  right: -90,
-                  bottom: -90,
-                  child: FilledButton(
-                    onPressed: () {
-                      Get.toNamed("/plan/finish");
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        bottom: 0.08.sh,
-                        right: 0.15.sw,
-                      ),
-                      child: Text(
-                        "작성 완료",
-                        style: TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    style: FilledButton.styleFrom(
-                      shape: CircleBorder(),
-                      fixedSize: Size(220.sp, 220.sp),
-                      backgroundColor: Color(0xFF3BDE7C),
-                    ),
-                  ),
-                ),
               ],
             );
           } else if (snapshot.hasError) {
@@ -163,6 +149,58 @@ class _EntirePlanState extends State<EntirePlan> {
           // By default, show a loading spinner.
           return Center(child: const CircularProgressIndicator());
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Get.offAllNamed("/");
+              break;
+            case 1:
+              Get.offAllNamed("/plan");
+              break;
+            case 2:
+              // TODO: challenge screen
+              break;
+            case 3:
+              Get.offAllNamed("/profile");
+              break;
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.calendar_month,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.star,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_3_rounded,
+              color: Color(0xFFBCBCBC),
+              size: 32.sp,
+            ),
+            label: "",
+          ),
+        ],
       ),
     );
   }
@@ -216,6 +254,7 @@ class _EntirePlanState extends State<EntirePlan> {
               alarmEndTime: pl[index].alarmEndTime,
               categoryCode: pl[index].categoryCode,
               complete: pl[index].complete,
+              curRoute: Get.currentRoute,
             ),
           ],
         );
