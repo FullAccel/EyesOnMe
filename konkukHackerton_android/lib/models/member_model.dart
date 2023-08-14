@@ -20,6 +20,15 @@ class MemberModel {
         planSuccessCount = json["planSuccessCount"],
         challengeSuccessCount = json["challengeSuccessCount"],
         firebaseToken = json["firebaseToken"];
+
+  MemberModel()
+      : id = -1,
+        name = "",
+        email = "",
+        profileUrl = "",
+        planSuccessCount = -1,
+        challengeSuccessCount = -1,
+        firebaseToken = "";
 }
 
 // {

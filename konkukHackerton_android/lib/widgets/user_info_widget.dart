@@ -18,7 +18,7 @@ class _UserInfoWrapperState extends State<UserInfoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("widget.memberData : ${widget.memberData}");
+    print("widget.memberData : ${widget.memberData.email}");
     return Container(
       height: 0.235.sh,
       decoration: BoxDecoration(

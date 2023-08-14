@@ -39,9 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> canGoNext() async {
     String? val;
-    while (val != "success") {
-      val = await _kakaologin();
-    }
+    val = await _kakaologin();
     print("after login $val");
     Get.offAllNamed("/");
   }

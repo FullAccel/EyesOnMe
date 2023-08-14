@@ -19,6 +19,7 @@ import 'package:eom_fe/screens/show_plan_screen.dart';
 import 'package:eom_fe/screens/sleep_time_screen.dart';
 import 'package:eom_fe/screens/start_plan.dart';
 import 'package:eom_fe/screens/user_profile_screen.dart';
+import 'package:eom_fe/screens/wakeup/wakeup_alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -146,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, child) {
         return GetMaterialApp(
           //home: LoginScreen(),
-          initialRoute: '/login',
+          initialRoute: '/wakeup',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),
@@ -219,6 +220,11 @@ class _MyHomePageState extends State<MyHomePage> {
             GetPage(
               name: "/plan/finish2",
               page: () => PlanFinish2(),
+              transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/wakeup",
+              page: () => WakeupAlarm(),
               transition: Transition.rightToLeft,
             ),
           ],
