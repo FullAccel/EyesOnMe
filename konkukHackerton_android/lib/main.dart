@@ -145,9 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
       splitScreenMode: true,
       builder: (context, child) {
         return GetMaterialApp(
-/*
           home: HomeScreen(),
-*/
           initialRoute: '/login',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),

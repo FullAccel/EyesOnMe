@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getTodaysPlan("20230814");
+    // _getTodaysPlan("20230814");
   }
 
   @override
