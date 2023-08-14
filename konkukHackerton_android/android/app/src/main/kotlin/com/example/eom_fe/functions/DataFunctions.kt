@@ -5,6 +5,7 @@ import android.os.Build
 import android.text.TextUtils.substring
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.example.eom_fe.activities.MainActivity
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.APIResponseData
@@ -33,7 +34,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
     val mainContext = context
     val applicationContext = applicationContext
 
-    var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0, "")
+//    var memberInfo: MemberData = MemberData(0, "", "", "", 0, 0, "")
+
+    var memberInfo = MainActivity.mInfo!!
 
     private lateinit var eventChannel: EventChannel
     val alarmFunctions = AlarmFunctions(context)

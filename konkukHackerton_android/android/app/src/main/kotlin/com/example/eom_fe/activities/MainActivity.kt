@@ -12,6 +12,7 @@ import com.example.eom_fe.alarm_package.AlarmService
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.*
 import com.example.eom_fe.follow.CustomMessageFactory
+import com.example.eom_fe.functions.ChallengeFunctions
 import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
@@ -59,6 +60,7 @@ class MainActivity: FlutterActivity() {
     lateinit var memberInfo: MemberData
     lateinit var loginFunctions: LoginFunctions
     lateinit var dataFunctions: DataFunctions
+    lateinit var challengeFuntions: ChallengeFunctions
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
@@ -69,6 +71,7 @@ class MainActivity: FlutterActivity() {
         KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         loginFunctions = LoginFunctions(this, applicationContext)
         dataFunctions = DataFunctions(this, applicationContext)
+        challengeFuntions = ChallengeFunctions(this, applicationContext)
         mContext = context
         // AlarmService : 앱 강종해도 종료되지 않고 계속 실행되도록 하는 서비스
         val fi = Intent(context, AlarmService::class.java)
@@ -298,6 +301,30 @@ class MainActivity: FlutterActivity() {
                         result.success("success")
                     }
                 }
+
+                // 여기서부터 챌린지 함수
+                "getAllChallenges" -> {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val challengesList = challengeFuntions.getAllChallengesFunc() // suspend 함수 호출
+                        result.success(challengesList) // 결과 출력 또는 처리
+                    }
+                }
+                "getAllValidators" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val validatorList = challengeFuntions.getAllValidators(jsonString.toInt())
+                        result.success(validatorList)
+                    }
+                }
+                "getSingleChallenge" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val challenge = challengeFuntions.getChallengeDataFunc(jsonString.toInt()) // suspend 함수 호출
+                        result.success(challenge) // 결과 출력 또는 처리
+                    }
+                }
+
+
                 else -> {
                     result.notImplemented()
                 }

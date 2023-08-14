@@ -1,9 +1,6 @@
 package com.example.eom_fe.api
 
-import com.example.eom_fe.data.APIResponseData
-import com.example.eom_fe.data.FirebaseToken
-import com.example.eom_fe.data.MemberData
-import com.example.eom_fe.data.ToDoData
+import com.example.eom_fe.data.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -28,13 +25,13 @@ interface RetrofitService {
     fun followOtherMember(
         @Path("memberId") number: Int,
         @Path("followMemberId") otherNumber: Int
-    )
+    ): Call<APIResponseData>
 
     @GET("follow/followingList/{memberId}")
-    fun getFollwingList(@Path("memberId") number: Int)
+    fun getFollwingList(@Path("memberId") number: Int): Call<APIResponseData>
 
     @GET("follow/followers")
-    fun getFollowerList()
+    fun getFollowerList(): Call<APIResponseData>
 
 
     // DailyPlan
@@ -84,4 +81,34 @@ interface RetrofitService {
 
     @POST("todo/fail/{todoId}")
     fun failureTodoData(@Path("todoId") number: Int): Call<APIResponseData>
+
+
+    // Challenge
+    @POST("challenge/{memberId}")
+    fun addChallengeData(@Path("memberId") number: Int, @Body params: ChallengeRequestData): Call<APIResponseData>
+
+    @POST("challenge/{challengeId}/validator")
+    fun addValidatorData(@Path("challengeId") number: Int, @Body params: ValidatorListData): Call<APIResponseData>
+
+    @GET("challenge/{challengeId}")
+    fun getChallengeData(@Path("challengeId") number: Int): Call<APIResponseData>
+
+    @GET("challenge/{memberId}/list")
+    fun getAllChallenges(@Path("memberId") number: Int): Call<APIResponseData>
+
+    @PUT("challenge/{challengeId}")
+    fun editChallengeData(@Path("challengeId") number: Int): Call<APIResponseData>
+
+    @DELETE("challenge/{challengeId}")
+    fun deleteChallengeData(@Path("challengeId") number: Int): Call<APIResponseData>
+
+
+    // Validation
+    @POST("validation/Entry/{challengeId}/{memberId}")
+    fun enterChallengeValidation(
+        @Path("challengeId") cId: Int,
+        @Path("memberId") mId: Int
+    ): Call<APIResponseData>
+
+
 }
