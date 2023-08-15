@@ -24,6 +24,8 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.template.model.Link
+import com.kakao.sdk.template.model.TextTemplate
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
@@ -36,6 +38,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
@@ -143,6 +146,7 @@ class MainActivity: FlutterActivity() {
     private fun initLogin() {
         Log.d("eyesonme-MA", "initLogin()")
         mInfo?.let { dataFunctions.init(it) }
+        mInfo?.let { challengeFuntions.init(it) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -250,6 +254,8 @@ class MainActivity: FlutterActivity() {
                         getAllAlarm()
                         result.success("success")
                     }
+
+
                 }
                 "editTodoDataFunc" -> {
                     val jsonString = call.arguments as String
@@ -427,6 +433,27 @@ class MainActivity: FlutterActivity() {
                     val todoFData: ChallengeEditData = gson.fromJson(jsonString, ChallengeEditData::class.java)
                     CoroutineScope(Dispatchers.IO).launch {
                         challengeFuntions.editChallengeDataFunc(todoFData.challengeId, todoFData.challengeRequestData)
+                        result.success("success")
+                    }
+                }
+
+                "sendKakaoValidationMessage" -> {
+                    val defaultText = TextTemplate(
+                        text = """
+                                카카오톡 공유는 카카오톡을 실행하여
+                                사용자가 선택한 채팅방으로 메시지를 전송합니다.
+                            """.trimIndent(),
+                        link = Link(
+                            webUrl = "https://developers.kakao.com",
+                            mobileWebUrl = "https://developers.kakao.com"
+                        )
+                    )
+                }
+
+                "sendValidationImage" -> {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val fileName = "testImage.jpg"
+                        challengeFuntions.postChallengeImage(1, fileName)
                         result.success("success")
                     }
                 }

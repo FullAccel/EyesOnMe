@@ -55,7 +55,7 @@ android {
         applicationId "com.example.eom_fe"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -85,15 +85,19 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     kapt "androidx.room:room-compiler:2.5.2"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:x.y.z'
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2" // 적절한 버전 사용
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4" // 적절한 버전 사용
 
     // 카카오 로그인
-    implementation "com.kakao.sdk:v2-user:2.6.0"
+    implementation "com.kakao.sdk:v2-user:2.15.0" // 카카오 로그인
+    implementation "com.kakao.sdk:v2-talk:2.15.0" // 친구, 메시지(카카오톡)
+    implementation "com.kakao.sdk:v2-share:2.15.0" // 메시지(카카오톡 공유)
 
     // Retrofit 라이브러리
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     // Gson 변환기 라이브러리
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    // OkHttp 라이브러리 추가
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
 
     // Import the Firebase BoM
     implementation platform('com.google.firebase:firebase-bom:32.2.2')

@@ -1,6 +1,8 @@
 package com.example.eom_fe.api
 
 import com.example.eom_fe.data.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -108,6 +110,16 @@ interface RetrofitService {
     fun enterChallengeValidation(
         @Path("challengeId") cId: Int,
         @Path("memberId") mId: Int
+    ): Call<APIResponseData>
+
+
+    // Challenge Post
+    @Multipart
+    @POST("proof/{challengeId}") // 실제 API 엔드포인트를 여기에 입력
+    fun uploadFile(
+        @Path("challengeId") cId: Int,
+        @PartMap data: HashMap<String, RequestBody>,
+        @Part image: MultipartBody.Part?
     ): Call<APIResponseData>
 
 

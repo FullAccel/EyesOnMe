@@ -5,6 +5,7 @@ import android.util.Log
 import com.example.eom_fe.activities.MainActivity
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.api.RetrofitBuilder
+import com.example.eom_fe.api.RetrofitBuilder.api
 import com.example.eom_fe.data.*
 import com.example.eom_fe.roomDB.AlarmDB
 import com.google.gson.Gson
@@ -14,9 +15,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.awaitResponse
+import java.io.File
 import java.lang.reflect.Type
 
 class ChallengeFunctions (context: Context, applicationContext: Context) {
@@ -253,6 +262,49 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+            }
+        }
+        )
+    }
+
+    fun postChallengeImage(cId: Int, fileName: String) {
+        val date = "2023-08-16"
+        val writing = "test :: disney plus moving"
+        val dateRequestBody : RequestBody = date.toRequestBody()
+        val writingRequestBody : RequestBody = writing.toRequestBody()
+        val textHashMap = hashMapOf<String, RequestBody>()
+        textHashMap["date"] = dateRequestBody
+        textHashMap["writing"] = writingRequestBody
+
+        val file = File(mainContext.filesDir, fileName)
+//        val file = File(path) // 업로드할 파일 경로
+        val fileRequestBody = file.asRequestBody("image/jpg".toMediaType()) // 파일의 MIME 타입 설정
+        val filePart = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
+
+        val postChallengeImageBuilder = RetrofitBuilder.api.uploadFile(cId, textHashMap, filePart)
+        postChallengeImageBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<ProofResponseData>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as ProofResponseData
+                    Log.d("eyesonme-CF", "result : $result")
+                }
+                else {
+                    Log.d("eyesonme-CF", "postChallengeImage null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                    Log.d("eyesonme-CF", "error 1 : ${response.raw()}")
+                }
+            }
+
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "postChallengeImage null (2)")
+                Log.d("eyesonme-CF", "error 1 : ${t.printStackTrace()}")
             }
         }
         )
