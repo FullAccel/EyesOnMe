@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eom_fe/models/Quotes_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +16,7 @@ class PlanningFinish extends StatefulWidget {
 }
 
 class _PlanningFinishState extends State<PlanningFinish> {
+  //static const platform = MethodChannel('samples.flutter.dev/battery');
   late Future<QuotesModel> quote;
   String jsonString = '''
   {
@@ -27,6 +30,7 @@ class _PlanningFinishState extends State<PlanningFinish> {
     // TODO: implement initState
     super.initState();
     quote = ApiService.getQuotes(jsonString);
+    ApiService.addPlan(jsonEncode(Get.arguments));
   }
 
   @override
@@ -72,7 +76,9 @@ class _PlanningFinishState extends State<PlanningFinish> {
           Positioned(
             bottom: 0.05.sh,
             child: FilledButton(
-              onPressed: () => Get.offAllNamed('/'),
+              onPressed: () {
+                Get.offAllNamed('/');
+              },
               style: FilledButton.styleFrom(
                 backgroundColor: Color(0xFF3BDE7C),
                 textStyle: TextStyle(fontWeight: FontWeight.bold),
