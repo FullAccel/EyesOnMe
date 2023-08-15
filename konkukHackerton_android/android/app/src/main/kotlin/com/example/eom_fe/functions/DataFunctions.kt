@@ -8,14 +8,12 @@ import androidx.annotation.RequiresApi
 import com.example.eom_fe.activities.MainActivity
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.api.RetrofitBuilder
-import com.example.eom_fe.data.APIResponseData
-import com.example.eom_fe.data.DailyPlanData
-import com.example.eom_fe.data.MemberData
-import com.example.eom_fe.data.ToDoData
+import com.example.eom_fe.data.*
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kakao.sdk.common.KakaoSdk.type
 import io.flutter.plugin.common.EventChannel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.awaitClose
@@ -69,7 +67,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 }
                 else {
                     Log.d("eyesonme-DF", "addDailyPlanFunc null (1)")
-                    Log.d("eyesonme-DF", "error 1 : ${response.body()}")
+//                    val temp = response.body() as ErrorData
+                    Log.d("eyesonme-DF", "error 1 : ${response.raw() as ErrorData}")
                     callback(null)
                 }
             }
@@ -147,7 +146,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 }
                 else {
                     Log.d("eyesonme-DF", "getMonthlyPlanFunc null (1)")
-                    Log.d("eyesonme-DF", "error 1 : ${response.body()}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.raw() as ErrorData}")
                     callback(null)
                 }
             }
@@ -340,7 +339,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     callback(result)
                 }
                 else {
-                    Log.d("eyesonme-DF", "error 1 : ${response.body()}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.raw() as ErrorData}")
                     callback(null)
                 }
             }
