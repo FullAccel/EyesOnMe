@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:eom_fe/models/Quotes_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +17,7 @@ class PlanningFinish extends StatefulWidget {
 }
 
 class _PlanningFinishState extends State<PlanningFinish> {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
   late Future<QuotesModel> quote;
   String jsonString = '''
   {
@@ -22,11 +26,31 @@ class _PlanningFinishState extends State<PlanningFinish> {
   }
   ''';
 
+  Future<void> _postTodoDataFunc(String jsonString) async {
+    try {
+      final result =
+          await platform.invokeMethod('postTodoDataFunc', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> addPlan(String jsonString) async {
+    print("${jsonString} 넣을 차례~");
+    await _postTodoDataFunc(jsonString);
+    print("${jsonString} 넣었음!!!");
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     quote = ApiService.getQuotes(jsonString);
+    print(Get.arguments);
+    addPlan(jsonEncode(Get.arguments));
   }
 
   @override

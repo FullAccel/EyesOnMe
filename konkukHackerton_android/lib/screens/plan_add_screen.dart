@@ -214,8 +214,11 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                   child: parsedPlanStartTime.hour > 12
                       ? Text(
                           "${(parsedPlanStartTime.hour % 12).toString().padLeft(2, "0")} : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  pm")
-                      : Text(
-                          "${parsedPlanStartTime.hour.toString().padLeft(2, "0")} : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  am"),
+                      : parsedPlanStartTime.hour == 12
+                          ? Text(
+                              "12 : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  pm")
+                          : Text(
+                              "${parsedPlanStartTime.hour.toString().padLeft(2, "0")} : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  am"),
                 ),
                 SizedBox(
                   height: 0.05.sh,
@@ -288,8 +291,11 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                   child: parsedPlanEndTime.hour > 12
                       ? Text(
                           "${(parsedPlanEndTime.hour % 12).toString().padLeft(2, "0")} : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  pm")
-                      : Text(
-                          "${parsedPlanEndTime.hour.toString().padLeft(2, "0")} : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  am"),
+                      : parsedPlanEndTime.hour == 12
+                          ? Text(
+                              "12 : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  pm")
+                          : Text(
+                              "${parsedPlanEndTime.hour.toString().padLeft(2, "0")} : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  am"),
                 ),
               ],
             ),
@@ -484,8 +490,8 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                       "alarmType": isSelected.indexOf(true),
                       "alarmRepeat": SetPlanService.repeatToInt[_repeat],
                     };
-                    addPlan(jsonEncode(plan));
-                    Get.toNamed('/plan/finish');
+                    //addPlan(jsonEncode(plan));
+                    Get.toNamed('/plan/finish', arguments: plan);
                   },
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),
@@ -511,7 +517,14 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
       minutesInterval: 15,
       onTimeChange: (time) {
         setState(() {
-          planStartTime = time.toString();
+          planStartTime = DateTime(
+            time.year,
+            time.month,
+            time.day,
+            time.hour,
+            time.minute,
+            0,
+          ).toString();
         });
       },
     );
@@ -525,7 +538,14 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
       minutesInterval: 15,
       onTimeChange: (time) {
         setState(() {
-          planEndTime = time.toString();
+          planEndTime = DateTime(
+            time.year,
+            time.month,
+            time.day,
+            time.hour,
+            time.minute,
+            0,
+          ).toString();
         });
       },
     );
