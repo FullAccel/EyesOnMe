@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -16,7 +17,8 @@ class PlanAddScreen extends StatefulWidget {
 }
 
 class _PlanAddScreenState extends State<PlanAddScreen> {
-  late String dropdownValue;
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+  late String dropdownValue; // 카테고리
   String planStartTime = "";
   String planEndTime = "";
   DateTime parsedPlanStartTime = DateTime.now();
@@ -25,6 +27,25 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
   String _alarmSound = "노래1";
   String _repeat = "없음";
   bool _isSilenceMode = false;
+  final _textController = TextEditingController();
+
+  Future<void> _postTodoDataFunc(String jsonString) async {
+    try {
+      final result =
+          await platform.invokeMethod('postTodoDataFunc', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> addPlan(String jsonString) async {
+    String? ret;
+    await _postTodoDataFunc(jsonString);
+    print(ret);
+  }
 
   @override
   void initState() {
@@ -36,6 +57,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         toolbarHeight: 0.08.sh,
         title: Text(
@@ -114,6 +136,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                   height: 0.1.sh,
                   width: 0.8.sw,
                   child: TextField(
+                    controller: _textController,
                     maxLength: 12,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(
@@ -451,12 +474,19 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                 ),
                 SizedBox(height: 0.1.sh),
                 FilledButton(
-                  onPressed: () => Get.toNamed(
-                    '/plan/finish',
-                    arguments:
-                        Get.arguments.addAll({planStartTime, planEndTime}),
-                    // 여기서 db로 보내야함 플랜 정보.
-                  ),
+                  onPressed: () {
+                    Map<String, dynamic> plan = {
+                      "title": _textController.text,
+                      "startTime": planStartTime,
+                      "endTime": planEndTime,
+                      "cCode": SetPlanService.categoryToCode[dropdownValue],
+                      "isAlarm": true,
+                      "alarmType": isSelected.indexOf(true),
+                      "alarmRepeat": SetPlanService.repeatToInt[_repeat],
+                    };
+                    addPlan(jsonEncode(plan));
+                    Get.toNamed('/plan/finish');
+                  },
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
