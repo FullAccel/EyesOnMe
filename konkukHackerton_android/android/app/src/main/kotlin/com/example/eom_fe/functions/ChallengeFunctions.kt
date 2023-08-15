@@ -60,16 +60,11 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 : 검증자 추가하기
-    fun addValidatior(cId: Int, vld: List<String>) {
+    fun addValidator(cId: Int, vld: List<String>) {
         CoroutineScope(Dispatchers.IO).launch {
             val validatorList = ValidatorListData(vld)
             addValidatorDataFunc(cId, validatorList)
         }
-    }
-
-    // 실제 : 재검증 요청하기
-    fun requestVerifyAgain() {
-
     }
 
     // 실제 : 특정 날짜에, 사진, 글 업로드
@@ -98,8 +93,8 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 : 챌린지 수정하기
-    fun editChallenge(cd: ChallengeRequestData) {
-//        CoroutineScope()
+    fun editChallenge(cId: Int, cd: ChallengeRequestData) {
+
 
     }
 
@@ -218,6 +213,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         }
     }
 
+    // 실제 : 챌린지 수정 함수
     fun editChallengeDataFunc(cId: Int, cd: ChallengeRequestData) {
         val editChallengeDataBuilder = RetrofitBuilder.api.editChallengeData(cId, cd)
         editChallengeDataBuilder.enqueue(object : Callback<APIResponseData> {

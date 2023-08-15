@@ -331,23 +331,55 @@ class MainActivity: FlutterActivity() {
                 "getAllChallenges" -> {
                     CoroutineScope(Dispatchers.IO).launch {
                         val challengesList = challengeFuntions.getAllChallengesFunc() // suspend 함수 호출
-                        result.success(challengesList) // 결과 출력 또는 처리
+                        result.success(Gson().toJson(challengesList).toString()) // 결과 출력 또는 처리
                     }
                 }
                 "getAllValidators" -> {
                     val jsonString = call.arguments as String
                     CoroutineScope(Dispatchers.IO).launch {
                         val validatorList = challengeFuntions.getAllValidators(jsonString.toInt())
-                        result.success(validatorList)
+                        result.success(Gson().toJson(validatorList).toString())
                     }
                 }
                 "getSingleChallenge" -> {
                     val jsonString = call.arguments as String
                     CoroutineScope(Dispatchers.IO).launch {
                         val challenge = challengeFuntions.getChallengeDataFunc(jsonString.toInt()) // suspend 함수 호출
-                        result.success(challenge) // 결과 출력 또는 처리
+                        result.success(Gson().toJson(challenge).toString()) // 결과 출력 또는 처리
                     }
                 }
+                "addValidator" -> {
+                    val jsonString = call.arguments as String
+
+                    val gson = Gson()
+                    val todoFData: AddValidatorListData = gson.fromJson(jsonString, AddValidatorListData::class.java)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.addValidator(todoFData.challengeId, todoFData.validatorNameList)
+                        result.success("success")
+                    }
+                }
+                "makeChallengeWithValidator" -> {
+                    val jsonString = call.arguments as String
+
+                    val gson = Gson()
+                    val todoFData: ChallengeMakeData = gson.fromJson(jsonString, ChallengeMakeData::class.java)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.makeChallengeWithValidator(todoFData.challengeRequestData, todoFData.validatorNameList)
+                        result.success("success")
+                    }
+                    // Gson().toJson(validatorList).toString()
+                }
+                "editChallengeDataFunc" -> {
+                    val jsonString = call.arguments as String
+
+                    val gson = Gson()
+                    val todoFData: ChallengeEditData = gson.fromJson(jsonString, ChallengeEditData::class.java)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.editChallengeDataFunc(todoFData.challengeId, todoFData.challengeRequestData)
+                        result.success("success")
+                    }
+                }
+
 
 
 

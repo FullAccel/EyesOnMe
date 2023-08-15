@@ -44,10 +44,18 @@ class KeepService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val i = Intent(applicationContext, BackgroundActivity::class.java)
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        applicationContext.startActivity(i)
-        Log.d("eyesonme-KS", "KeepService - onStartCommand called")
+
+        if (intent != null) {
+            val alarmCode = intent.getIntExtra("alarm_code", 0)
+            if (alarmCode != 0) {
+                // alarmCode를 사용하여 필요한 작업 수행
+                val i = Intent(applicationContext, BackgroundActivity::class.java)
+                i.putExtra("alarm_code", alarmCode)
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                applicationContext.startActivity(i)
+                Log.d("eyesonme-KS", "KeepService - onStartCommand called")
+            }
+        }
 
         return super.onStartCommand(intent, flags, startId)
 
