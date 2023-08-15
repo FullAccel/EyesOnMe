@@ -93,6 +93,17 @@ class MainActivity: FlutterActivity() {
         }
     }
 
+    fun getAllAlarm() {
+        coroutineScope.launch(Dispatchers.IO) {
+            data = db.alarmDao().getAllAlarms() as ArrayList<AlarmDataModel>
+            Log.d("eyesonme-MA", "alarm-size: ${data.size}")
+            for (alarm in data) {
+                Log.d("eyesonme-MA", "alarm: $alarm")
+            }
+            Log.d("eyesonme-MA", "getAllAlarm executed")
+        }
+    }
+
     private fun initLogin() {
         Log.d("eyesonme-MA", "initLogin()")
         mInfo?.let { dataFunctions.init(it) }
