@@ -29,7 +29,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugins.GeneratedPluginRegistrant
+//import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
@@ -101,7 +101,7 @@ class MainActivity: FlutterActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        GeneratedPluginRegistrant.registerWith(flutterEngine)
+//        GeneratedPluginRegistrant.registerWith(flutterEngine)
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
             // This method is invoked on the main thread.
@@ -197,6 +197,7 @@ class MainActivity: FlutterActivity() {
 
                     coroutineScope.launch(Dispatchers.IO) {
                         val todo = ToDoData(0, title, "C", startTime, endTime, cCode)
+                        Log.d("eyesonme-MA", "postTodoDataFunc called: date $date, todo $todo, isAlarm $isAlarm, alarmType $alarmType, alarmRepeat $alarmRepeat")
                         dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType, alarmRepeat)
                         result.success("success")
                     }
