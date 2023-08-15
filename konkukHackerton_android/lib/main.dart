@@ -46,12 +46,72 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  List<Map<String, dynamic>> dummyPlans = [
+    {
+      "title": "플랜1",
+      "startTime": "2023-08-15 01:00:00",
+      "endTime": "2023-08-15 07:00:00",
+      "cCode": "C001",
+      "isAlarm": true,
+      "alarmType": 0,
+      "alarmRepeat": 0
+    },
+    {
+      "title": "플랜2",
+      "startTime": "2023-08-15 07:00:00",
+      "endTime": "2023-08-15 08:15:00",
+      "cCode": "C002",
+      "isAlarm": true,
+      "alarmType": 0,
+      "alarmRepeat": 10
+    },
+    {
+      "title": "플랜3",
+      "startTime": "2023-08-15 09:00:00",
+      "endTime": "2023-08-15 11:00:00",
+      "cCode": "C003",
+      "isAlarm": true,
+      "alarmType": 0,
+      "alarmRepeat": 10
+    },
+    {
+      "title": "플랜4",
+      "startTime": "2023-08-15 22:05:00",
+      "endTime": "2023-08-15 23:05:00",
+      "cCode": "C004",
+      "isAlarm": true,
+      "alarmType": 0,
+      "alarmRepeat": 10
+    },
+  ];
+
+  Future<void> addPlan() async {
+    for (var plan in dummyPlans) {
+      print("${plan["title"]} 넣을 차례~");
+      await _postTodoDataFunc(jsonEncode(plan));
+      print("${plan["title"]} 넣었음!!!");
+    }
+  }
+
+  Future<void> _postTodoDataFunc(String jsonString) async {
+    try {
+      final result =
+          await MyApp.platform.invokeMethod('postTodoDataFunc', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
     setExtraScreenHandler();
     permission();
+    addPlan();
   }
 
   // This widget is the root of your application.

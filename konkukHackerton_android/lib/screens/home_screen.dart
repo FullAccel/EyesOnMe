@@ -39,17 +39,14 @@ class _HomeScreenState extends State<HomeScreen> {
           (jsonDecode(s) as List).map((e) => PlanModel.fromJson(e)).toList();
     });
     //return MemberModel.fromJson(jsonDecode(s));
-    print("todaysPlan : ${todaysPlan[0].categoryCode}");
+    //print("todaysPlan : ${todaysPlan[0].categoryCode}");
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      // 화면 호출 후 1 프레임 후에 실행할 함수
-      _getTodaysPlan("20230814");
-    });
+    _getTodaysPlan("20230815");
   }
 
   @override
