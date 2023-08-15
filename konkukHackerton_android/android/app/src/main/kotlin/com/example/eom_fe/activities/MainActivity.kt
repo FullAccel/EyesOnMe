@@ -132,6 +132,7 @@ class MainActivity: FlutterActivity() {
                             override fun onLoginComplete(memberInfo: MemberData) {
                                 Log.d("eyesonme-MA", msg)
                                 initLogin()
+                                getAllAlarm()
                                 result.success("success")
                             }
 
@@ -209,6 +210,7 @@ class MainActivity: FlutterActivity() {
                         val todo = ToDoData(0, title, "C", startTime, endTime, cCode)
                         Log.d("eyesonme-MA", "postTodoDataFunc called: date $date, todo $todo, isAlarm $isAlarm, alarmType $alarmType, alarmRepeat $alarmRepeat")
                         dataFunctions.postTodoDataFunc(date, todo, isAlarm, alarmType, alarmRepeat)
+                        getAllAlarm()
                         result.success("success")
                     }
                 }

@@ -20,6 +20,7 @@ class AlarmService: Service() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()
+        Log.d("eyesonme-AS", "onCreate called")
         val CHANNEL_ID = "service_channel_1"
         val channel = NotificationChannel(CHANNEL_ID, "service channel 1",
             NotificationManager.IMPORTANCE_LOW)

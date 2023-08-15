@@ -14,6 +14,8 @@ import com.example.eom_fe.activities.BackgroundActivity
 class KeepService: Service() {
     private val binder = LocalBinder()
 
+    var alarmCode = 0
+
     inner class LocalBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods
         fun getService(): KeepService = this@KeepService
@@ -27,6 +29,7 @@ class KeepService: Service() {
     override fun onTaskRemoved(rootIntent: Intent?) {
         Log.d("eyesonme-KS", "KeepService - onTaskRemoved called")
         val restartServiceIntent = Intent(applicationContext, this.javaClass)
+        restartServiceIntent.putExtra("alarm_code", alarmCode)
         restartServiceIntent.setPackage(packageName)
 
         val restartServicePendingIntent = PendingIntent.getService(
@@ -44,9 +47,9 @@ class KeepService: Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
         if (intent != null) {
-            val alarmCode = intent.getIntExtra("alarm_code", 0)
+            alarmCode = intent.getIntExtra("alarm_code", 0)
+            Log.d("eyesonme-KS", "KeepService - onStartCommand alarmCode : $alarmCode")
             if (alarmCode != 0) {
                 // alarmCode를 사용하여 필요한 작업 수행
                 val i = Intent(applicationContext, BackgroundActivity::class.java)
@@ -56,6 +59,7 @@ class KeepService: Service() {
                 Log.d("eyesonme-KS", "KeepService - onStartCommand called")
             }
         }
+        Log.d("eyesonme-KS", "KeepService - onStartCommand intent is null")
 
         return super.onStartCommand(intent, flags, startId)
 

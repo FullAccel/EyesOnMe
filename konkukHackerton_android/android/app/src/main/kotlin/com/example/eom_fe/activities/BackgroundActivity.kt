@@ -105,11 +105,11 @@ class BackgroundActivity : FlutterActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        if (isFinished) {
-            finish()
-        }
-    }
+//    override fun onBackPressed() {
+//        if (isFinished) {
+//            finish()
+//        }
+//    }
 
     private lateinit var mService: KeepService
     private var mBound: Boolean = false

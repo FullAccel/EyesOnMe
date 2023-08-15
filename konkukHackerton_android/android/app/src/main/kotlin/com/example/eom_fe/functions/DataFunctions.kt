@@ -67,11 +67,15 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as Int
                     callback(result)
                 }
-                Log.d("eyesonme-DF", "addDailyPlanFunc null (1)")
-                callback(null)
+                else {
+                    Log.d("eyesonme-DF", "addDailyPlanFunc null (1)")
+                    Log.d("eyesonme-DF", "error 1 : ${response.body()}")
+                    callback(null)
+                }
             }
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                 Log.d("eyesonme-DF", "addDailyPlanFunc null (2)")
+                Log.d("eyesonme-DF", "error 2 : ${t.printStackTrace()}")
                 callback(null)
             }
         }
@@ -141,12 +145,16 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as List<DailyPlanData>
                     callback(result)
                 }
-                Log.d("eyesonme-DF", "getMonthlyPlanFunc null (1)")
-                callback(null)
+                else {
+                    Log.d("eyesonme-DF", "getMonthlyPlanFunc null (1)")
+                    Log.d("eyesonme-DF", "error 1 : ${response.body()}")
+                    callback(null)
+                }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                 Log.d("eyesonme-DF", "getMonthlyPlanFunc null (2)")
+                Log.d("eyesonme-DF", "error 2 : ${t.printStackTrace()}")
                 callback(null)
             }
         }
@@ -317,6 +325,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
     fun addTodoDataFunc(dailyPlanId: Int, todo: ToDoData, callback: (Int?) -> Unit) {
         val addTodoDataBuilder = RetrofitBuilder.api.addTodoData(dailyPlanId, todo)
+        Log.d("eyesonme-DF", "addTodoDataFunc started")
         addTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
@@ -330,10 +339,14 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as Int
                     callback(result)
                 }
-                callback(null)
+                else {
+                    Log.d("eyesonme-DF", "error 1 : ${response.body()}")
+                    callback(null)
+                }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-DF", "error 2 : ${t.printStackTrace()}")
                 callback(null)
             }
         }
@@ -541,6 +554,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setAlarm(alarmCode : Int, content : String, time : String){
+        Log.d("eyesonme-DF", "setAlarm called - alarmCode : $alarmCode, content: $content, time: $time")
         alarmFunctions.callAlarm(time, alarmCode, content)
     }
 
