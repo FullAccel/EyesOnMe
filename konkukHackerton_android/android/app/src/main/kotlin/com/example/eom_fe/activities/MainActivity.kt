@@ -37,6 +37,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.lang.reflect.Type
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.suspendCoroutine
 
 
@@ -70,6 +73,39 @@ class MainActivity: FlutterActivity() {
 //        Stetho.initializeWithDefaults(this)
 
         db = AlarmDB.getDatabase(applicationContext)
+        val functions = AlarmFunctions(context)
+        coroutineScope.launch {
+            val db = AlarmDB.getDatabase(context)
+            val list = db!!.alarmDao().getAllAlarms()
+            val size = db.alarmDao().getAllAlarms().size
+            list.let {
+                for (i in 0 until size){
+                    val time = list[i].time
+                    val code = list[i].alarm_code
+
+                    // 현재 시간을 얻어옴
+                    val currentTime = Calendar.getInstance()
+
+                    // time 문자열을 Date 객체로 파싱
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd H:mm:ss", Locale.getDefault())
+                    val timeDate = dateFormat.parse(time)
+
+                    if (timeDate != null) {
+                        val calendar = Calendar.getInstance()
+                        calendar.time = timeDate
+
+                        if (calendar.after(currentTime)) {
+                            // time이 현재 시간보다 이후인 경우
+
+                            val content = list[i].content
+                            functions.callAlarm(time, code, content) // 알람 실행
+                        } else {
+                            db.alarmDao().deleteAlarm(code)
+                        }
+                    }
+                }
+            }
+        }
         KakaoSdk.init(this, getString(R.string.kakao_hash_key))
         loginFunctions = LoginFunctions(this, applicationContext)
         dataFunctions = DataFunctions(this, applicationContext)
