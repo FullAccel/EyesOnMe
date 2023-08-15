@@ -214,6 +214,7 @@ class MainActivity: FlutterActivity() {
                 }
                 "getAllDailyPlansByDate" -> {
                     var date = call.arguments as String
+                    Log.d("eyesonme-MA", "wanna get today's plan : $date")
                     CoroutineScope(Dispatchers.IO).launch {
                         dataFunctions.getDailyPlansByDate(date) { data ->
                             // data를 사용하여 원하는 작업 수행
