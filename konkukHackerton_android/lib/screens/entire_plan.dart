@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eom_fe/services/api_service.dart';
+import 'package:eom_fe/services/ui_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,7 +57,7 @@ class _EntirePlanState extends State<EntirePlan> {
     _controller = PageController(initialPage: _weekIndexOffset);
 
     datas = ApiService.getPlans();
-    //datas = _getAllDailyPlansByDate("20230813");
+    //datas = _getAllDailyPlansByDate("20230814");
   }
 
   @override
@@ -154,15 +155,19 @@ class _EntirePlanState extends State<EntirePlan> {
         onTap: (int index) {
           switch (index) {
             case 0:
+              UIService.curMenu = index;
               Get.offAllNamed("/");
               break;
             case 1:
+              UIService.curMenu = index;
               Get.offAllNamed("/plan");
               break;
             case 2:
               // TODO: challenge screen
+              UIService.curMenu = index;
               break;
             case 3:
+              UIService.curMenu = index;
               Get.offAllNamed("/profile");
               break;
           }
@@ -179,7 +184,9 @@ class _EntirePlanState extends State<EntirePlan> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.calendar_month,
-              color: Color(0xFFBCBCBC),
+              color: UIService.curMenu == 1
+                  ? Color(0xFF3BDE7C)
+                  : Color(0xFFBCBCBC),
               size: 32.sp,
             ),
             label: "",

@@ -170,7 +170,6 @@ class MainActivity: FlutterActivity() {
                         dataFunctions.getDailyPlansByDate(date) { data ->
                             // data를 사용하여 원하는 작업 수행
                             result.success(Gson().toJson(data).toString())
-
                         }
                     }
 

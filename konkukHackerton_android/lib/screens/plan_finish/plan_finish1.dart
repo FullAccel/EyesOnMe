@@ -40,6 +40,7 @@ class _PlanFinish1State extends State<PlanFinish1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppbarWidget(
         title: "플랜 완료하기",
       ),

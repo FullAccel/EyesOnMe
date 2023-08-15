@@ -25,21 +25,12 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
   String _alarmSound = "노래1";
   String _repeat = "없음";
   bool _isSilenceMode = false;
-  final categorys = {
-    "일상": "C001",
-    "업무/학습": "C002",
-    "모임/약속": "C003",
-    "건강/운동": "C004",
-    "여가/오락": "C005",
-    "재정관리": "C006",
-    "기타": "C007",
-  };
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    dropdownValue = categorys.keys.first;
+    dropdownValue = SetPlanService.categoryToCode.keys.first;
   }
 
   @override
@@ -100,7 +91,8 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                   dropdownValue = value!;
                 });
               },
-              items: categorys.keys.map<DropdownMenuItem<String>>(
+              items: SetPlanService.categoryToCode.keys
+                  .map<DropdownMenuItem<String>>(
                 (String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -463,6 +455,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                     '/plan/finish',
                     arguments:
                         Get.arguments.addAll({planStartTime, planEndTime}),
+                    // 여기서 db로 보내야함 플랜 정보.
                   ),
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),

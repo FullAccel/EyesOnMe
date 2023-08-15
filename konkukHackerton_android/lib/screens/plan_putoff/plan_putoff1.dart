@@ -43,6 +43,7 @@ class _PlanPutoff1State extends State<PlanPutoff1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppbarWidget(
         title: "플랜 미루기",
       ),

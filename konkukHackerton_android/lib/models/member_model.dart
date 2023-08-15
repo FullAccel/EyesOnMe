@@ -9,7 +9,7 @@ class MemberModel {
   // var firebaseToken: String = ""
   // )
 
-  MemberModel(this.id, this.planSuccessCount, this.challengeSuccessCount, this.name, this.email, this.profileUrl, this.firebaseToken);
+  //MemberModel(this.id, this.planSuccessCount, this.challengeSuccessCount, this.name, this.email, this.profileUrl, this.firebaseToken);
 
   final int id, planSuccessCount, challengeSuccessCount;
   final String name, email, profileUrl, firebaseToken;
@@ -22,6 +22,15 @@ class MemberModel {
         planSuccessCount = json["planSuccessCount"],
         challengeSuccessCount = json["challengeSuccessCount"],
         firebaseToken = json["firebaseToken"];
+
+  MemberModel()
+      : id = -1,
+        name = "",
+        email = "",
+        profileUrl = "",
+        planSuccessCount = -1,
+        challengeSuccessCount = -1,
+        firebaseToken = "";
 }
 
 // {
