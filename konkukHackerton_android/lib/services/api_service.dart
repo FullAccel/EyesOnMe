@@ -49,12 +49,12 @@ class ApiService {
     var tmp = dt.substring(11, 16); // 23:40
     var h = tmp.substring(0, 2);
     if (int.parse(h) == 12) {
-      return "12:${tmp.substring(14, 16)} pm";
+      return "12:${tmp.substring(3, 5)} pm";
     } else if (int.parse(h) / 12 < 1) {
       // am
       return "$h:${tmp.substring(3, 5)} am";
     } else {
-      return "$h:${tmp.substring(3, 5)} pm";
+      return "${int.parse(h) % 12}:${tmp.substring(3, 5)} pm";
     }
   }
 }

@@ -44,4 +44,23 @@ class SetPlanService {
     ]
 ]
     ''';
+
+  static Map<String, String> categoryToCode = {
+    "일상": "C001",
+    "업무/학습": "C002",
+    "모임/약속": "C003",
+    "건강/운동": "C004",
+    "여가/오락": "C005",
+    "재정관리": "C006",
+    "기타": "C007",
+  };
+  static Map<String, String> codeToCategory = {
+    "C001": "일상",
+    "C002": "업무/학습",
+    "C003": "모임/약속",
+    "C004": "건강/운동",
+    "C005": "여가/오락",
+    "C006": "재정관리",
+    "C007": "기타",
+  };
 }

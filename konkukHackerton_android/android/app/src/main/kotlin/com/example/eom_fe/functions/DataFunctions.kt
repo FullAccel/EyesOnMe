@@ -480,7 +480,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
                         val result = Gson().fromJson(jsonResult, type) as List<ToDoData>
                         continuation.resume(result, null)
                     }
-                    continuation.resume(null, null)
+                    else
+                        continuation.resume(null, null)
                 }
 
                 override fun onFailure(call: Call<APIResponseData>, t: Throwable) {

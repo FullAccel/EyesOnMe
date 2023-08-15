@@ -42,6 +42,7 @@ class _PlanDelete1State extends State<PlanDelete1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppbarWidget(
         title: "플랜 취소하기",
       ),

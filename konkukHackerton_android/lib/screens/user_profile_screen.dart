@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../models/member_model.dart';
+import '../services/ui_service.dart';
 import '../widgets/user_info_widget.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -151,15 +152,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         onTap: (int index) {
           switch (index) {
             case 0:
+              UIService.curMenu = index;
               Get.offAllNamed("/");
               break;
             case 1:
+              UIService.curMenu = index;
               Get.offAllNamed("/plan");
               break;
             case 2:
               // TODO: challenge screen
+              UIService.curMenu = index;
               break;
             case 3:
+              UIService.curMenu = index;
               Get.offAllNamed("/profile");
               break;
           }
@@ -192,7 +197,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_3_rounded,
-              color: Color(0xFFBCBCBC),
+              color: UIService.curMenu == 3
+                  ? Color(0xFF3BDE7C)
+                  : Color(0xFFBCBCBC),
               size: 32.sp,
             ),
             label: "",

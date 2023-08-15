@@ -1,7 +1,9 @@
 import 'package:eom_fe/widgets/oval_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class WakeupAlarm extends StatefulWidget {
   const WakeupAlarm({super.key});
@@ -11,6 +13,26 @@ class WakeupAlarm extends StatefulWidget {
 }
 
 class _WakeupAlarmState extends State<WakeupAlarm> {
+  static const platform = MethodChannel("samples.flutter.dev/battery");
+
+  Future<void> _delayWSAlarm(String yyyymmdd) async {
+    try {
+      final result = await platform.invokeMethod('delayWSAlarm', yyyymmdd);
+      print("delayWSAlarm in flutter : $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,36 +44,38 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
             children: [
               SizedBox(height: 0.12.sh),
               Text(
-                "취침 시간",
+                "기상 시간",
                 style: TextStyle(
-                    fontSize: 28.sp,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600),
+                  fontSize: 28.sp,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               SizedBox(height: 0.06.sh),
               Text(
-                "하루를 정리하고",
+                "오늘 하루도",
                 style: TextStyle(
                   fontSize: 28.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "내일을 계획",
-                    style: TextStyle(
-                      fontSize: 42.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding: const EdgeInsets.only(top: 12),
                     child: Text(
-                      "해보아요!",
+                      "힘차게 ",
                       style: TextStyle(
                         fontSize: 24.sp,
                       ),
+                    ),
+                  ),
+                  Text(
+                    "시작해 볼까요!",
+                    style: TextStyle(
+                      fontSize: 42.sp,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ],
@@ -60,23 +84,27 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
               Text(
                 "00:00 am",
                 style: TextStyle(
-                  color: Color(0xFF20884A),
+                  color: Colors.white,
                   fontSize: 42.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              Image.asset(
-                "assets/images/logo_note.png",
-                color: Colors.white,
-                scale: 0.8,
+              Container(
+                margin: EdgeInsets.only(top: 0.05.sh, bottom: 0.1.sh),
+                child: Image.asset(
+                  "assets/images/wakeup_logo.png",
+                  color: Color(0xFF0C612E),
+                  scale: 1,
+                ),
               ),
               ElevatedButton(
-                onPressed: () => Get.toNamed(
-                  '/plan/wakeup',
+                onPressed: () => Get.offAllNamed(
+                  '/wakeup/mission',
                 ),
                 child: Text(
-                  "내일 플랜 작성하기",
-                  style: TextStyle(fontSize: 24.sp),
+                  "기상 미션 시작",
+                  style:
+                      TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w600),
                 ),
                 style: ElevatedButton.styleFrom(
                   shape: new RoundedRectangleBorder(
@@ -88,12 +116,15 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
               ),
               SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _delayWSAlarm(DateFormat("yyyymmdd").format(DateTime.now()));
+                },
                 child: Text(
                   "10분 뒤 다시 울림",
                   style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 16.sp,
                     color: Colors.grey,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -101,7 +132,7 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
                     borderRadius: new BorderRadius.circular(90),
                   ),
                   backgroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 42),
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 56),
                 ),
               ),
             ],
