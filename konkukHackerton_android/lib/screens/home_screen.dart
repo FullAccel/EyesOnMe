@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:eom_fe/services/setplan_service.dart';
 import 'package:eom_fe/services/ui_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +9,7 @@ import 'package:get/get.dart';
 import '../models/plan_model.dart';
 import '../services/api_service.dart';
 import '../services/datetime_service.dart';
+import '../services/setplan_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       todaysPlan =
           (jsonDecode(s) as List).map((e) => PlanModel.fromJson(e)).toList();
+      todaysPlan = ApiService.sortDailyPlans(todaysPlan);
     });
     //return MemberModel.fromJson(jsonDecode(s));
     //print("todaysPlan : ${todaysPlan[0].categoryCode}");
@@ -129,92 +130,96 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Positioned(
             top: 100,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  ...List.generate(
-                    todaysPlan.length,
-                    (index) => Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      clipBehavior: Clip.hardEdge,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 0.01.sh),
-                        width: 0.9.sw,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Transform.scale(
-                              scale: 1.2,
-                              child: Transform.translate(
-                                offset: Offset(-10, 0),
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Image.asset(
-                                    "assets/images/icon_x.png",
-                                    scale: 0.7,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFFF0F0F0),
-                                    shape: CircleBorder(),
-                                    padding: EdgeInsets.all(16.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  SetPlanService.codeToCategory[
-                                      todaysPlan[index].categoryCode]!,
-                                  style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF20884A),
-                                  ),
-                                ),
-                                Text(
-                                  todaysPlan[index].title,
-                                  style: TextStyle(
-                                    fontSize: 28.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  "${ApiService.DateTimeTo12(todaysPlan[index].alarmStartTime)}~${ApiService.DateTimeTo12(todaysPlan[index].alarmEndTime)}",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF3BDE7C),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Transform.scale(
-                              scale: 1.2,
-                              child: Transform.translate(
-                                offset: Offset(10, 0),
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Image.asset(
-                                    "assets/images/icon_check.png",
-                                    scale: 0.7,
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFF3BDE7C),
-                                    shape: CircleBorder(),
-                                    padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Container(
+                  width: 0.9.sw,
+                  height: 0.4.sh,
+                  child: ListView.builder(
+                    itemCount: todaysPlan.length,
+                    itemBuilder: (context, index) {
+                      Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        clipBehavior: Clip.hardEdge,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 0.01.sh),
+                          width: 0.9.sw,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Transform.scale(
+                                scale: 1.2,
+                                child: Transform.translate(
+                                  offset: Offset(-10, 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Image.asset(
+                                      "assets/images/icon_x.png",
+                                      scale: 0.7,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFFF0F0F0),
+                                      shape: CircleBorder(),
+                                      padding: EdgeInsets.all(16.0),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                              Column(
+                                children: [
+                                  Text(
+                                    SetPlanService.codeToCategory[
+                                        todaysPlan[index].categoryCode]!,
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF20884A),
+                                    ),
+                                  ),
+                                  Text(
+                                    todaysPlan[index].title,
+                                    style: TextStyle(
+                                      fontSize: 28.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${ApiService.DateTimeTo12(todaysPlan[index].alarmStartTime)}~${ApiService.DateTimeTo12(todaysPlan[index].alarmEndTime)}",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF3BDE7C),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Transform.scale(
+                                scale: 1.2,
+                                child: Transform.translate(
+                                  offset: Offset(10, 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Image.asset(
+                                      "assets/images/icon_check.png",
+                                      scale: 0.7,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFF3BDE7C),
+                                      shape: CircleBorder(),
+                                      padding: EdgeInsets.all(16.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
