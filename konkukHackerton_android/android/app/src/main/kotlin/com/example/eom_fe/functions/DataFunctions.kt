@@ -67,8 +67,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 }
                 else {
                     Log.d("eyesonme-DF", "addDailyPlanFunc null (1)")
-//                    val temp = response.body() as ErrorData
-                    Log.d("eyesonme-DF", "error 1 : ${response.raw() as ErrorData}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.errorBody()!!.string()}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.raw()}")
                     callback(null)
                 }
             }
@@ -146,7 +146,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
                 }
                 else {
                     Log.d("eyesonme-DF", "getMonthlyPlanFunc null (1)")
-                    Log.d("eyesonme-DF", "error 1 : ${response.raw() as ErrorData}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.errorBody()!!.string()}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.raw()}")
                     callback(null)
                 }
             }
@@ -339,7 +340,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     callback(result)
                 }
                 else {
-                    Log.d("eyesonme-DF", "error 1 : ${response.raw() as ErrorData}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.errorBody()!!.string()}")
+                    Log.d("eyesonme-DF", "error 1 : ${response.raw()}")
                     callback(null)
                 }
             }
