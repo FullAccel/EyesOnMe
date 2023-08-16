@@ -11,5 +11,5 @@ data class ChallengeData(
     val validationIntervalCode: String,
     val validationCountPerInterval: Int,
     val categoryCode: String,
-    val validatorList: List<String>
+    val validatorList: List<ValidatorListData>
 ) : java.io.Serializable
