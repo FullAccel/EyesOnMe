@@ -1,12 +1,15 @@
 import 'dart:convert';
 
 import 'package:eom_fe/services/api_service.dart';
+import 'package:eom_fe/services/setplan_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../models/challenge_model.dart';
+import '../../services/ui_service.dart';
 
 class ChallengeMainScreen extends StatefulWidget {
   const ChallengeMainScreen({super.key});
@@ -17,6 +20,36 @@ class ChallengeMainScreen extends StatefulWidget {
 
 class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
+
+  List<Map<String, dynamic>> dummyChallenge = [
+    {
+      "id": 1,
+      "title": "Challenge 1",
+      "deadline": "2023-08-31",
+      "totalProofNum": 6,
+      "currentSuccessNum": 0,
+      "achievementRate": 0,
+      "challengeStatusCode": "P",
+      "validationIntervalCode": "VI07",
+      "validationCountPerInterval": 3,
+      "categoryCode": "C001",
+      "validatorList": ["김세연", "박세준", "서지명"]
+    },
+    {
+      "id": 2,
+      "title": "Challenge 2",
+      "deadline": "2023-09-15",
+      "totalProofNum": 6,
+      "currentSuccessNum": 0,
+      "achievementRate": 0,
+      "challengeStatusCode": "P",
+      "validationIntervalCode": "VI01",
+      "validationCountPerInterval": 5,
+      "categoryCode": "C002",
+      "validatorList": []
+    },
+    // 나머지 ChallengeData 객체들
+  ];
 
   List<ChallengeModel> challengeList = [];
   DateTime now = DateTime.now();
@@ -69,7 +102,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
       ),
       body: ListView.separated(
         itemBuilder: (context, index) {
-          return Container(
+          return Card(
             child: Row(
               children: [
                 Column(
@@ -79,8 +112,10 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                          "D-${getDDay(challengeList[index].deadline, now)}"),
+                          "D-${getDDay(dummyChallenge[index]["deadline"], now)}"),
                     ),
+                    Text(SetPlanService.codeToCategory[dummyChallenge[index]
+                        ["categoryCode"]]!),
                   ],
                 ),
               ],
@@ -89,6 +124,76 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
         },
         separatorBuilder: (BuildContext context, int index) => const Divider(),
         itemCount: challengeList.length,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              UIService.curMenu = index;
+              Get.offAllNamed("/");
+              break;
+            case 1:
+              UIService.curMenu = index;
+              Get.offAllNamed("/plan");
+              break;
+            case 2:
+              UIService.curMenu = index;
+              Get.offAllNamed("/challenge");
+              break;
+            case 3:
+              UIService.curMenu = index;
+              Get.offAllNamed("/profile");
+              break;
+          }
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Container(
+              margin: EdgeInsets.only(top: 15.sp, right: 12.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu1.png"),
+                color: UIService.curMenu == 0
+                    ? Color(0xFF3BDE7C)
+                    : Color(0xFFBCBCBC),
+                size: 32,
+              ),
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              margin: EdgeInsets.only(right: 48.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu2.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              margin: EdgeInsets.only(right: 28.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu3.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
+            ),
+            label: "",
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              margin: EdgeInsets.only(right: 18),
+              child: ImageIcon(
+                AssetImage("assets/images/menu4.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
+            ),
+            label: "",
+          ),
+        ],
       ),
     );
   }
