@@ -78,13 +78,11 @@
 
 ### 왜 Flutter와 Kotlin을 연계하여 썼는가
   - 현재 프론트 팀원 2명의 기술 스택이 Flutter와 Kotlin으로 상이함에 따라 한정된 자원으로 분업을 하여 프로젝트를 진행해야 했음
-  - View 개발에 더 편리한 Flutter가 화면을, Kotlin이 device Control 및 HTTP를 통한 서버와 REST API를 통해 통신을 
-</br>담당하는 것으로 분업하였음
+  - View 개발에 더 편리한 Flutter가 화면을, Kotlin이 device Control 및 HTTP를 통한 서버와 REST API를 통해 통신을 담당하는 것으로 분업하였음
   - 작업 분야를 확실히 나누는 과정에서 확실한 규칙 없이는 개발자 간 소통에 어려움이 있다는 점을 체감함. 이에 따라 두 언어 간 원활한 의사 전달이 이루어지도록 정확하고 간결하게 문서를 작성함.
 
 ### 왜 FCM(Firebase Cloud Messaging)을 썼는가
-  - 이후에 배포를 위해 ios, 웹까지 확장 될 수 있음을 고려해 특정 플랫폼에 종속되지 않고 Android, ios, web 모두에게 알림
-</br>메세지를 보낼수 있는 FCM을 채택하여 푸쉬 알림 시스템을 구현
+  - 이후에 배포를 위해 ios, 웹까지 확장 될 수 있음을 고려해 특정 플랫폼에 종속되지 않고 Android, ios, web 모두에게 알림 메세지를 보낼수 있는 FCM을 채택하여 푸쉬 알림 시스템을 구현
 
 ### 왜 FCM(Firebase Cloud Messaging)을 썼는가
   - DB에 blob 타입으로 직접 이미지를 저장할 수 있지만 성능 저하을 고려하여 DB에는 S3 이미지 객체의 이름과 accessUrl만 저장
