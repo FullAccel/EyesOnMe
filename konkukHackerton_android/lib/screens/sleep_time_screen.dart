@@ -45,6 +45,7 @@ class _SleepTimeScreenState extends State<SleepTimeScreen> {
                 "하루를 정리하고",
                 style: TextStyle(
                   fontSize: 28.sp,
+                  color: Colors.white,
                 ),
               ),
               Row(
@@ -55,6 +56,7 @@ class _SleepTimeScreenState extends State<SleepTimeScreen> {
                     style: TextStyle(
                       fontSize: 42.sp,
                       fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
                   Padding(
@@ -63,6 +65,7 @@ class _SleepTimeScreenState extends State<SleepTimeScreen> {
                       "해보아요!",
                       style: TextStyle(
                         fontSize: 24.sp,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -72,7 +75,7 @@ class _SleepTimeScreenState extends State<SleepTimeScreen> {
               Text(
                 "00:00 am",
                 style: TextStyle(
-                  color: Color(0xFF20884A),
+                  color: Colors.white,
                   fontSize: 42.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -94,7 +97,7 @@ class _SleepTimeScreenState extends State<SleepTimeScreen> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(90),
                   ),
-                  backgroundColor: Color(0xFF3BDE7C),
+                  backgroundColor: Theme.of(context).primaryColor,
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 84),
                 ),
               ),

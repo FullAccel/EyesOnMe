@@ -352,7 +352,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                 if (response.isSuccessful) {
                     // 사용자 정보 있음
                     Log.d("eyesonme-LF", "findLoginHttp -> response.isSuccessful")
-                    Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                     Log.d("eyesonme-LF", "response.body : ${response.body()}")
 //                    memberInfo = response.body()!!
                     val userApiResponseData = response.body() as APIResponseData
@@ -390,7 +390,7 @@ class LoginFunctions(context: Context, applicationContext: Context) {
                 Log.d("eyesonme-LF", response.raw().toString())
                 if (response.isSuccessful) {
                     Log.d("eyesonme-LF", "createMemberInfo -> response.isSuccessful")
-                    Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(applicationContext, "Call Success", Toast.LENGTH_LONG).show()
                     Log.d("eyesonme-LF", "response -> ${response}")
                     Log.d("eyesonme-LF", "response.body : ${response.body()}")
                     val userApiResponseData = response.body() as APIResponseData

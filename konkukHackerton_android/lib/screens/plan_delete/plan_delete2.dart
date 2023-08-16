@@ -86,7 +86,7 @@ class _PlanDelete2State extends State<PlanDelete2> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF3BDE7C),
+                backgroundColor: Theme.of(context).primaryColor,
                 minimumSize: Size(0.83.sw, 0.05.sh),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -121,7 +121,7 @@ class _PlanDelete2State extends State<PlanDelete2> {
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Color(0xFFD6FCE5),
+                  color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -158,7 +158,7 @@ class _PlanDelete2State extends State<PlanDelete2> {
                         Text(
                           "${plan.categoryCode}\n${plan.title}",
                           style: TextStyle(
-                            color: Color(0xFF3BDE7C),
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 16.sp,
                           ),
@@ -175,7 +175,7 @@ class _PlanDelete2State extends State<PlanDelete2> {
                             style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
                               backgroundColor: Colors.white,
-                              foregroundColor: Color(0xFF3BDE7C),
+                              foregroundColor: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
