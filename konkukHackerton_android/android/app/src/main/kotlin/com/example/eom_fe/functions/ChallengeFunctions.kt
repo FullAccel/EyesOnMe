@@ -1,13 +1,21 @@
 package com.example.eom_fe.functions
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.*
 import com.example.eom_fe.roomDB.AlarmDB
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kakao.sdk.common.util.KakaoCustomTabsClient
+import com.kakao.sdk.share.ShareClient
+import com.kakao.sdk.share.WebSharerClient
+import com.kakao.sdk.template.model.Button
+import com.kakao.sdk.template.model.Link
+import com.kakao.sdk.template.model.TextTemplate
 import io.flutter.plugin.common.EventChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,13 +72,17 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         }
     }
 
+    /*
     // 실제 : 검증자 추가하기
     fun addValidator(cId: Int, vld: List<String>) {
         CoroutineScope(Dispatchers.IO).launch {
             val validatorList = ValidatorListData(vld)
             addValidatorDataFunc(cId, validatorList)
+
         }
     }
+
+     */
 
     // 실제 : 특정 날짜에, 사진, 글 업로드
     fun uploadChallengePost() {
@@ -87,16 +99,16 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         addChallengeDataFunc(cd) { challengeId ->
             if (challengeId != null) {
                 // 결과 값인 challengeId를 사용하여 다른 작업 수행
-                CoroutineScope(Dispatchers.IO).launch {
-                    if (vld == null) {
-                        addValidatorDataFunc(challengeId, null)
-
-                    } else {
-                        val validatorList = ValidatorListData(vld)
-                        addValidatorDataFunc(challengeId, validatorList)
-                    }
-
-                }
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    if (vld == null) {
+//                        addValidatorDataFunc(challengeId, null)
+//
+//                    } else {
+//                        val validatorList = ValidatorListData(vld)
+//                        addValidatorDataFunc(challengeId, validatorList)
+//                    }
+//
+//                }
             } else {
                 // 실패한 경우 처리
             }
@@ -114,6 +126,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
 
 
     // from RetrofitService
+    // 실제 사용 함수
     fun addChallengeDataFunc(cd: ChallengeRequestData, callback: (Int?) -> Unit) {
         val addChallengeDataBuilder = RetrofitBuilder.api.addChallengeData(memberInfo.id, cd)
         addChallengeDataBuilder.enqueue(object : Callback<APIResponseData> {
@@ -145,7 +158,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         })
     }
 
-
+/*
     fun addValidatorDataFunc(cId: Int, vld: ValidatorListData?) {
         if (vld != null) {
             val addValidatorDataBuilder = RetrofitBuilder.api.addValidatorData(cId, vld)
@@ -180,6 +193,8 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
             Log.d("eyesonme-CF", "addValidatorDataFunc validatorList is null")
         }
     }
+
+ */
 
     fun getChallengeDataFunc2(cId: Int) {
         val getChallengeDataBuilder = RetrofitBuilder.api.getChallengeData(cId)
@@ -339,17 +354,21 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         )
     }
 
-    fun postChallengeImage(cId: Int, fileName: String) {
-        val date = "2023-08-16"
-        val writing = "test :: disney plus moving"
+    // 실제
+    // date : "yyyy-mm-dd" 형태로
+    fun postChallengeImage(cId: Int, date: String, writing: String, filePath: String, callback: (String?) -> Unit) {
+        val date = date
+        val writing = writing
         val dateRequestBody : RequestBody = date.toRequestBody()
         val writingRequestBody : RequestBody = writing.toRequestBody()
         val textHashMap = hashMapOf<String, RequestBody>()
         textHashMap["date"] = dateRequestBody
         textHashMap["writing"] = writingRequestBody
 
-        val file = File(mainContext.filesDir, fileName)
-//        val file = File(path) // 업로드할 파일 경로
+        Log.d("eyesonme-CF", "postChallengeImage called")
+
+//        val file = File(mainContext.filesDir, fileName)
+        val file = File(filePath) // 업로드할 파일 경로
         val fileRequestBody = file.asRequestBody("image/jpg".toMediaType()) // 파일의 MIME 타입 설정
         val filePart = MultipartBody.Part.createFormData("images", file.name, fileRequestBody)
 
@@ -366,25 +385,29 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as ProofResponseData
                     Log.d("eyesonme-CF", "result : $result")
+                    callback(result.images.last().accessUrl)
                 }
                 else {
                     Log.d("eyesonme-CF", "postChallengeImage null (1)")
                     Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
-                    Log.d("eyesonme-CF", "error 1 : ${response.raw()}")
+                    callback(null)
                 }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                 Log.d("eyesonme-CF", "postChallengeImage null (2)")
                 Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
             }
         }
         )
     }
 
-    fun sendValidatorKakaoMessage(cId: Int) {
-        val sendValidatorKakaoMessageBuilder = RetrofitBuilder.api.enterChallengeValidation(cId, memberInfo.id)
-        sendValidatorKakaoMessageBuilder.enqueue(object : Callback<APIResponseData> {
+    // 실제 : 검증자가 방에 입장
+    fun enterValidation(cId: Int) {
+        Log.d("eyesonme-CF", "enterValidation called")
+        val enterValidationBuilder = RetrofitBuilder.api.enterChallengeValidation(cId, memberInfo.id)
+        enterValidationBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
                 call: Call<APIResponseData>,
                 response: Response<APIResponseData>
@@ -397,17 +420,98 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as Boolean
                 }
                 else {
-                    Log.d("eyesonme-CF", "sendValidatorKakaoMessage null (1)")
+                    Log.d("eyesonme-CF", "enterValidation null (1)")
                     Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
                 }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
-                Log.d("eyesonme-CF", "sendValidatorKakaoMessage null (2)")
+                Log.d("eyesonme-CF", "enterValidation null (2)")
                 Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
             }
         }
         )
+    }
+
+    // 실제 : 카카오톡 메시지 전송
+    fun sendKakaoValidationMessage(cId: Int, title: String, validationIntervalCode: String, validationCountPerInterval: Int) {
+        Log.d("eyesonme-CF", "sendKakaoValidationMessage called")
+        val hostName = memberInfo.name
+        var vic: String = ""
+        val vcpi: Int = validationCountPerInterval
+        vic = when (validationIntervalCode) {
+            "VI01" -> " 하루에"
+            "VI07" -> " 일주일에"
+            "VI14" -> " 이주일에"
+            "VI30" -> " 한 달에"
+            else -> ""
+        }
+        val defaultText = TextTemplate(
+            text = """
+                지속 가능한 강력한 플래너 어플리케이션, “아이투두”에서 알려드립니다.\n
+                ${hostName}님께서 당신을 아래 챌린지 검증 위원으로 설정하였습니다.\n
+                “${title} :${vic} ${vcpi}번 하기!”\n
+                ${hostName}님께서 빚어낼 변화의 첫 걸음 함께 응원해주시길 바랍니다!\n
+                -${hostName}님의 성취를 열원하며, 아이투두 올림-
+            """.trimIndent(),
+            link = Link(
+//                webUrl = "https://developers.kakao.com",
+//                mobileWebUrl = "https://developers.kakao.com"
+            ),
+            buttons = listOf(
+                Button(
+                    "자세히 보기",
+                    Link(
+                        //이 부분을 사용해서 어떤 상세페이지를 띄울지 결정할수 있다 ⭐️⭐️⭐️⭐️⭐️
+                        androidExecutionParams = mapOf(
+                            "cIdString" to cId.toString()
+                        )
+                    ),
+                )
+            )
+        )
+        // 피드 메시지 보내기
+
+        // 카카오톡 설치여부 확인
+        if (ShareClient.instance.isKakaoTalkSharingAvailable(mainContext)) {
+            // 카카오톡으로 카카오톡 공유 가능
+            ShareClient.instance.shareDefault(mainContext, defaultText) { sharingResult, error ->
+                if (error != null) {
+                    Log.e("eyesonme-CF", "카카오톡 공유 실패", error)
+                }
+                else if (sharingResult != null) {
+                    Log.d("eyesonme-CF", "카카오톡 공유 성공 ${sharingResult.intent}")
+                    mainContext.startActivity(sharingResult.intent)
+
+                    // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
+                    Log.w("eyesonme-CF", "Warning Msg: ${sharingResult.warningMsg}")
+                    Log.w("eyesonme-CF", "Argument Msg: ${sharingResult.argumentMsg}")
+                }
+            }
+        }
+        else {
+            // 카카오톡 미설치: 웹 공유 사용 권장
+            // 웹 공유 예시 코드
+            val sharerUrl = WebSharerClient.instance.makeDefaultUrl(defaultText)
+
+            // CustomTabs으로 웹 브라우저 열기
+
+            // 1. CustomTabsServiceConnection 지원 브라우저 열기
+            // ex) Chrome, 삼성 인터넷, FireFox, 웨일 등
+            try {
+                KakaoCustomTabsClient.openWithDefault(mainContext, sharerUrl)
+            } catch(e: UnsupportedOperationException) {
+                // CustomTabsServiceConnection 지원 브라우저가 없을 때 예외처리
+            }
+
+            // 2. CustomTabsServiceConnection 미지원 브라우저 열기
+            // ex) 다음, 네이버 등
+            try {
+                KakaoCustomTabsClient.open(mainContext, sharerUrl)
+            } catch (e: ActivityNotFoundException) {
+                // 디바이스에 설치된 인터넷 브라우저가 없을 때 예외처리
+            }
+        }
     }
 
 

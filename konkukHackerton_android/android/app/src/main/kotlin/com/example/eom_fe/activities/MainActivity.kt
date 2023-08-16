@@ -27,6 +27,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 //import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
+import okhttp3.Dispatcher
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -400,16 +401,17 @@ class MainActivity: FlutterActivity() {
                         result.success(Gson().toJson(challenge).toString()) // 결과 출력 또는 처리
                     }
                 }
-                "addValidator" -> {
-                    val jsonString = call.arguments as String
-
-                    val gson = Gson()
-                    val todoFData: AddValidatorListData = gson.fromJson(jsonString, AddValidatorListData::class.java)
-                    CoroutineScope(Dispatchers.IO).launch {
-                        challengeFuntions.addValidator(todoFData.challengeId, todoFData.validatorNameList)
-                        result.success("success")
-                    }
-                }
+//                "addValidator" -> {
+//                    val jsonString = call.arguments as String
+//
+//                    val gson = Gson()
+//                    val todoFData: AddValidatorListData = gson.fromJson(jsonString, AddValidatorListData::class.java)
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        challengeFuntions.addValidator(todoFData.challengeId, todoFData.validatorNameList)
+//                        result.success("success")
+//                    }
+//                }
+                /*
                 "makeChallengeWithValidator" -> {
                     val jsonString = call.arguments as String
 
@@ -427,6 +429,26 @@ class MainActivity: FlutterActivity() {
                     }
                     // Gson().toJson(validatorList).toString()
                 }
+                 */
+                "makeChallengeWOValidator" -> {
+                    val jsonString = call.arguments as String
+
+                    val gson = Gson()
+                    val cd: ChallengeRequestData = gson.fromJson(jsonString, ChallengeRequestData::class.java)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.addChallengeDataFunc(cd) { challengeId ->
+                            result.success(challengeId.toString())
+//                            if (challengeId != null) {
+//                                // 결과 값인 challengeId를 사용하여 다른 작업 수행
+//
+//                            } else {
+//                                // 실패한 경우 처리
+//                            }
+                        }
+
+                    }
+                }
+
                 "editChallengeDataFunc" -> {
                     val jsonString = call.arguments as String
 
@@ -438,26 +460,49 @@ class MainActivity: FlutterActivity() {
                     }
                 }
 
-                "sendKakaoValidationMessage" -> {
-                    val defaultText = TextTemplate(
-                        text = """
-                                카카오톡 공유는 카카오톡을 실행하여
-                                사용자가 선택한 채팅방으로 메시지를 전송합니다.
-                            """.trimIndent(),
-                        link = Link(
-                            webUrl = "https://developers.kakao.com",
-                            mobileWebUrl = "https://developers.kakao.com"
-                        )
-                    )
+                "postValidationDiary" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val cId = jsonObject.getInt("id")
+                    // status -> "C", "P", "F" 중 하나
+//                    val status = jsonObject.getString("status")
+                    val date = jsonObject.getString("date")
+
+                    val writing = jsonObject.getString("writing")
+                    val path = jsonObject.getString("path")
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.postChallengeImage(cId, date, writing, path) { accessUrl ->
+                            result.success(accessUrl)
+                        }
+                    }
                 }
 
-                "sendValidationImage" -> {
+                "sendKakaoValidationMessage" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val cId = jsonObject.getInt("id")
+                    val title = jsonObject.getString("title")
+                    val validationIntervalCode = jsonObject.getString("validationIntervalCode")
+                    val validationCountPerInterval = jsonObject.getInt("validationCountPerInterval")
+
                     CoroutineScope(Dispatchers.IO).launch {
-                        val fileName = "testImage.jpg"
-                        challengeFuntions.postChallengeImage(1, fileName)
+                        challengeFuntions.sendKakaoValidationMessage(cId, title, validationIntervalCode, validationCountPerInterval)
                         result.success("success")
                     }
                 }
+
+                "enterValidationWithLogin" -> {
+                    val cId = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.enterValidation(cId.toInt())
+                        result.success("success")
+                    }
+                }
+
+
 
 
 
