@@ -3,6 +3,7 @@ package com.hackerton.domain.dailyPlanGroup.toDo.entity;
 import com.hackerton.domain.BaseTimeEntity;
 import com.hackerton.domain.category.entity.Category;
 import com.hackerton.domain.dailyPlanGroup.dailyPlan.entity.DailyPlan;
+import com.hackerton.domain.dailyPlanGroup.toDo.dto.ToDoRequestDto;
 import com.hackerton.domain.dailyPlanGroup.toDo.dto.ToDoUpdateDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -46,7 +47,7 @@ public class ToDo extends BaseTimeEntity {
         this.category = category;
     }
 
-    public ToDo update(ToDoUpdateDto dto){
+    public ToDo update(ToDoRequestDto dto){
         this.title = dto.getTitle();
         this.alarmStartTime = dto.getAlarmStartTime();
         this.alarmEndTime = dto.getAlarmEndTime();

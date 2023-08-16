@@ -14,14 +14,6 @@ public class ToDoRequestDto {
     private String alarmEndTime;
     private String categoryCode;
 
-    @Builder
-    public ToDoRequestDto(String title, String alarmStartTime, String alarmEndTime, String categoryCode) {
-        this.title = title;
-        this.alarmStartTime = alarmStartTime;
-        this.alarmEndTime = alarmEndTime;
-        this.categoryCode = categoryCode;
-    }
-
     public ToDo toEntity(){
         return ToDo.builder()
                 .title(this.title)

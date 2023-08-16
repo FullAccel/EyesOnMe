@@ -44,16 +44,16 @@ public class ToDoService {
     }
 
     @Transactional
-    public boolean updateById(Long toDoId, ToDoUpdateDto toDoUpdateDto) {
+    public boolean updateById(Long toDoId, ToDoRequestDto toDoRequestDto) {
 
         ToDo toDo = toDoRepository.findById(toDoId)
-                .map(entity -> entity.update(toDoUpdateDto))
+                .map(entity -> entity.update(toDoRequestDto))
                 .orElseThrow(() -> new EntityNotFoundException(TODOLIST_NOT_FOUND, "해당 Id에 해당하는 투두리스트가 없습니다 : " + toDoId));
 
         Category category = toDo.getCategory();
-        String afterCategoryCode = toDoUpdateDto.getAfterCategoryCode();
+        String afterCategoryCode = toDoRequestDto.getCategoryCode();
 
-        if(!category.getCategoryCode().equals(afterCategoryCode))
+        if(!category.getCategoryCode().getCode().equals(afterCategoryCode))
             category = categoryService.update(
                     category,
                     afterCategoryCode,
@@ -65,13 +65,9 @@ public class ToDoService {
     }
 
     public ToDoResponseDto findById(Long toDoId) {
-        ToDo toDo = toDoRepository.findById(toDoId)
+        return toDoRepository.findById(toDoId)
+                .map(ToDoResponseDto::new)
                 .orElseThrow(() -> new EntityNotFoundException(TODOLIST_NOT_FOUND, "해당 Id에 해당하는 투두리스트가 없습니다 : " + toDoId));
-
-
-        return ToDoResponseDto.builder()
-                .entity(toDo)
-                .build();
     }
 
     public List<ToDoResponseDto> findAllByDailyPlanId(Long dailyPlanId) {

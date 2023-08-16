@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface DailyPlanRepository extends JpaRepository<DailyPlan, Long> {
 
-    boolean existsDailyPlanByYearMonthAndDate(String yearMonth,int date);
+    boolean existsDailyPlanByYearMonthAndDayAndMemberId(String yearMonth, int day, Long memberId);
 
-    List<DailyPlan> findByYearMonth(String yearMonth);
+    List<DailyPlan> findByYearMonthAndMemberId(String yearMonth, Long memberId);
+
 }

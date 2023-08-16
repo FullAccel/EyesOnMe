@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2ea59058-228f-431b-a525-eb2ff78307c5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/global/firebase/FCMConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="2ea59058-228f-431b-a525-eb2ff78307c5" name="Changes" comment="검증 사진 올리기까지 완료">
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" afterDir="false" />
@@ -14,20 +12,107 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/konkukHackerton-1.0-SNAPSHOT-plain.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/konkukHackerton-1.0-SNAPSHOT-plain.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/konkukHackerton-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/konkukHackerton-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/bootJar/MANIFEST.MF" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlan/dto/DailyPlanResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlan/dto/DailyPlanResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlan/entity/DailyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlan/entity/DailyPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDoList/controller/ToDoListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDo/controller/ToDoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDoList/dto/ToDoListRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDo/dto/ToDoRequestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDoList/dto/ToDoListResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDo/dto/ToDoResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDoList/entity/ToDoList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDo/entity/ToDo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDoList/entity/ToDoListRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDo/entity/ToDoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDoList/service/ToDoListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/toDo/service/ToDoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/Application.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/category/entity/CategoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/category/entity/CategoryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/category/service/CategoryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/category/service/CategoryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/controller/ChallengeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/controller/ChallengeController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/dto/ChallengeRequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/dto/ChallengeRequestDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/Challenge$ChallengeBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/Challenge$ChallengeBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/Challenge.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/Challenge.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/ChallengeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/ChallengeRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/ValidationInterval.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/entity/ValidationInterval.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/service/ChallengeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/challenge/service/ChallengeService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/check/entity/Check.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/proof/entity/Proof.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/proof/entity/Proof.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/validation/entity/Validation$ValidationBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/validation/entity/Validation$ValidationBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/validation/entity/Validation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/challengeGroup/validation/entity/Validation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/dto/DailyPlanResponseDto$DailyPlanResponseDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/dto/DailyPlanResponseDto$DailyPlanResponseDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/dto/DailyPlanResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/dto/DailyPlanResponseDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlan$DailyPlanBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlan$DailyPlanBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlan.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlanRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlanRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/service/DailyPlanService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/dailyPlan/service/DailyPlanService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/controller/ToDoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/controller/ToDoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoCompleteOrNotDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoCompleteOrNotDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoRequestDto$ToDoRequestDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoRequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoRequestDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoUpdateDto$ToDoUpdateDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoUpdateDto$ToDoUpdateDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoUpdateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoUpdateDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/entity/ToDo$ToDoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/entity/ToDo$ToDoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/entity/ToDo.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/entity/ToDo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/service/ToDoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/dailyPlanGroup/toDo/service/ToDoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/follows/service/FollowService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/follows/service/FollowService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/controller/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/controller/MemberController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberRequestDto$MemberRequestDtoBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberRequestDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberRequestDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberResponseDto$MemberResponseDtoBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberResponseDto$MemberResponseDtoBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/dto/MemberResponseDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/entity/Member$MemberBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/entity/Member$MemberBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/entity/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/entity/Member.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/service/MemberService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/domain/member/service/MemberService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/DummyDataInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/DummyDataInitializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/error/ErrorCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/error/ErrorCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/error/exception/BusinessException.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/error/exception/BusinessException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/firebase/FCMConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/firebase/FCMConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/result/ResultCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/hackerton/global/result/ResultCode.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/konkukHackerton-1.0-SNAPSHOT-plain.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/konkukHackerton-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/BusinessException.class.uniqueId8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CategoryCode.class.uniqueId10" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/CategoryService.class.uniqueId12" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ChallengeService.class.uniqueId4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/DailyPlanService.class.uniqueId9" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/EntityAlreadyExistException.class.uniqueId14" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/EntityNotFoundException.class.uniqueId7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ErrorCode.class.uniqueId3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ErrorResponse.class.uniqueId5" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/FCMService.class.uniqueId1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/FirebaseTokenNotFoundException.class.uniqueId2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/FollowMyselfFailException.class.uniqueId6" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/FollowService.class.uniqueId13" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/GlobalExceptionHandler.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/MemberService.class.uniqueId15" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/compileTransaction/stash-dir/ToDoService.class.uniqueId11" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/category/entity/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/category/entity/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/category/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/category/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/controller/ChallengeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/controller/ChallengeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/dto/ChallengeRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/dto/ChallengeRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/Challenge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/Challenge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/ChallengeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/ChallengeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/ValidationInterval.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/ValidationInterval.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/service/ChallengeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/service/ChallengeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/check/entity/Check.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/proof/entity/Proof.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/proof/entity/Proof.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/validation/entity/Validation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/validation/entity/Validation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/dto/DailyPlanResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/dto/DailyPlanResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlanRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/entity/DailyPlanRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/service/DailyPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/service/DailyPlanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/controller/ToDoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/controller/ToDoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoCompleteOrNotDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoCompleteOrNotDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/dto/ToDoUpdateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/entity/ToDo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/entity/ToDo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/service/ToDoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/toDo/service/ToDoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/follows/service/FollowService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/follows/service/FollowService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/controller/MemberController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/dto/MemberRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/dto/MemberRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/dto/MemberResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/dto/MemberResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/entity/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/entity/Member.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/domain/member/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/global/DummyDataInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/global/DummyDataInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/global/error/ErrorCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/global/error/ErrorCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/global/error/exception/BusinessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/global/error/exception/BusinessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/global/firebase/FCMConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/global/firebase/FCMConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hackerton/global/result/ResultCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hackerton/global/result/ResultCode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,8 +147,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
+        <option value="package-info" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -75,35 +161,37 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/mac/sejoon/konkukHackerton/konkukHackerton_backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;4e362bcdbb9f3ae79582d7afed38ca57&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/mac/sejoon/konkukHackerton/konkukHackerton_backend/src/main/java/com/hackerton/domain/challengeGroup/validation",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "프로젝트",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "4e362bcdbb9f3ae79582d7afed38ca57",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/validation" />
+      <recent name="$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/check" />
       <recent name="$PROJECT_DIR$/src/main/java/com/hackerton/service/member" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/hackerton/domain" />
-      <recent name="$PROJECT_DIR$/src/main/java/com/hackerton" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/firebase" />
@@ -176,20 +264,57 @@
       <workItem from="1691126747767" duration="22241000" />
       <workItem from="1691168326402" duration="17510000" />
       <workItem from="1691338535210" duration="26720000" />
-      <workItem from="1691571793759" duration="3396000" />
+      <workItem from="1691571793759" duration="87134000" />
+      <workItem from="1691850544975" duration="34730000" />
+      <workItem from="1691995380528" duration="17223000" />
+      <workItem from="1692026059710" duration="20587000" />
+      <workItem from="1692114764717" duration="48770000" />
+      <workItem from="1692208688695" duration="1371000" />
     </task>
+    <task id="LOCAL-00001" summary="검증 사진 올리기까지 완료">
+      <created>1692209853934</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1692209853934</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="검증 사진 올리기까지 완료" />
+    <option name="LAST_COMMIT_MESSAGE" value="검증 사진 올리기까지 완료" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlan/service/DailyPlanService.java</url>
-          <line>77</line>
+          <url>file://$PROJECT_DIR$/src/main/java/com/hackerton/domain/dailyPlanGroup/dailyPlan/service/DailyPlanService.java</url>
+          <line>76</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hackerton/domain/category/entity/CategoryCode.java</url>
+          <line>9</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hackerton/global/firebase/FCMConfig.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hackerton/domain/category/entity/Category.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hackerton/domain/challengeGroup/challenge/entity/Challenge.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

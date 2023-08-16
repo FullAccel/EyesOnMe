@@ -24,9 +24,9 @@ public class MemberController {
         return ResponseEntity.ok(ResultResponse.of(MEMBER_SAVE_OR_UPDATE_SUCCESS, memberResponseDto));
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<ResultResponse> getMember(@PathVariable Long id) {
-        MemberResponseDto memberById = memberService.findMemberById(id);
+    @GetMapping("{memberId}")
+    public ResponseEntity<ResultResponse> getMember(@PathVariable Long memberId) {
+        MemberResponseDto memberById = memberService.findMemberById(memberId);
         return ResponseEntity.ok(ResultResponse.of(GET_USERPROFILE_SUCCESS, memberById));
     }
 

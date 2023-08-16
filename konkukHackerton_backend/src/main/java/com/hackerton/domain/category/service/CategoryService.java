@@ -43,8 +43,6 @@ public class CategoryService {
             category.plusCountByToDo();
         else if(dailyPlanOrChallenge instanceof Challenge)
             category.plusCountByChallenge();
-        if(member == null)
-            throw new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 데일리 플래이나 챌린지가 유저에 할당되어 있지 않습니다");
 
         category.setMember(member);
         return categoryRepository.save(category);
@@ -54,10 +52,6 @@ public class CategoryService {
     public Category update(Category category, String afterCategoryCode, Object dailyPlanOrChallenge) {
         Member member = category.getMember();
 
-        Category oldCategory = categoryRepository.findByMemberIdAndCategoryCode(member.getId(), category.getCategoryCode())
-                .orElseThrow(() -> new EntityNotFoundException(CATEGORY_NOT_FOUND, "해당 유저 Id( " + member.getId() + " )는 "
-                        + category.getCategoryCode() + "에 해당하는 카테고리를 가지고 있지 않습니다."));
-
         Category newCategory = Category.builder()
                 .categoryCode(CategoryCode.findByCode(afterCategoryCode))
                 .build();
@@ -65,14 +59,13 @@ public class CategoryService {
         if(dailyPlanOrChallenge instanceof DailyPlan)
         {
             newCategory.plusCountByToDo();
-            oldCategory.minusCountByToDo();
+            category.minusCountByToDo();
         }
         else if(dailyPlanOrChallenge instanceof Challenge)
         {
             newCategory.plusCountByChallenge();
-            oldCategory.minusCountByChallenge();
+            category.minusCountByChallenge();
         }
-
 
         newCategory.setMember(member);
         return categoryRepository.save(newCategory);

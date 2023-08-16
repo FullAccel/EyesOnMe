@@ -17,14 +17,6 @@ public class MemberRequestDto {
 
     private String firebaseToken;
 
-    @Builder
-    public MemberRequestDto(String name, String email, String profileUrl, String firebaseToken) {
-        this.name = name;
-        this.email = email;
-        this.profileUrl = profileUrl;
-        this.firebaseToken = firebaseToken;
-    }
-
     public Member toEntity(){
         return Member.builder()
                 .name(this.name)

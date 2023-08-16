@@ -25,7 +25,7 @@ public class DailyPlan extends BaseTimeEntity {
     private String yearMonth;
 
     @Column(nullable = false)
-    private int date;
+    private int day;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID")
@@ -35,10 +35,9 @@ public class DailyPlan extends BaseTimeEntity {
     List<ToDo> toDos = new ArrayList<>();
 
     @Builder
-    public DailyPlan(Member member, String yearMonth, int date) {
+    public DailyPlan(Member member, String yearMonth, int day) {
         this.member = member;
         this.yearMonth = yearMonth;
-        this.date = date;
+        this.day = day;
     }
-
 }

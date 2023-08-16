@@ -10,6 +10,4 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     List<Category> findAllByMemberId(Long memberId);
     Optional<Category> findByMemberIdAndCategoryCode(Long memberId, CategoryCode categoryCode);
 
-    boolean existsByMemberIdAndCategoryCode(Long memberId, CategoryCode categoryCode);
-
 }

@@ -26,17 +26,22 @@ public class MemberService {
         Member member = memberRepository.findByEmail(memberRequestDto.getEmail())
                 .map(entity -> entity.update(memberRequestDto.getName(), memberRequestDto.getProfileUrl()))
                 .orElse(memberRequestDto.toEntity());
-        return memberRepository.save(member).toMemberResponseDto();
+
+        return MemberResponseDto.builder()
+                .entity(memberRepository.save(member))
+                .build();
     }
 
     public MemberResponseDto findMemberByEmail(String email) {
         return memberRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND,"해당 이메일의 유저가 없습니다 : " + email)).toMemberResponseDto();
+                .map(MemberResponseDto::new)
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND,"해당 이메일의 유저가 없습니다 : " + email));
     }
 
     public MemberResponseDto findMemberById(Long id) {
         return memberRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 id의 유저가 없습니다 : " + id)).toMemberResponseDto();
+                .map(MemberResponseDto::new)
+                .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 id의 유저가 없습니다 : " + id));
     }
 
     @Transactional
