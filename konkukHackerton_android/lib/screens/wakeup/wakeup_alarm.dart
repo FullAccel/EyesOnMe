@@ -14,6 +14,7 @@ class WakeupAlarm extends StatefulWidget {
 
 class _WakeupAlarmState extends State<WakeupAlarm> {
   static const platform = MethodChannel("samples.flutter.dev/battery");
+  int planId = -1;
 
   Future<void> _delayWSAlarm(String yyyymmdd) async {
     try {
@@ -29,8 +30,8 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
+    planId = Get.arguments["planId"];
   }
 
   @override

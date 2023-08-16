@@ -264,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ImageIcon(
                 AssetImage("assets/images/menu1.png"),
                 color: UIService.curMenu == 0
-                    ? Color(0xFF3BDE7C)
+                    ? Theme.of(context).primaryColor
                     : Color(0xFFBCBCBC),
                 size: 32,
               ),

@@ -303,7 +303,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
               margin: EdgeInsets.only(right: 28.sp),
               child: ImageIcon(
                 AssetImage("assets/images/menu3.png"),
-                color: Color(0xFFBCBCBC),
+                color: UIService.curMenu == 2 ? Theme.of(context).primaryColor : Color(0xFFBCBCBC),
                 size: 32,
               ),
             ),

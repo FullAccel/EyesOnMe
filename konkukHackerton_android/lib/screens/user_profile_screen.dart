@@ -209,7 +209,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               child: ImageIcon(
                 AssetImage("assets/images/menu4.png"),
                 color: UIService.curMenu == 3
-                    ? Color(0xFF3BDE7C)
+                    ? Theme.of(context).primaryColor
                     : Color(0xFFBCBCBC),
                 size: 32,
               ),

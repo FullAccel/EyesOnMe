@@ -11,6 +11,7 @@ import 'package:eom_fe/screens/login_screen.dart';
 import 'package:eom_fe/screens/plan_add_screen.dart';
 import 'package:eom_fe/screens/plan_delete/plan_delete1.dart';
 import 'package:eom_fe/screens/plan_delete/plan_delete2.dart';
+import 'package:eom_fe/screens/plan_finish/finish_alarm.dart';
 import 'package:eom_fe/screens/plan_finish/plan_finish1.dart';
 import 'package:eom_fe/screens/plan_finish/plan_finish2.dart';
 import 'package:eom_fe/screens/plan_progressing_screen.dart';
@@ -75,7 +76,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Nanum_SQUARE',
           ),
           //home: LoginScreen(),
-          initialRoute: '/login',
+          initialRoute: '/plan/finish',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),
@@ -142,6 +143,11 @@ class _MyAppState extends State<MyApp> {
               transition: Transition.rightToLeftWithFade,
             ),
             GetPage(
+              name: "/plan/finish",
+              page: () => FinishAlarm(),
+              transition: Transition.rightToLeftWithFade,
+            ),
+            GetPage(
               name: "/plan/finish1",
               page: () => PlanFinish1(),
             ),
@@ -189,7 +195,9 @@ class _MyAppState extends State<MyApp> {
       print("setExtraScreenHandler");
       if (call.method == 'showExtraScreen') {
         print("showExtraScreen");
-        _showExtraScreen();
+        String jsonString = call.arguments;
+        Map<String, dynamic> dict = jsonDecode(jsonString);
+        _showExtraScreen(dict["alarmCode"].toString());
       }
     });
   }
@@ -203,25 +211,52 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  Future<void> _showExtraScreen() async {
+  Future<void> _showExtraScreen(String alarmCode) async {
+    int last = int.parse(alarmCode) % 10;
     try {
-      Navigator.pushNamed(context, '/extraScreen'); // Navigate to ExtraScreen
+      if (last < 0) {
+        if (last % 2 == 1) {
+          // 기상
+          Get.toNamed('/wakeup',
+              arguments: {"planId": int.parse(alarmCode) / 10});
+        } else {
+          // 취침
+          Get.toNamed('/plan/tomorrow',
+              arguments: {"planId": int.parse(alarmCode) / 10});
+        }
+      } else if (last == 0) {
+        // 플랜 시작
+        Get.toNamed('/plan/start',
+            arguments: {"planId": int.parse(alarmCode) / 10});
+      } else if (last == 1) {
+        // 중간 알람(진행 중)
+        Get.toNamed('/plan/progressing',
+            arguments: {"planId": int.parse(alarmCode) / 10});
+      } else if (last == 2) {
+        // 종료 알람
+        Get.toNamed('/extraScreen',
+            arguments: {"planId": int.parse(alarmCode) / 10});
+      }
+
+      Get.toNamed('/extraScreen', arguments: {
+        "planId": int.parse(alarmCode) / 10
+      }); // Navigate to ExtraScreen
     } on PlatformException catch (e) {
       print("Error: ${e.message}");
     }
   }
 
-  Future<void> _testData() async {
-    try {
-      final result =
-          await MyApp.platform.invokeMethod('testData', ["Raon", "29"]);
-      print("flutter : $result");
-
-      // await platform.invokeMethod('testData');
-    } on PlatformException catch (e) {
-      print("Error: ${e.message}");
-    }
-  }
+  // Future<void> _testData() async {
+  //   try {
+  //     final result =
+  //         await MyApp.platform.invokeMethod('testData', ["Raon", "29"]);
+  //     print("flutter : $result");
+  //
+  //     // await platform.invokeMethod('testData');
+  //   } on PlatformException catch (e) {
+  //     print("Error: ${e.message}");
+  //   }
+  // }
 
   Future<bool> permission() async {
     Map<Permission, PermissionStatus> status =

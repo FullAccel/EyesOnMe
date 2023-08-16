@@ -191,7 +191,7 @@ class _EntirePlanState extends State<EntirePlan> {
               child: ImageIcon(
                 AssetImage("assets/images/menu2.png"),
                 color: UIService.curMenu == 1
-                    ? Color(0xFF3BDE7C)
+                    ? Theme.of(context).primaryColor
                     : Color(0xFFBCBCBC),
                 size: 32,
               ),

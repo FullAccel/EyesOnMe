@@ -1,8 +1,8 @@
 class SetPlanService {
   static List<String> soundSettings = [
-    "알림음",
-    "진동",
     "무음",
+    "진동",
+    "알림음",
   ];
 
   static var alarmSounds = '''
