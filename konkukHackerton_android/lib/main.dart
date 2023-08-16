@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Nanum_SQUARE',
           ),
           //home: LoginScreen(),
-          initialRoute: '/challenges',
+          initialRoute: '/login',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eom_fe/models/challenge_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:weekly_date_picker/weekly_date_picker.dart';
 
-import '../../services/challenge_service.dart';
 import '../../services/ui_service.dart';
 
 class ChallengeDetail extends StatefulWidget {
@@ -19,59 +20,21 @@ class _ChallengeDetailState extends State<ChallengeDetail> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 
   DateTime _selectedDay = DateTime.now();
-  late ChallengeModel ch;
+  late Future<ChallengeModel> ch;
+  late int id;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getSingleChallenge(Get.arguments);
+    id = Get.arguments;
+    print("id: $id");
+    ch = _getSingleChallenge(id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(1.sw, 0.22.sh),
-        child: Container(
-          child: AppBar(
-            backgroundColor: Theme.of(context).primaryColor,
-            elevation: 5,
-            title: Column(
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Text(ch.title),
-                        Container(
-                          margin: EdgeInsets.only(left: 0.01.sw),
-                          padding: EdgeInsets.symmetric(
-                              vertical: 0.005.sh, horizontal: 0.03.sw),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Theme.of(context).dialogBackgroundColor,
-                          ),
-                          child: Text(
-                            ChallengeService.getInterval(
-                                ch.validationIntervalCode,
-                                ch.validationCountPerInterval),
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(),
-              ],
-            ),
-          ),
-        ),
-      ),
       body: Container(
         child: Column(
           children: [
@@ -174,16 +137,15 @@ class _ChallengeDetailState extends State<ChallengeDetail> {
     );
   }
 
-  Future<void> _getSingleChallenge(int id) async {
+  Future<ChallengeModel> _getSingleChallenge(int id) async {
     try {
-      ChallengeModel CModel =
-          await platform.invokeMethod('getAllValidators', id);
-      print(CModel);
-      setState(() {
-        ch = CModel;
-      });
+      String got =
+          await platform.invokeMethod('getSingleChallenge', id.toString());
+      Future.delayed(const Duration(milliseconds: 700), () {});
+
+      return ChallengeModel.fromJson(jsonDecode(got));
     } on PlatformException catch (e) {
-      throw Exception("Exception at invokeMethod: makeChallengeWOValidator");
+      throw Exception("Exception at invokeMethod: getSingleChallenge");
     }
   }
 }

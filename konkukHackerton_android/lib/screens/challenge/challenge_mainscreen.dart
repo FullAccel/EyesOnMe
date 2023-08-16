@@ -68,7 +68,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getAllChallenges();
+    getChallenge();
     //_makeChallengeWithValidator(jsonEncode(dummyMakeChallenge));
     //_makeChallengeWithValidator(jsonEncode(dummyChallenge[1]));
   }
@@ -361,16 +361,12 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     try {
       tmp = await platform.invokeMethod("getAllChallenges");
       print("invoke getAllChallenges: $tmp");
-      List<ChallengeModel> list = jsonDecode(tmp);
+      List<dynamic> list = jsonDecode(tmp);
 
       for (var ch in list) {
-        ret.add(ChallengeModel.fromJson(ch as Map<String, dynamic>));
+        ret.add(ChallengeModel.fromJson(ch));
         print(ret);
       }
-
-      setState(() {
-        challengeList = ret;
-      });
 
       return ApiService.sortChallenges(ret);
     } on PlatformException catch (e) {

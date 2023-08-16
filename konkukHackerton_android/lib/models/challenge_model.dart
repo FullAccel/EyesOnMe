@@ -9,7 +9,21 @@ class ChallengeModel {
       challengeStatusCode,
       validationIntervalCode,
       categoryCode;
-  final List<Map<String, dynamic>> validatorList;
+  final List<dynamic> validatorList;
+
+  ChallengeModel({
+    required this.id,
+    required this.totalProofNum,
+    required this.currentSuccessNum,
+    required this.achievementRate,
+    required this.validationCountPerInterval,
+    required this.title,
+    required this.deadline,
+    required this.challengeStatusCode,
+    required this.validationIntervalCode,
+    required this.categoryCode,
+    required this.validatorList,
+  });
 
   ChallengeModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
