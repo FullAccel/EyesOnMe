@@ -1,6 +1,6 @@
 package com.hackerton.security.dto;
 
-import com.hackerton.member.domain.Member;
+import com.hackerton.domain.member.entity.Member;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -16,6 +16,6 @@ public class SessionMember implements Serializable {
         this.id = member.getId();
         this.name = member.getName();
         this.email = member.getEmail();
-        this.picture = member.getPicture();
+        this.picture = member.getProfileUrl();
     }
 }

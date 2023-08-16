@@ -1,6 +1,6 @@
 package com.hackerton.security.config;
 
-import com.hackerton.member.domain.Role;
+import com.hackerton.domain.member.entity.Role;
 import com.hackerton.security.service.CustomOAuth2UserService;
 import com.hackerton.security.service.LoginSuccessHandler;
 import lombok.RequiredArgsConstructor;

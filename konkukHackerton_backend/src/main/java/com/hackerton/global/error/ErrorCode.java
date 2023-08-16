@@ -1,0 +1,71 @@
+package com.hackerton.global.error;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+/**
+ * ErrorCode Convention
+ * - 도메인 별로 나누어 관리
+ * - [주체_이유] 형태로 생성
+ * - 코드는 도메인명 앞에서부터 1~2글자로 사용
+ * - 메시지는 "~~다."로 마무리
+ */
+
+@Getter
+@AllArgsConstructor
+public enum ErrorCode {
+
+    // Member
+    MEMBER_NOT_FOUND(400, "M001", "존재 하지 않는 유저입니다."),
+    USERNAME_ALREADY_EXIST(400, "M002", "이미 존재하는 사용자 이름입니다."),
+    ACCOUNT_MISMATCH(401, "M005", "계정 정보가 일치하지 않습니다."),
+
+    //Follow
+    FOLLOW_ALREADY_EXIST(400, "F001", "이미 팔로우한 유저입니다."),
+    UNFOLLOW_FAIL(400, "F002", "팔로우하지 않은 유저와 언팔로우를 할 수 없습니다."),
+    FOLLOW_MYSELF_FAIL(400, "F003", "자기 자신을 팔로우 할 수 없습니다."),
+    UNFOLLOW_MYSELF_FAIL(400, "F004", "자기 자신을 언팔로우 할 수 없습니다."),
+    FOLLOWER_DELETE_FAIL(400, "F005", "팔로워 삭제할 수 없는 대상입니다."),
+    FOLLOWING_NOT_FOUND(400, "F006", "팔로잉한 유저가 없습니다."),
+    FOLLOWER_NOT_FOUND(400, "F007", "팔로워가 없습니다."),
+
+
+    //DailyPlan
+    DAILYPLAN_ALREADY_EXIST(400, "D001", "이미 데일리 플랜을 작성하였습니다. PUT으로 update 해주세요"),
+    DAILYPLAN_NOT_FOUND(400, "D002", "존재 하지 않는 데일리 플랜입니다"),
+    DAILYPLAN_MONTHLIST_NOT_FOUND(400, "D003", "해당 월에 작성된 데일리 플랜이 없습니다"),
+    DAILYPLAN_NOT_HAVE_TODOLIST(400, "D004", "해당 데일리 플랜에 작성된 투두리스트가 없습니다"),
+
+    //ToDoList
+    TODOLIST_NOT_FOUND(400, "T001", "존재 하지 않는 투두리스트입니다"),
+
+    //Category
+    CATEGORY_NOT_FOUND(400, "CT001", "존재 하지 않는 카테고리입니다"),
+
+    //Firebase
+    TOKEN_NOT_FOUND(400, "FB001", "해당 멤버의 토큰이 올바르지 않습니다"),
+    PUSH_NOTIFICATION_FAIL(400, "FB002", "알림 보내기를 실패하였습니다"),
+
+    //Challenge
+    VALIDATION_INTERVAL_NOT_FOUND(400, "C001", "존재 하지 않는 인증 간격입니다."),
+    CHALLENGE_NOT_FOUND(400, "C002", " 존재 하지 않는 챌린지 입니다"),
+    VALIDATOR_UNDER_ZERO(400, "C003", "검증자는 0명이 될 수 없습니다"),
+    VALIDATOR_UPPER_MAX_NUM(400, "C004", "검증자는 3명 이상이 될 수 없습니다"),
+    VALIDATION_COUNT_EXCEPTION(400, "C005", "검증 횟수는 1회 이상 99회 이하여야 합니다"),
+    VALIDATION_INTERVAL_TOO_SMALL(400, "C006", "인증 간격이 챌린지 전체 기간보다 큽니다"),
+
+    //Validation
+    VALIDATION_NOT_FOUND(400, "V001", "존재 하지 않은 검증입니다"),
+
+    //Proof
+    PROOF_NOT_FOUND(400, "P001", "등록된 Proof가 없습니다"),
+
+    ;
+
+
+
+
+    private final int status;
+    private final String code;
+    private final String message;
+}

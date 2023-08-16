@@ -1,7 +1,6 @@
 package com.hackerton.security.dto;
 
-import com.hackerton.member.domain.Member;
-import com.hackerton.member.domain.Role;
+import com.hackerton.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +12,7 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String name;
     private String email;
-    private String picture;
+    private String profileUrl;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
@@ -21,7 +20,7 @@ public class OAuthAttributes {
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
-        this.picture = picture;
+        this.profileUrl = picture;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
@@ -90,8 +89,7 @@ public class OAuthAttributes {
         return Member.builder()
                 .name(name)
                 .email(email)
-                .picture(picture)
-                .role(Role.GUEST)
+                .profileUrl(profileUrl)
                 .build();
     }
 }

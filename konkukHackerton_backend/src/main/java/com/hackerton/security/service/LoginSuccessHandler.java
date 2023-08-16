@@ -1,6 +1,6 @@
 package com.hackerton.security.service;
 
-import com.hackerton.member.domain.Member;
+import com.hackerton.domain.member.entity.Member;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
