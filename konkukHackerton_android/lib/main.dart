@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:eom_fe/screens/challenge/challenge_detail.dart';
+import 'package:eom_fe/screens/challenge/challenge_mainscreen.dart';
+import 'package:eom_fe/screens/challenge/make_challenge.dart';
 import 'package:eom_fe/screens/entire_plan.dart';
 import 'package:eom_fe/screens/home_screen.dart';
 import 'package:eom_fe/screens/intro_screen1.dart';
@@ -46,71 +49,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // List<Map<String, dynamic>> dummyPlans = [
-  //   {
-  //     "title": "플랜1",
-  //     "startTime": "2023-08-15 01:00:00",
-  //     "endTime": "2023-08-15 07:00:00",
-  //     "cCode": "C001",
-  //     "isAlarm": true,
-  //     "alarmType": 0,
-  //     "alarmRepeat": 0
-  //   },
-  //   {
-  //     "title": "플랜2",
-  //     "startTime": "2023-08-15 07:00:00",
-  //     "endTime": "2023-08-15 08:15:00",
-  //     "cCode": "C002",
-  //     "isAlarm": true,
-  //     "alarmType": 0,
-  //     "alarmRepeat": 10
-  //   },
-  //   {
-  //     "title": "플랜3",
-  //     "startTime": "2023-08-15 09:00:00",
-  //     "endTime": "2023-08-15 11:00:00",
-  //     "cCode": "C003",
-  //     "isAlarm": true,
-  //     "alarmType": 0,
-  //     "alarmRepeat": 10
-  //   },
-  //   {
-  //     "title": "플랜4",
-  //     "startTime": "2023-08-15 22:05:00",
-  //     "endTime": "2023-08-15 23:05:00",
-  //     "cCode": "C004",
-  //     "isAlarm": true,
-  //     "alarmType": 0,
-  //     "alarmRepeat": 10
-  //   },
-  // ];
-  //
-  // Future<void> addPlan() async {
-  //   for (var plan in dummyPlans) {
-  //     print("${plan["title"]} 넣을 차례~");
-  //     await _postTodoDataFunc(jsonEncode(plan));
-  //     print("${plan["title"]} 넣었음!!!");
-  //   }
-  // }
-  //
-  // Future<void> _postTodoDataFunc(String jsonString) async {
-  //   try {
-  //     final result =
-  //         await MyApp.platform.invokeMethod('postTodoDataFunc', jsonString);
-  //     print("alarm: $result");
-  //
-  //     // await platform.invokeMethod('testData');
-  //   } on PlatformException catch (e) {
-  //     print("Error: ${e.message}");
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
 
     setExtraScreenHandler();
-    print("permission");
     permission();
     //addPlan();
   }
@@ -126,10 +69,13 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return GetMaterialApp(
           theme: ThemeData(
+            primaryColor: Color(0xFF5A7FFF),
+            dialogBackgroundColor: Color(0xFFDFE4FF),
+            shadowColor: Color(0xFFBCBCBC),
             fontFamily: 'Nanum_SQUARE',
           ),
-          //home: Test(),
-          initialRoute: '/login',
+          //home: LoginScreen(),
+          initialRoute: '/challenges',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),
@@ -218,6 +164,18 @@ class _MyAppState extends State<MyApp> {
               name: "/wakeup/preview",
               page: () => WakeupPreviewPlan(),
               transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/challenge",
+              page: () => ChallengeMainScreen(),
+            ),
+            GetPage(
+              name: "/challenge/make",
+              page: () => MakeChallenge(),
+            ),
+            GetPage(
+              name: "/challenge/detail",
+              page: () => ChallengeDetail(),
             ),
           ],
         );

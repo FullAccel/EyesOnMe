@@ -134,6 +134,12 @@ class _ShowPlanScreenState extends State<ShowPlanScreen> {
                     onPressed: () {
                       Get.toNamed("/plan/finish");
                     },
+                    clipBehavior: Clip.hardEdge,
+                    style: FilledButton.styleFrom(
+                      shape: CircleBorder(),
+                      fixedSize: Size(220.sp, 220.sp),
+                      backgroundColor: Color(0xFF3BDE7C),
+                    ),
                     child: Container(
                       margin: EdgeInsets.only(
                         bottom: 0.08.sh,
@@ -146,12 +152,6 @@ class _ShowPlanScreenState extends State<ShowPlanScreen> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    style: FilledButton.styleFrom(
-                      shape: CircleBorder(),
-                      fixedSize: Size(220.sp, 220.sp),
-                      backgroundColor: Color(0xFF3BDE7C),
                     ),
                   ),
                 ),

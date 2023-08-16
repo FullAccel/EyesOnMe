@@ -6,7 +6,6 @@ import 'package:flutter_picker/picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PlanningWakeupTime extends StatefulWidget {
   const PlanningWakeupTime({super.key});
@@ -16,9 +15,8 @@ class PlanningWakeupTime extends StatefulWidget {
 }
 
 class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  String wakeup_time = "";
-  DateTime parsedWakeupTime = DateTime.now();
+  String wakeup_time = DateTime.now().toString();
+
   final isSelected = [true, false, false];
   String _alarmSound = "노래1";
   String _repeat = "없음";
@@ -33,7 +31,14 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
       minutesInterval: 15,
       onTimeChange: (time) {
         setState(() {
-          wakeup_time = time.toString();
+          wakeup_time = DateTime(
+            time.year,
+            time.month,
+            time.day,
+            time.hour,
+            time.minute,
+            0,
+          ).toString();
         });
       },
     );
@@ -159,8 +164,6 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
 
   @override
   Widget build(BuildContext context) {
-    wakeup_time = DateTime.now().toString();
-
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0.08.sh,
@@ -194,63 +197,65 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
               SizedBox(
                 height: 0.02.sh,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFF5F5F5),
-                  foregroundColor: Color(0xFF3BDE7C),
-                  minimumSize: Size(
-                    0.6.sw,
-                    0.07.sh,
+              Builder(builder: (BuildContext context) {
+                DateTime parsedWakeupTime = DateTime.parse(wakeup_time);
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFF5F5F5),
+                    foregroundColor: Color(0xFF3BDE7C),
+                    minimumSize: Size(
+                      0.6.sw,
+                      0.07.sh,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  textStyle: TextStyle(
-                    fontSize: 40.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                onPressed: () {
-                  showDialog(
-                      //barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          titlePadding: EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 5,
-                          ),
-                          title: Container(
-                            alignment: Alignment.centerLeft,
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              icon: Icon(
-                                Icons.arrow_back_outlined,
-                                size: 30,
+                  onPressed: () {
+                    showDialog(
+                        //barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            titlePadding: EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 5,
+                            ),
+                            title: Container(
+                              alignment: Alignment.centerLeft,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                icon: Icon(
+                                  Icons.arrow_back_outlined,
+                                  size: 30,
+                                ),
                               ),
                             ),
-                          ),
-                          content: hourMinute12H(parsedWakeupTime),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  parsedWakeupTime =
-                                      DateTime.parse(wakeup_time);
-                                });
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("확인"),
-                            )
-                          ],
-                        );
-                      });
-                },
-                child: parsedWakeupTime.hour > 12
-                    ? Text(
-                        "${parsedWakeupTime.hour % 12} : ${parsedWakeupTime.minute}  pm")
-                    : Text(
-                        "${parsedWakeupTime.hour} : ${parsedWakeupTime.minute}  am"),
-              )
+                            content: hourMinute12H(parsedWakeupTime),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("확인"),
+                              )
+                            ],
+                          );
+                        });
+                  },
+                  child: parsedWakeupTime.hour > 12
+                      ? Text(
+                          "${(parsedWakeupTime.hour % 12).toString().padLeft(2, "0")} : ${parsedWakeupTime.minute.toString().padLeft(2, "0")}  pm")
+                      : parsedWakeupTime.hour == 12
+                          ? Text(
+                              "12 : ${parsedWakeupTime.minute.toString().padLeft(2, "0")}  pm")
+                          : Text(
+                              "${parsedWakeupTime.hour.toString().padLeft(2, "0")} : ${parsedWakeupTime.minute.toString().padLeft(2, "0")}  am"),
+                );
+              })
             ],
           ),
           Container(
@@ -470,10 +475,21 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
                 ),
                 SizedBox(height: 0.05.sh),
                 FilledButton(
-                  onPressed: () => Get.toNamed(
-                    '/plan/sleep',
-                    arguments: [wakeup_time],
-                  ),
+                  onPressed: () {
+                    Get.toNamed(
+                      '/plan/sleep',
+                      arguments: {
+                        "argName": "wakeupAndSleep",
+                        "data": [
+                          {
+                            "startTime": wakeup_time,
+                            "alarmType": isSelected.indexOf(true),
+                            "alarmRepeat": SetPlanService.repeatToInt[_repeat]
+                          },
+                        ],
+                      },
+                    );
+                  },
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),
                     textStyle: TextStyle(fontWeight: FontWeight.bold),

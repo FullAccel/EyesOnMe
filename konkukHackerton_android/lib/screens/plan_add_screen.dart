@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_picker/picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
@@ -16,6 +17,7 @@ class PlanAddScreen extends StatefulWidget {
 }
 
 class _PlanAddScreenState extends State<PlanAddScreen> {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
   late String dropdownValue; // 카테고리
   String planStartTime = "";
   String planEndTime = "";
@@ -27,27 +29,29 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
   bool _isSilenceMode = false;
   final _textController = TextEditingController();
 
+  Future<void> _postTodoDataFunc(String jsonString) async {
+    try {
+      final result =
+          await platform.invokeMethod('postTodoDataFunc', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> addPlan(String jsonString) async {
+    String? ret;
+    await _postTodoDataFunc(jsonString);
+    print(ret);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     dropdownValue = SetPlanService.categoryToCode.keys.first;
-    planStartTime = DateTime(
-      parsedPlanStartTime.year,
-      parsedPlanStartTime.month,
-      parsedPlanStartTime.day,
-      parsedPlanStartTime.hour,
-      parsedPlanStartTime.minute,
-      0,
-    ).toString();
-    planEndTime = DateTime(
-      parsedPlanEndTime.year,
-      parsedPlanEndTime.month,
-      parsedPlanEndTime.day,
-      parsedPlanEndTime.hour,
-      parsedPlanEndTime.minute,
-      0,
-    ).toString();
   }
 
   @override
@@ -210,8 +214,11 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                   child: parsedPlanStartTime.hour > 12
                       ? Text(
                           "${(parsedPlanStartTime.hour % 12).toString().padLeft(2, "0")} : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  pm")
-                      : Text(
-                          "${parsedPlanStartTime.hour.toString().padLeft(2, "0")} : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  am"),
+                      : parsedPlanStartTime.hour == 12
+                          ? Text(
+                              "12 : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  pm")
+                          : Text(
+                              "${parsedPlanStartTime.hour.toString().padLeft(2, "0")} : ${parsedPlanStartTime.minute.toString().padLeft(2, "0")}  am"),
                 ),
                 SizedBox(
                   height: 0.05.sh,
@@ -284,8 +291,11 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                   child: parsedPlanEndTime.hour > 12
                       ? Text(
                           "${(parsedPlanEndTime.hour % 12).toString().padLeft(2, "0")} : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  pm")
-                      : Text(
-                          "${parsedPlanEndTime.hour.toString().padLeft(2, "0")} : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  am"),
+                      : parsedPlanEndTime.hour == 12
+                          ? Text(
+                              "12 : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  pm")
+                          : Text(
+                              "${parsedPlanEndTime.hour.toString().padLeft(2, "0")} : ${parsedPlanEndTime.minute.toString().padLeft(2, "0")}  am"),
                 ),
               ],
             ),
@@ -471,19 +481,17 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                 SizedBox(height: 0.1.sh),
                 FilledButton(
                   onPressed: () {
+                    Map<String, dynamic> plan = {
+                      "title": _textController.text,
+                      "startTime": planStartTime,
+                      "endTime": planEndTime,
+                      "cCode": SetPlanService.categoryToCode[dropdownValue],
+                      "isAlarm": true,
+                      "alarmType": isSelected.indexOf(true),
+                      "alarmRepeat": SetPlanService.repeatToInt[_repeat],
+                    };
                     //addPlan(jsonEncode(plan));
-                    Get.toNamed(
-                      '/plan/finish',
-                      arguments: {
-                        "title": _textController.text,
-                        "startTime": planStartTime,
-                        "endTime": planEndTime,
-                        "cCode": SetPlanService.categoryToCode[dropdownValue],
-                        "isAlarm": true,
-                        "alarmType": isSelected.indexOf(true),
-                        "alarmRepeat": SetPlanService.repeatToInt[_repeat],
-                      },
-                    );
+                    Get.toNamed('/plan/finish', arguments: plan);
                   },
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),
@@ -509,10 +517,14 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
       minutesInterval: 15,
       onTimeChange: (time) {
         setState(() {
-          //planStartTime = time.toString();
           planStartTime = DateTime(
-                  time.year, time.month, time.day, time.hour, time.minute, 0)
-              .toString();
+            time.year,
+            time.month,
+            time.day,
+            time.hour,
+            time.minute,
+            0,
+          ).toString();
         });
       },
     );
@@ -525,11 +537,15 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
       is24HourMode: false,
       minutesInterval: 15,
       onTimeChange: (time) {
-        print(time);
         setState(() {
           planEndTime = DateTime(
-                  time.year, time.month, time.day, time.hour, time.minute, 0)
-              .toString();
+            time.year,
+            time.month,
+            time.day,
+            time.hour,
+            time.minute,
+            0,
+          ).toString();
         });
       },
     );

@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class PlanWidget extends StatefulWidget {
-  static const platform = MethodChannel("samples.flutter.dev/battery");
   final id,
       title,
       toDoStatusCode,
@@ -30,11 +29,13 @@ class PlanWidget extends StatefulWidget {
 }
 
 class _PlanWidgetState extends State<PlanWidget> {
+  static const platform = MethodChannel("samples.flutter.dev/battery");
   Future<void> _deletePlan() async {
     String value;
     try {
-      value = await PlanWidget.platform
-          .invokeMethod("deleteTodoDataFunc", widget.id.toString());
+      value = await platform.invokeMethod(
+          "deleteTodoDataFunc", widget.id.toString());
+      print(value);
     } on PlatformException catch (e) {
       value = "error message : ${e.message}";
     }
@@ -56,7 +57,9 @@ class _PlanWidgetState extends State<PlanWidget> {
         motion: ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: null,
+            onPressed: (context) {
+              _deletePlan();
+            },
             backgroundColor: Color(0xFFDADADA).withOpacity(0.5),
             foregroundColor: Colors.red,
             icon: Icons.delete,

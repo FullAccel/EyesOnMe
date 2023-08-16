@@ -5,7 +5,6 @@ import 'package:flutter_picker/picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/setplan_service.dart';
 
@@ -17,8 +16,7 @@ class PlanningSleepTime extends StatefulWidget {
 }
 
 class _PlanningSleepTimeState extends State<PlanningSleepTime> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<String> sleepTime;
+  String sleepTime = DateTime.now().toString();
   final isSelected = [true, false, false];
   String _alarmSound = "노래1";
   String _repeat = "없음";
@@ -61,17 +59,6 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
 ]
     ''';
 
-  setSleepTime(time) async {
-    final SharedPreferences prefs = await _prefs;
-
-    setState(() {
-      sleepTime =
-          prefs.setString("sleepTime", time.toString()).then((bool success) {
-        return time.toString();
-      });
-    });
-  }
-
   Widget hourMinute12H(DateTime t) {
     return TimePickerSpinner(
       time: t,
@@ -79,8 +66,16 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
       is24HourMode: false,
       minutesInterval: 15,
       onTimeChange: (time) {
-        print(time);
-        setSleepTime(time);
+        setState(() {
+          sleepTime = DateTime(
+            time.year,
+            time.month,
+            time.day,
+            time.hour,
+            time.minute,
+            0,
+          ).toString();
+        });
       },
     );
   }
@@ -159,6 +154,8 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
         }).showDialog(context);
   }
 
+  var arg;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -168,10 +165,8 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
 
   @override
   Widget build(BuildContext context) {
-    sleepTime = _prefs.then((prefs) {
-      //print("saved time ${prefs.getString("wakeup_time")}");
-      return prefs?.getString("sleepTime") ?? DateTime.now().toString();
-    });
+    arg = Get.arguments;
+    print("CurRoute: /plan/sleep, arg: $arg");
 
     return Scaffold(
       appBar: AppBar(
@@ -206,72 +201,66 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
               SizedBox(
                 height: 0.02.sh,
               ),
-              FutureBuilder(
-                future: sleepTime,
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData) {
-                    DateTime parsedWakeupTime = DateTime.parse(snapshot.data);
-                    //print(parsedWakeupTime);
-                    return ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFF5F5F5),
-                        foregroundColor: Color(0xFF3BDE7C),
-                        minimumSize: Size(
-                          0.6.sw,
-                          0.07.sh,
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+              Builder(
+                builder: (BuildContext context) {
+                  DateTime parsedSleepTime = DateTime.parse(sleepTime);
+                  //print(parsedWakeupTime);
+                  return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFFF5F5F5),
+                      foregroundColor: Color(0xFF3BDE7C),
+                      minimumSize: Size(
+                        0.6.sw,
+                        0.07.sh,
                       ),
-                      onPressed: () {
-                        showDialog(
-                            //barrierDismissible: false,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                titlePadding: EdgeInsets.symmetric(
-                                  vertical: 5,
-                                  horizontal: 5,
-                                ),
-                                title: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Get.back();
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_back_outlined,
-                                      size: 30,
-                                    ),
+                      textStyle: TextStyle(
+                        fontSize: 40.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    onPressed: () {
+                      showDialog(
+                          //barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              titlePadding: EdgeInsets.symmetric(
+                                vertical: 5,
+                                horizontal: 5,
+                              ),
+                              title: Container(
+                                alignment: Alignment.centerLeft,
+                                child: IconButton(
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_back_outlined,
+                                    size: 30,
                                   ),
                                 ),
-                                content: hourMinute12H(parsedWakeupTime),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("확인"),
-                                  )
-                                ],
-                              );
-                            });
-                      },
-                      child: parsedWakeupTime.hour > 12
-                          ? Text(
-                              "${parsedWakeupTime.hour % 12} : ${parsedWakeupTime.minute}  pm")
-                          : Text(
-                              "${parsedWakeupTime.hour} : ${parsedWakeupTime.minute}  am"),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-
-                  // By default, show a loading spinner.
-                  return Center(child: const CircularProgressIndicator());
+                              ),
+                              content: hourMinute12H(parsedSleepTime),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("확인"),
+                                )
+                              ],
+                            );
+                          });
+                    },
+                    child: parsedSleepTime.hour > 12
+                        ? Text(
+                            "${(parsedSleepTime.hour % 12).toString().padLeft(2, "0")} : ${parsedSleepTime.minute.toString().padLeft(2, "0")}  pm")
+                        : parsedSleepTime.hour == 12
+                            ? Text(
+                                "12 : ${parsedSleepTime.minute.toString().padLeft(2, "0")}  pm")
+                            : Text(
+                                "${parsedSleepTime.hour.toString().padLeft(2, "0")} : ${parsedSleepTime.minute.toString().padLeft(2, "0")}  am"),
+                  );
                 },
               ),
             ],
@@ -455,15 +444,19 @@ class _PlanningSleepTimeState extends State<PlanningSleepTime> {
                 ),
                 SizedBox(height: 0.1.sh),
                 FilledButton(
-                  onPressed: () => Get.toNamed(
-                    '/plan/finish',
-                    arguments: sleepTime.then(
-                      (value) {
-                        Get.arguments.add(value);
+                  onPressed: () {
+                    arg["data"].add(
+                      {
+                        "startTime": sleepTime,
+                        "alarmType": isSelected.indexOf(true),
+                        "alarmRepeat": SetPlanService.repeatToInt[_repeat]
                       },
-                    ),
-                    //arguments: Get.arguments.add(sleepTime),
-                  ),
+                    );
+                    Get.toNamed(
+                      '/plan/finish',
+                      arguments: arg,
+                    );
+                  },
                   style: FilledButton.styleFrom(
                     backgroundColor: Color(0xFF3BDE7C),
                     textStyle: TextStyle(fontWeight: FontWeight.bold),

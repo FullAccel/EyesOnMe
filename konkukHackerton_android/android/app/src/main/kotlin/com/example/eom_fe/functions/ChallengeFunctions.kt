@@ -243,29 +243,65 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         }
     }
 
-    suspend fun getAllChallengesFunc(): List<ChallengeData>? {
-        return try {
-            val getAllChallengesBuilder = RetrofitBuilder.api.getAllChallenges(memberInfo.id)
-            val response = getAllChallengesBuilder.execute()
+    fun getAllChallengesFunc(callback: (List<ChallengeData>?) -> Unit) {
+        val getAllChallengesBuilder = RetrofitBuilder.api.getAllChallenges(memberInfo.id)
+        getAllChallengesBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-DF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<List<ChallengeData>>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as List<ChallengeData>
+                    callback(result)
+                }
+                else {
+                    Log.d("eyesonme-DF", "getMonthlyPlanFunc null (1)")
+                    Log.d("eyesonme-DF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
+                }
 
-            if (response.isSuccessful) {
-                Log.d("eyesonme-CF", "response : ${response.body()}")
-                val temp = response.body() as APIResponseData
-                val type: Type = object : TypeToken<List<ChallengeData>>() {}.type
-                val jsonResult = Gson().toJson(temp.data)
-                val result = Gson().fromJson(jsonResult, type) as List<ChallengeData>
-                result
-            } else {
-                Log.d("eyesonme-CF", "getAllChallengesFunc null (1)")
-                Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
-                null
             }
-        } catch (e: Exception) {
-            Log.d("eyesonme-CF", "getAllChallengesFunc null (2)")
-            Log.d("eyesonme-CF", "error 2 : ${e.printStackTrace()}")
-            null
+
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-DF", "getMonthlyPlanFunc null (2)")
+                Log.d("eyesonme-DF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
+            }
         }
+        )
     }
+
+//    suspend fun getAllChallengesFunc(): List<ChallengeData>? {
+//        return try {
+//            val getAllChallengesBuilder = RetrofitBuilder.api.getAllChallenges(memberInfo.id)
+//            val response = getAllChallengesBuilder.execute()
+//
+//            if (response.isSuccessful) {
+//                CoroutineScope(Dispatchers.IO).launch {
+//                    Log.d("eyesonme-CF", "response : ${response.body()}")
+//                    val temp = response.body() as APIResponseData
+//                    val type: Type = object : TypeToken<List<ChallengeData>>() {}.type
+//                    val jsonResult = Gson().toJson(temp.data)
+//                    val result = Gson().fromJson(jsonResult, type) as List<ChallengeData>
+//                    Log.d("eyesonme-CF", "responseSuccessful $result")
+//                    result
+//                }
+//
+//            } else {
+//                Log.d("eyesonme-CF", "getAllChallengesFunc null (1)")
+//                Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+//                null
+//            }
+//        } catch (e: Exception) {
+//            Log.d("eyesonme-CF", "getAllChallengesFunc null (2)")
+//            Log.d("eyesonme-CF", "error 2 : ${e.printStackTrace()}")
+//            null
+//        }
+//    }
 
     // 실제 : 챌린지 수정 함수
     fun editChallengeDataFunc(cId: Int, cd: ChallengeRequestData) {

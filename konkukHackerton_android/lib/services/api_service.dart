@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eom_fe/models/Quotes_model.dart';
+import 'package:eom_fe/models/challenge_model.dart';
 import 'package:flutter/services.dart';
 
 import '../models/plan_model.dart';
@@ -33,6 +34,12 @@ class ApiService {
     pl.sort((a, b) => a.alarmStartTime.compareTo(b.alarmStartTime));
     print(pl);
     return pl;
+  }
+
+  static List<ChallengeModel> sortChallenges(List<ChallengeModel> cl) {
+    cl.sort((a, b) => a.deadline.compareTo(b.deadline));
+
+    return cl;
   }
 
   static List<PlanModel> deleteLastPlans(List<PlanModel> pl) {

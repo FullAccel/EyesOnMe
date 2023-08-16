@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:eom_fe/models/Quotes_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -16,8 +17,10 @@ class PlanningFinish extends StatefulWidget {
 }
 
 class _PlanningFinishState extends State<PlanningFinish> {
-  //static const platform = MethodChannel('samples.flutter.dev/battery');
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+
   late Future<QuotesModel> quote;
+  late var arg;
   String jsonString = '''
   {
     "quote": "계획 없는 성공은 한낱 꿈에 불과하다.",
@@ -25,16 +28,70 @@ class _PlanningFinishState extends State<PlanningFinish> {
   }
   ''';
 
+  Future<void> _postTodoDataFunc(String jsonString) async {
+    try {
+      final result =
+          await platform.invokeMethod('postTodoDataFunc', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> _setWakeAlarm(String jsonString) async {
+    try {
+      final result = await platform.invokeMethod('setWakeAlarm', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> _setSleepAlarm(String jsonString) async {
+    try {
+      final result = await platform.invokeMethod('setSleepAlarm', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> addPlan(String jsonString) async {
+    print("${jsonString} 넣을 차례~");
+    await _postTodoDataFunc(jsonString);
+    print("${jsonString} 넣었음!!!");
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     quote = ApiService.getQuotes(jsonString);
-    ApiService.addPlan(jsonEncode(Get.arguments));
+
+    //print(Get.arguments);
+    print("addplan");
+    addPlan(jsonEncode(Get.arguments));
   }
 
   @override
   Widget build(BuildContext context) {
+    arg = Get.arguments;
+    print("CurRoute: /plan/finish, arg: ${arg}");
+
+    switch (arg["argName"]) {
+      case "wakeupAndSleep":
+        _setWakeAlarm(jsonEncode(arg["data"][0]));
+        _setSleepAlarm(jsonEncode(arg["data"][1]));
+        print("wakeupAndSleep");
+        break;
+    }
+
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.center,
@@ -77,7 +134,7 @@ class _PlanningFinishState extends State<PlanningFinish> {
             bottom: 0.05.sh,
             child: FilledButton(
               onPressed: () {
-                Get.offAllNamed('/');
+                Get.offNamed("/");
               },
               style: FilledButton.styleFrom(
                 backgroundColor: Color(0xFF3BDE7C),

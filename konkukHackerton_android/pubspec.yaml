@@ -53,6 +53,10 @@ dependencies:
   json_bridge: ^0.0.4
   linear_timer: ^2.0.0
   flutter_slidable: ^3.0.0
+  calendar_date_picker2: ^0.5.2
+  flutter_spinner_picker: ^0.0.7
+  table_calendar: ^3.0.8
+  cr_calendar: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:
