@@ -84,12 +84,14 @@ class _PlanningFinishState extends State<PlanningFinish> {
     arg = Get.arguments;
     print("CurRoute: /plan/finish, arg: ${arg}");
 
-    switch (arg["argName"]) {
-      case "wakeupAndSleep":
-        _setWakeAlarm(jsonEncode(arg["data"][0]));
-        _setSleepAlarm(jsonEncode(arg["data"][1]));
-        print("wakeupAndSleep");
-        break;
+    if (arg != null) {
+      switch (arg["argName"]) {
+        case "wakeupAndSleep":
+          _setWakeAlarm(jsonEncode(arg["data"][0]));
+          _setSleepAlarm(jsonEncode(arg["data"][1]));
+          print("wakeupAndSleep");
+          break;
+      }
     }
 
     return Scaffold(
@@ -134,10 +136,10 @@ class _PlanningFinishState extends State<PlanningFinish> {
             bottom: 0.05.sh,
             child: FilledButton(
               onPressed: () {
-                Get.offNamed("/");
+                Get.offAllNamed("/");
               },
               style: FilledButton.styleFrom(
-                backgroundColor: Color(0xFF3BDE7C),
+                backgroundColor: Theme.of(context).primaryColor,
                 textStyle: TextStyle(fontWeight: FontWeight.bold),
                 fixedSize: Size(0.8.sw, 0.05.sh),
                 shadowColor: Colors.grey,

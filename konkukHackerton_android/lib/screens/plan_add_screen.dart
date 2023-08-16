@@ -370,7 +370,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                               child: Ink(
                                 decoration: BoxDecoration(
                                   color: isSelected[index]
-                                      ? Color(0xFF3BDE7C)
+                                      ? Theme.of(context).primaryColor
                                       : Colors.white,
                                   borderRadius: BorderRadius.circular(45),
                                 ),
@@ -494,7 +494,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                     Get.toNamed('/plan/finish', arguments: plan);
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor: Color(0xFF3BDE7C),
+                    backgroundColor: Theme.of(context).primaryColor,
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     fixedSize: Size(0.8.sw, 0.05.sh),
                   ),

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:eom_fe/services/challenge_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -378,9 +376,9 @@ class _MakeChallengeState extends State<MakeChallenge> {
                   children: [
                     SizedBox(height: 0.3.sh),
                     FilledButton(
-                      onPressed: () async {
-                        await _makeChallengeWOValidator();
-
+                      onPressed: () {
+                        _makeChallengeWOValidator();
+                        Future.delayed(Duration(milliseconds: 500), () {});
                         Get.offAllNamed("/");
                       },
                       style: FilledButton.styleFrom(
@@ -404,7 +402,6 @@ class _MakeChallengeState extends State<MakeChallenge> {
   }
 
   Future<void> _makeChallengeWOValidator() async {
-    print(_interval);
     Map<String, dynamic> param = {
       "title": _textController.text,
       "deadline": DateFormat("yyyy-MM-dd").format(_selectedDay),
@@ -412,12 +409,10 @@ class _MakeChallengeState extends State<MakeChallenge> {
       "validationCountPerInterval": counts[_count],
       "categoryCode": SetPlanService.categoryToCode[dropdownValue],
     };
-
-    String jsonString = jsonEncode(param);
+    print(param);
 
     try {
-      print(jsonString);
-      await platform.invokeMethod('makeChallengeWOValidator', jsonString);
+      await platform.invokeMethod('makeChallengeWOValidator', param.toString());
     } on PlatformException catch (e) {
       throw Exception("Exception at invokeMethod: makeChallengeWOValidator");
     }

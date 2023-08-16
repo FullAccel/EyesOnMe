@@ -44,7 +44,10 @@
             android:theme="@style/Theme.AppCompat.Light" />
         <activity
             android:name=".activities.BackgroundActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/NoActionBar"
+
+            />
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

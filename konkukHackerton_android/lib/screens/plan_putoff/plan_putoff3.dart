@@ -85,7 +85,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF3BDE7C),
+                backgroundColor: Theme.of(context).primaryColor,
                 minimumSize: Size(0.83.sw, 0.05.sh),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -115,7 +115,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Color(0xFFD6FCE5),
+                  color: Color(0xFF9AAAFF),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -132,7 +132,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                     Text(
                       "${DateTimeTo12(plan.alarmStartTime)} ~ ${DateTimeTo12(plan.alarmEndTime)}",
                       style: TextStyle(
-                        color: Color(0xFF20884A),
+                        color: Color(0xFF25A7FFF),
                         fontSize: 32.sp,
                         fontWeight: FontWeight.w600,
                       ),
@@ -152,7 +152,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                         Text(
                           "${plan.categoryCode}\n${plan.title}",
                           style: TextStyle(
-                            color: Color(0xFF3BDE7C),
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.w600,
                             fontSize: 16.sp,
                           ),
@@ -169,7 +169,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                             style: ElevatedButton.styleFrom(
                               shape: CircleBorder(),
                               backgroundColor: Colors.white,
-                              foregroundColor: Color(0xFF3BDE7C),
+                              foregroundColor: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

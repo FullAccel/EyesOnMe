@@ -219,7 +219,7 @@ class _PlanPutoff2State extends State<PlanPutoff2> {
                     Text(
                       "${selectedH}",
                       style: TextStyle(
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                         fontSize: 48.sp,
                       ),
                     ),
@@ -233,7 +233,7 @@ class _PlanPutoff2State extends State<PlanPutoff2> {
                     Text(
                       "${selectedM}",
                       style: TextStyle(
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                         fontSize: 48.sp,
                       ),
                     ),
@@ -258,7 +258,7 @@ class _PlanPutoff2State extends State<PlanPutoff2> {
                   Text(
                     "${hour.padLeft(2, "0")}시 ${minute.padLeft(2, "0")}분에 알람이 울립니다.",
                     style: TextStyle(
-                      color: Color(0xFF3BDE7C),
+                      color: Theme.of(context).primaryColor,
                       fontSize: 20.sp,
                     ),
                   ),
@@ -274,7 +274,7 @@ class _PlanPutoff2State extends State<PlanPutoff2> {
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF3BDE7C),
+                      backgroundColor: Theme.of(context).primaryColor,
                       minimumSize: Size(0.83.sw, 0.05.sh),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),

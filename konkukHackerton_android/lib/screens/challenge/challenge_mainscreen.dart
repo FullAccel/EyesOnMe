@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:eom_fe/services/api_service.dart';
 import 'package:eom_fe/services/challenge_service.dart';
 import 'package:eom_fe/services/setplan_service.dart';
+import 'package:eom_fe/widgets/challenge_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,8 @@ class ChallengeMainScreen extends StatefulWidget {
 
 class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
+
+  final isSelected = [true, false];
 
   List<Map<String, dynamic>> dummyChallenge = [
     {
@@ -68,7 +71,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getAllChallenges();
+    getChallenge();
     //_makeChallengeWithValidator(jsonEncode(dummyMakeChallenge));
     //_makeChallengeWithValidator(jsonEncode(dummyChallenge[1]));
   }
@@ -77,40 +80,41 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0.08.sh),
-        child: AppBar(
-          backgroundColor: Colors.white.withOpacity(1),
-          elevation: 1,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        preferredSize: Size.fromHeight(0.15.sh),
+        child: Container(
+          margin: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + 0.01.sh),
+          child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(top: 20.sp),
-                child: Container(
-                  margin: EdgeInsets.only(left: 0.04.sw),
-                  child: Text(
-                    "Challenge",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w600,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    //margin: EdgeInsets.only(top: 20.sp),
+                    child: Container(
+                      margin: EdgeInsets.only(left: 0.04.sw),
+                      child: Text(
+                        "Challenge",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 24.sp,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Container(
+                    margin: EdgeInsets.only(right: 10.sp, top: 15.sp),
+                    child: Icon(
+                      Icons.notifications,
+                      color: Color(0xFF8A8A8A),
+                      size: 30.sp,
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                margin: EdgeInsets.only(right: 10.sp, top: 15.sp),
-                child: Icon(
-                  Icons.notifications,
-                  color: Color(0xFF8A8A8A),
-                  size: 30.sp,
-                ),
-              ),
+              ChallengeAppbar(),
             ],
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(45),
-            ),
           ),
         ),
       ),
@@ -303,7 +307,9 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
               margin: EdgeInsets.only(right: 28.sp),
               child: ImageIcon(
                 AssetImage("assets/images/menu3.png"),
-                color: Color(0xFFBCBCBC),
+                color: UIService.curMenu == 2
+                    ? Theme.of(context).primaryColor
+                    : Color(0xFFBCBCBC),
                 size: 32,
               ),
             ),
@@ -361,16 +367,12 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     try {
       tmp = await platform.invokeMethod("getAllChallenges");
       print("invoke getAllChallenges: $tmp");
-      List<ChallengeModel> list = jsonDecode(tmp);
+      List<dynamic> list = jsonDecode(tmp);
 
       for (var ch in list) {
-        ret.add(ChallengeModel.fromJson(ch as Map<String, dynamic>));
+        ret.add(ChallengeModel.fromJson(ch));
         print(ret);
       }
-
-      setState(() {
-        challengeList = ret;
-      });
 
       return ApiService.sortChallenges(ret);
     } on PlatformException catch (e) {
