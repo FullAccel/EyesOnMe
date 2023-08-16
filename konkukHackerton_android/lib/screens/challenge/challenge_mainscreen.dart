@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:eom_fe/services/api_service.dart';
+import 'package:eom_fe/services/challenge_service.dart';
 import 'package:eom_fe/services/setplan_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,14 +54,11 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   ];
 
   Map<String, dynamic> dummyMakeChallenge = {
-    "challengeRequestData": {
-      "title": "Challenge 1",
-      "deadline": "2023-08-31",
-      "validationIntervalCode": "VI07",
-      "validationCountPerInterval": 3,
-      "categoryCode": "C001",
-    },
-    "validatorList": ["김세연", "박세준", "서지명"]
+    "title": "Challenge 1",
+    "deadline": "2023-08-31",
+    "validationIntervalCode": "VI07",
+    "validationCountPerInterval": 3,
+    "categoryCode": "C001",
   };
 
   List<ChallengeModel> challengeList = [];
@@ -69,8 +68,8 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //getChallenge();
-    _makeChallengeWithValidator(jsonEncode(dummyMakeChallenge));
+    _getAllChallenges();
+    //_makeChallengeWithValidator(jsonEncode(dummyMakeChallenge));
     //_makeChallengeWithValidator(jsonEncode(dummyChallenge[1]));
   }
 
@@ -81,17 +80,19 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
         preferredSize: Size.fromHeight(0.08.sh),
         child: AppBar(
           backgroundColor: Colors.white.withOpacity(1),
+          elevation: 1,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                margin: EdgeInsets.only(top: 15.sp),
+                margin: EdgeInsets.only(top: 20.sp),
                 child: Container(
                   margin: EdgeInsets.only(left: 0.04.sw),
                   child: Text(
                     "Challenge",
                     style: TextStyle(
-                      color: Color(0xFF3BDE7C),
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -115,27 +116,140 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
       ),
       body: ListView.separated(
         itemBuilder: (context, index) {
-          return Card(
-            child: Row(
-              children: [
-                Column(
+          return GestureDetector(
+            onTap: () {
+              Get.toNamed("/challenge/detail",
+                  arguments: challengeList[index].id);
+            },
+            child: Card(
+              clipBehavior: Clip.hardEdge,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Container(
+                padding: EdgeInsets.only(
+                    left: 0.025.sw, top: 0.01.sh, bottom: 0.02.sh),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFFCCD7FF),
+                      Colors.white,
+                      Colors.white,
+                    ],
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 0.01.sh, horizontal: 0.03.sw),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Colors.white,
+                            ),
+                            child: Text(
+                              "D${getDDay(challengeList[index].deadline, now)}",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: 0.02.sh, left: 0.01.sw),
+                          child: Text(
+                            SetPlanService.codeToCategory[
+                                challengeList[index].categoryCode]!,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 0.01.sw),
+                          child: Text(
+                            challengeList[index].title,
+                            style: TextStyle(
+                              fontSize: 24.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                     Container(
+                      margin: EdgeInsets.only(left: 0.01.sw),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 0.005.sh, horizontal: 0.03.sw),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(20),
+                        color: Theme.of(context).dialogBackgroundColor,
                       ),
                       child: Text(
-                          "D-${getDDay(challengeList[index].deadline, now)}"),
+                        ChallengeService.getInterval(
+                            challengeList[index].validationIntervalCode,
+                            challengeList[index].validationCountPerInterval),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                    Text(SetPlanService
-                        .codeToCategory[challengeList[index].categoryCode]!),
+                    CustomPaint(
+                      painter: ArcPainter(challengeList[index].achievementRate),
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Color(0xFFF0F0F0)),
+                          //color: Colors.red,
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(top: 0.025.sh),
+                          child: Column(
+                            children: [
+                              Text(
+                                "달성도",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 11.sp,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 0.002.sh,
+                              ),
+                              Text(
+                                "${challengeList[index].achievementRate}%",
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           );
         },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        separatorBuilder: (BuildContext context, int index) =>
+            SizedBox(height: 0.01.sh),
         itemCount: challengeList.length,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -208,6 +322,16 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(
+          Icons.add,
+          size: 40,
+        ),
+        onPressed: () {
+          Get.toNamed("/challenge/make");
+        },
+      ),
     );
   }
 
@@ -235,17 +359,18 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     List<ChallengeModel> ret = [];
     String tmp = "";
     try {
-      while (tmp != "success") {
-        tmp = await platform.invokeMethod("getAllChallenges");
-        print("loop");
-      }
+      tmp = await platform.invokeMethod("getAllChallenges");
       print("invoke getAllChallenges: $tmp");
-      List<dynamic> list = jsonDecode(tmp);
+      List<ChallengeModel> list = jsonDecode(tmp);
 
       for (var ch in list) {
-        ret.add(ChallengeModel.fromJson(ch));
+        ret.add(ChallengeModel.fromJson(ch as Map<String, dynamic>));
         print(ret);
       }
+
+      setState(() {
+        challengeList = ret;
+      });
 
       return ApiService.sortChallenges(ret);
     } on PlatformException catch (e) {
@@ -257,6 +382,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     List<ChallengeModel> ret = [];
     try {
       ret = await _getAllChallenges();
+      print("ret: $ret");
     } catch (e) {
       print("Error: getChallenge()");
     }
@@ -264,5 +390,36 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     setState(() {
       challengeList = ret;
     });
+  }
+}
+
+class ArcPainter extends CustomPainter {
+  final acheiveRate;
+  ArcPainter(this.acheiveRate);
+  final gradient = new SweepGradient(
+    startAngle: 3 * pi / 2,
+    endAngle: 7 * pi / 2,
+    tileMode: TileMode.repeated,
+    colors: [Colors.white, Color(0xFF5A7FFF), Color(0xFF4D69FF)],
+  );
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Rect rect = Rect.fromCircle(center: Offset(40, 40), radius: 40);
+    double startAngle = 3 * pi / 2; // in radians
+    double endAngle = (3 * pi / 2 + (2 * pi * acheiveRate / 100)); // in radians
+
+    final Paint paint = Paint()
+      ..shader = gradient.createShader(rect)
+      ..color = Color(0xFF5A7FFF)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8.0;
+
+    canvas.drawArc(rect, startAngle, endAngle - startAngle, false, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }

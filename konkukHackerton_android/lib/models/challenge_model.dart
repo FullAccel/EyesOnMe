@@ -9,7 +9,7 @@ class ChallengeModel {
       challengeStatusCode,
       validationIntervalCode,
       categoryCode;
-  final List<dynamic> validatorList;
+  final List<Map<String, dynamic>> validatorList;
 
   ChallengeModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],

@@ -75,7 +75,8 @@ class _PlanningFinishState extends State<PlanningFinish> {
     quote = ApiService.getQuotes(jsonString);
 
     //print(Get.arguments);
-    //addPlan(jsonEncode(Get.arguments));
+    print("addplan");
+    addPlan(jsonEncode(Get.arguments));
   }
 
   @override
