@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:eom_fe/services/api_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../models/plan_model.dart';
 import '../../widgets/appbar_widget.dart';
@@ -15,28 +19,45 @@ class PlanFinish2 extends StatefulWidget {
 }
 
 class _PlanFinish2State extends State<PlanFinish2> {
+  static const platform = MethodChannel("samples.flutter.dev/battery");
+
   late Future<List<PlanModel>> planList;
   final curSchedule = 0; // 현재 미루려는 일정
 
-  String DateTimeTo12(String? dt) {
-    dt ??= "default";
-    //"2023-08-11 23:40:00" -> 11:40 pm
-    var tmp = dt.substring(11, 16); // 23:40
-    var h = tmp.substring(0, 2);
-    if (int.parse(h) == 12) {
-      return "12:${tmp.substring(14, 16)} pm";
-    } else if (int.parse(h) / 12 < 1) {
-      // am
-      return "$h:${tmp.substring(3, 5)} am";
-    } else {
-      return "$h:${tmp.substring(3, 5)} pm";
+  Future<String> deleteTodoDataFunc(String planId) async {
+    try {
+      String got = await platform.invokeMethod('deleteTodoDataFunc', planId);
+      Future.delayed(const Duration(milliseconds: 300), () {});
+
+      return got;
+    } on PlatformException catch (e) {
+      throw Exception("Exception at invokeMethod: getSingleChallenge");
+    }
+  }
+
+  Future<List<PlanModel>> getAllDailyPlansByDate(String yyyyMMdd) async {
+    try {
+      List<PlanModel> ret = [];
+      String got =
+          await platform.invokeMethod('getAllDailyPlansByDate', yyyyMMdd);
+      Future.delayed(const Duration(milliseconds: 300), () {});
+
+      for (var plan in jsonDecode(got)) {
+        ret.add(PlanModel.fromJson(plan));
+      }
+
+      return ret;
+    } on PlatformException catch (e) {
+      throw Exception("Exception at invokeMethod: getSingleChallenge");
     }
   }
 
   @override
   void initState() {
     super.initState();
-    planList = ApiService.getPlans();
+    // planList = ApiService.getPlans();
+    planList =
+        getAllDailyPlansByDate(DateFormat("yyyyMMdd").format(DateTime.now()));
   }
 
   @override
@@ -110,7 +131,7 @@ class _PlanFinish2State extends State<PlanFinish2> {
         //원래는 DateTime.now().milli~~로.
         pl.removeWhere((element) =>
             DateTime.parse(element.alarmEndTime).millisecondsSinceEpoch <=
-            DateTime.parse("2023-08-11 02:30:00").millisecondsSinceEpoch);
+            DateTime.parse(DateTime.now().toString()).millisecondsSinceEpoch);
 
         pl.sort((a, b) => a.alarmStartTime.compareTo(b.alarmStartTime));
         PlanModel plan = snapshot.data![index];
@@ -136,7 +157,7 @@ class _PlanFinish2State extends State<PlanFinish2> {
                 child: Column(
                   children: [
                     Text(
-                      "${DateTimeTo12(plan.alarmStartTime)} ~ ${DateTimeTo12(plan.alarmEndTime)}",
+                      "${ApiService.DateTimeTo12(plan.alarmStartTime)} ~ ${ApiService.DateTimeTo12(plan.alarmEndTime)}",
                       style: TextStyle(
                         color: Color(0xFF20884A),
                         fontSize: 32.sp,
@@ -168,6 +189,7 @@ class _PlanFinish2State extends State<PlanFinish2> {
                           height: 60,
                           child: ElevatedButton(
                             onPressed: () {
+                              deleteTodoDataFunc(plan.id.toString());
                               Get.toNamed("/plan/add");
                             },
                             child: Text(
@@ -206,7 +228,7 @@ class _PlanFinish2State extends State<PlanFinish2> {
                 child: Row(
                   children: [
                     Text(
-                      "${DateTimeTo12(plan.alarmStartTime)}\n~ ${DateTimeTo12(plan.alarmEndTime)}",
+                      "${ApiService.DateTimeTo12(plan.alarmStartTime)}\n~ ${ApiService.DateTimeTo12(plan.alarmEndTime)}",
                       style: TextStyle(
                         color: Color(0xFFA0A0A0).withOpacity(0.7),
                         fontSize: 16.sp,

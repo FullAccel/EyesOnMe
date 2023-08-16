@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:eom_fe/models/plan_model.dart';
 import 'package:eom_fe/widgets/oval_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../services/api_service.dart';
 
 class WakeupAlarm extends StatefulWidget {
   const WakeupAlarm({super.key});
@@ -14,7 +19,9 @@ class WakeupAlarm extends StatefulWidget {
 
 class _WakeupAlarmState extends State<WakeupAlarm> {
   static const platform = MethodChannel("samples.flutter.dev/battery");
+
   int planId = -1;
+  late PlanModel planStart;
 
   Future<void> _delayWSAlarm(String yyyymmdd) async {
     try {
@@ -27,11 +34,24 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
     }
   }
 
+  Future<void> _getSingleTodoData(String planId) async {
+    try {
+      String got = await platform.invokeMethod('getSingleTodoData', planId);
+      Future.delayed(const Duration(milliseconds: 300), () {});
+
+      setState(() {
+        planStart = PlanModel.fromJson(jsonDecode(got));
+      });
+    } on PlatformException catch (e) {
+      throw Exception("Exception at invokeMethod: getSingleChallenge");
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    planId = Get.arguments["planId"];
+    _getSingleTodoData(Get.arguments["planId"]);
   }
 
   @override
@@ -83,7 +103,7 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
               ),
               SizedBox(height: 10),
               Text(
-                "00:00 am",
+                "${ApiService.DateTimeTo12(planStart.alarmStartTime)}",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 42.sp,
@@ -118,7 +138,7 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
               SizedBox(height: 12),
               ElevatedButton(
                 onPressed: () {
-                  _delayWSAlarm(DateFormat("yyyymmdd").format(DateTime.now()));
+                  _delayWSAlarm(DateFormat("yyyyMMdd").format(DateTime.now()));
                 },
                 child: Text(
                   "10분 뒤 다시 울림",

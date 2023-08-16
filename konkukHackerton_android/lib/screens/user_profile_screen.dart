@@ -67,7 +67,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     child: Text(
                       "Profile",
                       style: TextStyle(
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                         fontSize: 22.sp,
                       ),
                     ),
@@ -271,7 +271,7 @@ class Doughnut2 extends CustomPainter {
 
     final gradient = LinearGradient(
       tileMode: TileMode.clamp,
-      colors: [Color(0xFFD8FFE7), Color(0xFF3BDE7C)],
+      colors: [Color(0xFFE4E9FF), Color(0xFF5A7FFF)],
     );
 
     final double start = -pi / 9;
@@ -282,7 +282,7 @@ class Doughnut2 extends CustomPainter {
       ..isAntiAlias = true
       ..strokeWidth = 90
       ..style = PaintingStyle.stroke
-      ..color = Color(0xFF3BDE7C);
+      ..color = Color(0xFF5A7FFF);
 
     // -20도(-pi/9) ~ 200도(11*pi/9)
     //

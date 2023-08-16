@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Nanum_SQUARE',
           ),
           //home: LoginScreen(),
-          initialRoute: '/plan/finish',
+          initialRoute: '/login',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),
@@ -217,30 +217,26 @@ class _MyAppState extends State<MyApp> {
       if (last < 0) {
         if (last % 2 == 1) {
           // 기상
-          Get.toNamed('/wakeup',
+          Get.offAllNamed('/wakeup',
               arguments: {"planId": int.parse(alarmCode) / 10});
         } else {
           // 취침
-          Get.toNamed('/plan/tomorrow',
+          Get.offAllNamed('/plan/tomorrow',
               arguments: {"planId": int.parse(alarmCode) / 10});
         }
       } else if (last == 0) {
         // 플랜 시작
-        Get.toNamed('/plan/start',
+        Get.offAllNamed('/plan/start',
             arguments: {"planId": int.parse(alarmCode) / 10});
       } else if (last == 1) {
         // 중간 알람(진행 중)
-        Get.toNamed('/plan/progressing',
+        Get.offAllNamed('/plan/progressing',
             arguments: {"planId": int.parse(alarmCode) / 10});
       } else if (last == 2) {
         // 종료 알람
-        Get.toNamed('/extraScreen',
+        Get.offAllNamed('/plan/finish',
             arguments: {"planId": int.parse(alarmCode) / 10});
       }
-
-      Get.toNamed('/extraScreen', arguments: {
-        "planId": int.parse(alarmCode) / 10
-      }); // Navigate to ExtraScreen
     } on PlatformException catch (e) {
       print("Error: ${e.message}");
     }

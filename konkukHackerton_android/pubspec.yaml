@@ -57,6 +57,7 @@ dependencies:
   flutter_spinner_picker: ^0.0.7
   table_calendar: ^3.0.8
   cr_calendar: ^1.0.0+1
+  percent_indicator: ^4.2.3
 
 dev_dependencies:
   flutter_test:

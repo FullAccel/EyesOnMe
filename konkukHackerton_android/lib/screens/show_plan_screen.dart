@@ -107,7 +107,7 @@ class _ShowPlanScreenState extends State<ShowPlanScreen> {
                       backgroundColor: Colors.white,
                       weekdayTextColor: const Color(0xFF8A8A8A),
                       digitsColor: Color(0xFF8A8A8A),
-                      selectedBackgroundColor: const Color(0xFF3BDE7C),
+                      selectedBackgroundColor: Theme.of(context).primaryColor,
                       weekdays: const [
                         "MON",
                         "TUE",

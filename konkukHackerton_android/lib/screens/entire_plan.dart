@@ -76,7 +76,7 @@ class _EntirePlanState extends State<EntirePlan> {
                 child: Text(
                   "Planner",
                   style: TextStyle(
-                    color: Color(0xFF3BDE7C),
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -123,7 +123,7 @@ class _EntirePlanState extends State<EntirePlan> {
                       backgroundColor: Colors.white,
                       weekdayTextColor: const Color(0xFF8A8A8A),
                       digitsColor: Color(0xFF8A8A8A),
-                      selectedBackgroundColor: const Color(0xFF3BDE7C),
+                      selectedBackgroundColor: Theme.of(context).primaryColor,
                       weekdays: const [
                         "MON",
                         "TUE",
@@ -261,7 +261,7 @@ class _EntirePlanState extends State<EntirePlan> {
                           Get.toNamed("/plan/add");
                         },
                         icon: Icon(Icons.add_circle),
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                         iconSize: 55.sp,
                       ),
                     ],

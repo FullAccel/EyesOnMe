@@ -75,7 +75,7 @@ class _UserInfoWrapperState extends State<UserInfoWidget> {
               renderBorder: false,
               borderColor: Colors.white,
               fillColor: Colors.white,
-              selectedColor: Color(0xFF3BDE7C),
+              selectedColor: Theme.of(context).primaryColor,
               selectedBorderColor: Colors.white,
               color: Colors.grey,
               children: [

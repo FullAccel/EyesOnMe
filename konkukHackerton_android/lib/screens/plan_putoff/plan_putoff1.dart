@@ -88,7 +88,7 @@ class _PlanPutoff1State extends State<PlanPutoff1> {
                         style: ElevatedButton.styleFrom(
                           alignment: Alignment.centerLeft,
                           backgroundColor: isPressed[index]
-                              ? Color(0xFF3BDE7C)
+                              ? Theme.of(context).primaryColor
                               : Colors.white,
                           foregroundColor:
                               isPressed[index] ? Colors.white : Colors.black,
@@ -136,7 +136,9 @@ class _PlanPutoff1State extends State<PlanPutoff1> {
                           offset: Offset(0, 3),
                         ),
                       ],
-                      color: isExpanded ? Color(0xFF3BDE7C) : Colors.white,
+                      color: isExpanded
+                          ? Theme.of(context).primaryColor
+                          : Colors.white,
                     ),
                     duration: Duration(milliseconds: 300),
                     height: isExpanded ? 120 : 50,

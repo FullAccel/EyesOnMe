@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:eom_fe/services/api_service.dart';
 import 'package:eom_fe/widgets/oval_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +17,31 @@ class FinishAlarm extends StatefulWidget {
 }
 
 class _FinishAlarmState extends State<FinishAlarm> {
-  late Future<List<PlanModel>> planList;
+  //late Future<List<PlanModel>> planList;
+  static const platform = MethodChannel("samples.flutter.dev/battery");
+
+  int planId = -1;
+  late PlanModel planFinish;
+
+  Future<void> _getSingleTodoData(String planId) async {
+    try {
+      String got = await platform.invokeMethod('getSingleTodoData', planId);
+      Future.delayed(const Duration(milliseconds: 300), () {});
+
+      setState(() {
+        planFinish = PlanModel.fromJson(jsonDecode(got));
+      });
+    } on PlatformException catch (e) {
+      throw Exception("Exception at invokeMethod: getSingleChallenge");
+    }
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    planList = ApiService.getPlans();
+    // planList = ApiService.getPlans();
+    _getSingleTodoData(Get.arguments["planId"]);
   }
 
   @override
@@ -51,14 +72,14 @@ class _FinishAlarmState extends State<FinishAlarm> {
                   height: 0.05.sh,
                 ),
                 Text(
-                  "운동",
+                  "${planFinish.title}",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 36.sp,
                   ),
                 ),
                 Text(
-                  "잘 진행되고 있나요?",
+                  "마무리할 시간이예요!",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22.sp,
@@ -68,7 +89,7 @@ class _FinishAlarmState extends State<FinishAlarm> {
                   height: 0.02.sh,
                 ),
                 Text(
-                  "10:00 pm",
+                  "${ApiService.DateTimeTo12(planFinish.alarmEndTime)}",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -91,7 +112,7 @@ class _FinishAlarmState extends State<FinishAlarm> {
                             onPressed: () {
                               Get.toNamed(
                                 "/plan/delete1",
-                                arguments: planList,
+                                arguments: planFinish.id,
                               );
                             },
                             icon: Icon(
@@ -138,7 +159,7 @@ class _FinishAlarmState extends State<FinishAlarm> {
                             onPressed: () {
                               Get.toNamed(
                                 "/plan/finish1",
-                                arguments: planList,
+                                arguments: planFinish.id,
                               );
                             },
                             icon: Icon(

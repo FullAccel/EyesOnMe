@@ -18,8 +18,8 @@ class OvalWidget extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  const Color(0xFF3BDE7C),
-                  const Color(0xFFB7E8CA),
+                  Theme.of(context).primaryColor,
+                  const Color(0xFFE4E9FF),
                 ],
               ),
             ),
@@ -34,7 +34,7 @@ class OvalWidget extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  const Color(0xFFB7E8CA),
+                  Theme.of(context).primaryColor,
                   Colors.white,
                 ],
               ),

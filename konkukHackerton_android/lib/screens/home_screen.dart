@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:eom_fe/models/member_model.dart';
+import 'package:eom_fe/services/challenge_service.dart';
 import 'package:eom_fe/services/ui_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../models/challenge_model.dart';
 import '../models/plan_model.dart';
 import '../services/api_service.dart';
 import '../services/datetime_service.dart';
@@ -23,7 +27,26 @@ class _HomeScreenState extends State<HomeScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 
   List<PlanModel> todaysPlan = [];
+  late Future<List<ChallengeModel>> userChallenges;
   final DateTime today = DateTime.now();
+  late Future<MemberModel> user;
+
+  Future<List<ChallengeModel>> _getAllChallenges() async {
+    List<ChallengeModel> ret = [];
+    try {
+      String s = await platform.invokeMethod('getAllChallenges');
+      Future.delayed(Duration(milliseconds: 300), () {});
+      List<dynamic> tmp = jsonDecode(s);
+
+      for (var ch in tmp) {
+        ret.add(ChallengeModel.fromJson(ch));
+      }
+
+      return ret;
+    } on PlatformException catch (e) {
+      throw Exception("Failed to get challenges");
+    }
+  }
 
   Future<List<PlanModel>> _getTodaysPlan(String yyyymmdd) async {
     print("_getTodaysPlan called");
@@ -54,20 +77,44 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  Future<MemberModel> _getMemberData() async {
+    String s = "";
+    try {
+      s = await platform.invokeMethod('getMemberData');
+      print(s);
+      Future.delayed(Duration(milliseconds: 500), () {});
+      MemberModel ret = MemberModel.fromJson(jsonDecode(s));
+
+      return ret;
+    } on PlatformException catch (e) {
+      throw Exception("Failed to get todays plan");
+    }
+  }
+
+  ScrollController scrollController = ScrollController(
+    initialScrollOffset: 2, // or whatever offset you wish
+    keepScrollOffset: true,
+  );
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     getPlan();
+    userChallenges = _getAllChallenges();
+    print(userChallenges);
+    user = _getMemberData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFE4E9FF),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(0.08.sh),
         child: AppBar(
-          backgroundColor: Colors.white.withOpacity(1),
+          backgroundColor: Colors.white.withOpacity(0.8),
+          elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -76,6 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Image.asset(
                   "assets/images/logo_home.png",
                   scale: 3.5,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Container(
@@ -95,58 +143,65 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      extendBodyBehindAppBar: true,
       body: Stack(
         alignment: Alignment.center,
         children: [
           Positioned(
-            top: -20,
+            top: 30,
             left: 0,
             child: Container(
-              height: 150,
-              width: 300,
+              height: 0.7.sh,
+              width: 1800,
               decoration: BoxDecoration(
-                color: Color(0xFF17D864),
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.all(
-                  Radius.elliptical(200, 100),
-                ),
-              ),
-              child: Container(
-                margin: EdgeInsets.only(
-                  left: 0.1.sw,
-                  top: 0.05.sh,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${today.year}년",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Colors.white.withOpacity(0.7),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    Text(
-                      "${today.month}월  ${today.day}일 ${DateTimeService.weekdayKO[today.weekday]}",
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                  Radius.elliptical(1000, 600),
                 ),
               ),
             ),
           ),
           Positioned(
-            top: 100,
+            right: 0.1.sw,
+            top: 0.12.sh,
+            child: Container(
+              margin: EdgeInsets.only(
+                left: 0.1.sw,
+                top: 0.05.sh,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${today.year}년",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      color: Colors.white.withOpacity(0.7),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Text(
+                    "${today.month}월 ${today.day}일 ${DateTimeService.weekdayKO[today.weekday]}",
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      color: Colors.white.withOpacity(0.8),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0.32.sh,
+            left: 0.05.sw,
             child: Column(
               children: [
                 Container(
                   width: 0.9.sw,
-                  height: 0.4.sh,
+                  height: 0.35.sh,
                   child: ListView.builder(
+                    controller: scrollController,
                     itemCount: todaysPlan.length,
                     itemBuilder: (context, index) {
                       //print(todaysPlan[index].alarmEndTime);
@@ -168,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onPressed: () {},
                                     child: Image.asset(
                                       "assets/images/icon_x.png",
-                                      scale: 0.7,
+                                      scale: 1.2,
                                     ),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Color(0xFFF0F0F0),
@@ -186,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: TextStyle(
                                       fontSize: 18.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: Color(0xFF20884A),
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                   Text(
@@ -201,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     style: TextStyle(
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w600,
-                                      color: Color(0xFF3BDE7C),
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                 ],
@@ -214,10 +269,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     onPressed: () {},
                                     child: Image.asset(
                                       "assets/images/icon_check.png",
-                                      scale: 0.7,
+                                      scale: 1.2,
                                     ),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xFF3BDE7C),
+                                      backgroundColor:
+                                          Theme.of(context).primaryColor,
                                       shape: CircleBorder(),
                                       padding: EdgeInsets.all(16.0),
                                     ),
@@ -232,6 +288,181 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              height: 0.3.sh,
+              width: 1.sw,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(30),
+                ),
+              ),
+              child: FutureBuilder(
+                future: user,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Container(
+                      margin: EdgeInsets.only(left: 0.03.sw, top: 0.03.sh),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "${snapshot.data!.name}님",
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                "지금 진행 중인",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                              Text(
+                                " 챌린지",
+                                style: TextStyle(
+                                  fontSize: 25.sp,
+                                  color: Theme.of(context).primaryColor,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              Text(
+                                "입니다!",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                          FutureBuilder(
+                            future: userChallenges,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Container(
+                                  margin: EdgeInsets.only(top: 15),
+                                  width: 0.95.sw,
+                                  height: 0.18.sh,
+                                  child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          clipBehavior: Clip.hardEdge,
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Container(
+                                            width: 150,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.white,
+                                                  Color(0xFFF0F3FF),
+                                                  Color(0xFFCBD3FF),
+                                                ],
+                                                begin: Alignment.bottomLeft,
+                                                end: Alignment.topRight,
+                                              ),
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 10,
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 0.01.sh,
+                                                      horizontal: 0.03.sw),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    color: Colors.white,
+                                                  ),
+                                                  child: Text(
+                                                    "D${getDDay(snapshot.data![index].deadline, today)}",
+                                                    style: TextStyle(
+                                                      fontSize: 14.sp,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                    top: 8,
+                                                    left: 10,
+                                                  ),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        "${ChallengeService.getInterval(snapshot.data![index].validationIntervalCode, snapshot.data![index].validationCountPerInterval)}",
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        "${snapshot.data![index].title}",
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                SizedBox(height: 0.035.sh),
+                                                LinearPercentIndicator(
+                                                  width: 150,
+                                                  animation: true,
+                                                  animationDuration: 100,
+                                                  lineHeight: 7,
+                                                  percent: 0.2,
+                                                  progressColor: Colors.black,
+                                                  barRadius:
+                                                      Radius.circular(10),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) =>
+                                              const Divider(),
+                                      itemCount: snapshot.data!.length),
+                                );
+                              }
+                              return const CircularProgressIndicator();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
             ),
           ),
         ],
@@ -307,5 +538,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  int getDDay(String d1, DateTime d2) {
+    Duration duration = d2.difference(DateFormat("yyyy-MM-dd").parse(d1));
+
+    return duration.inDays;
   }
 }
