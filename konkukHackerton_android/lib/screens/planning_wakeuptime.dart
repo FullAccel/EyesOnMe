@@ -202,7 +202,7 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
                 return ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFF5F5F5),
-                    foregroundColor: Color(0xFF3BDE7C),
+                    foregroundColor: Theme.of(context).primaryColor,
                     minimumSize: Size(
                       0.6.sw,
                       0.07.sh,
@@ -327,7 +327,7 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
                               child: Ink(
                                 decoration: BoxDecoration(
                                   color: isSelected[index]
-                                      ? Color(0xFF3BDE7C)
+                                      ? Theme.of(context).primaryColor
                                       : Colors.white,
                                   borderRadius: BorderRadius.circular(45),
                                 ),
@@ -491,7 +491,7 @@ class _PlanningWakeupTimeState extends State<PlanningWakeupTime> {
                     );
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor: Color(0xFF3BDE7C),
+                    backgroundColor: Theme.of(context).primaryColor,
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                     fixedSize: Size(0.8.sw, 0.05.sh),
                   ),

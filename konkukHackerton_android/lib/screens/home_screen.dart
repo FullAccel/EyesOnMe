@@ -106,9 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
     //Future.delayed(Duration(milliseconds: 500), () {});
     getPlan();
     _getAllChallenges();
-    print(userChallenges);
+    Future.delayed(Duration(milliseconds: 500), () {});
     _getMemberData();
-    print(today.weekday);
+    Future.delayed(Duration(milliseconds: 500), () {});
   }
 
   @override

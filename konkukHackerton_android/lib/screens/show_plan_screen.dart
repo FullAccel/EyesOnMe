@@ -138,7 +138,7 @@ class _ShowPlanScreenState extends State<ShowPlanScreen> {
                     style: FilledButton.styleFrom(
                       shape: CircleBorder(),
                       fixedSize: Size(220.sp, 220.sp),
-                      backgroundColor: Color(0xFF3BDE7C),
+                      backgroundColor: Theme.of(context).primaryColor,
                     ),
                     child: Container(
                       margin: EdgeInsets.only(
@@ -203,7 +203,7 @@ class _ShowPlanScreenState extends State<ShowPlanScreen> {
                           Get.toNamed("/plan/add");
                         },
                         icon: Icon(Icons.add_circle),
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                         iconSize: 55.sp,
                       ),
                     ],

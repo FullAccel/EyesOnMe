@@ -119,7 +119,7 @@ class _PlanWidgetState extends State<PlanWidget> {
                         : "${ApiService.DateTimeTo12(widget.alarmEndTime)}",
                     style: TextStyle(
                       color: !now.isAfter(DateTime.parse(widget.alarmEndTime))
-                          ? Color(0xFF3BDE7C)
+                          ? Theme.of(context).primaryColor
                           : Color(0xFF8A8A8A),
                       fontSize: 14.sp,
                       fontWeight: isPlan ? FontWeight.bold : FontWeight.normal,
@@ -139,7 +139,7 @@ class _PlanWidgetState extends State<PlanWidget> {
                                   color: now.isAfter(
                                           DateTime.parse(widget.alarmEndTime))
                                       ? Color(0xFF8A8A8A)
-                                      : Color(0xFF3BDE7C),
+                                      : Theme.of(context).primaryColor,
                                 ),
                               )
                             : const SizedBox.shrink(),
@@ -185,7 +185,7 @@ class _PlanWidgetState extends State<PlanWidget> {
                         Positioned.fill(
                           child: Container(
                             margin: EdgeInsets.all(20.sp),
-                            color: const Color(0xFF3BDE7C),
+                            color: Theme.of(context).primaryColor,
                             // Color
                           ),
                         ),
@@ -193,7 +193,7 @@ class _PlanWidgetState extends State<PlanWidget> {
                             ? IconButton(
                                 icon: Icon(Icons.remove_circle), // Icon
                                 color: Colors.white,
-                                iconSize: 40.sp,
+                                iconSize: 32.sp,
                                 style: IconButton.styleFrom(
                                   backgroundColor: Colors.white,
                                 ),
