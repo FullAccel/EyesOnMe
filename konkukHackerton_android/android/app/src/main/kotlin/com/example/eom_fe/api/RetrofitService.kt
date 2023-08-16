@@ -90,7 +90,7 @@ interface RetrofitService {
     fun addChallengeData(@Path("memberId") number: Int, @Body params: ChallengeRequestData): Call<APIResponseData>
 
     @POST("challenge/{challengeId}/validator")
-    fun addValidatorData(@Path("challengeId") number: Int, @Body params: ValidatorListData): Call<APIResponseData>
+    fun addValidatorData(@Path("challengeId") number: Int, @Body params: ValidatorListData?): Call<APIResponseData>
 
     @GET("challenge/{challengeId}")
     fun getChallengeData(@Path("challengeId") number: Int): Call<APIResponseData>
