@@ -51,6 +51,17 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     // 나머지 ChallengeData 객체들
   ];
 
+  Map<String, dynamic> dummyMakeChallenge = {
+    "challengeRequestData": {
+      "title": "Challenge 1",
+      "deadline": "2023-08-31",
+      "validationIntervalCode": "VI07",
+      "validationCountPerInterval": 3,
+      "categoryCode": "C001",
+    },
+    "validatorList": ["김세연", "박세준", "서지명"]
+  };
+
   List<ChallengeModel> challengeList = [];
   DateTime now = DateTime.now();
 
@@ -58,7 +69,9 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getChallenge();
+    //getChallenge();
+    _makeChallengeWithValidator(jsonEncode(dummyMakeChallenge));
+    //_makeChallengeWithValidator(jsonEncode(dummyChallenge[1]));
   }
 
   @override
@@ -112,10 +125,10 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                          "D-${getDDay(dummyChallenge[index]["deadline"], now)}"),
+                          "D-${getDDay(challengeList[index].deadline, now)}"),
                     ),
-                    Text(SetPlanService.codeToCategory[dummyChallenge[index]
-                        ["categoryCode"]]!),
+                    Text(SetPlanService
+                        .codeToCategory[challengeList[index].categoryCode]!),
                   ],
                 ),
               ],
@@ -204,12 +217,28 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     return duration.inDays;
   }
 
+  Future<String> _makeChallengeWithValidator(String jsonString) async {
+    print(jsonString);
+    String tmp = "";
+    try {
+      tmp =
+          await platform.invokeMethod("makeChallengeWithValidator", jsonString);
+      print("tmp $tmp");
+      return tmp;
+    } on PlatformException catch (e) {
+      throw Exception("Exception: _makeChallengeWithValidator");
+    }
+  }
+
   Future<List<ChallengeModel>> _getAllChallenges() async {
     print("_getAllChallenges()");
     List<ChallengeModel> ret = [];
-    String tmp;
+    String tmp = "";
     try {
-      tmp = await platform.invokeMethod("getAllChallenges");
+      while (tmp != "success") {
+        tmp = await platform.invokeMethod("getAllChallenges");
+        print("loop");
+      }
       print("invoke getAllChallenges: $tmp");
       List<dynamic> list = jsonDecode(tmp);
 

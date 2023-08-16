@@ -386,9 +386,17 @@ class MainActivity: FlutterActivity() {
 
                 // 여기서부터 챌린지 함수
                 "getAllChallenges" -> {
+                    Log.d("eyesonme-MA", "getAllChallenges called in Kotlin")
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        val challengesList = challengeFuntions.getAllChallengesFunc() // suspend 함수 호출
+//                        result.success(Gson().toJson(challengesList).toString()) // 결과 출력 또는 처리
+//                    }
                     CoroutineScope(Dispatchers.IO).launch {
-                        val challengesList = challengeFuntions.getAllChallengesFunc() // suspend 함수 호출
-                        result.success(Gson().toJson(challengesList).toString()) // 결과 출력 또는 처리
+                        challengeFuntions.getAllChallengesFunc() { data ->
+                            // data를 사용하여 원하는 작업 수행
+                            Log.d("eyesonme-MA", "challengeFunctions !!!!!")
+                            result.success(Gson().toJson(data).toString())
+                        }
                     }
                 }
                 "getAllValidators" -> {
