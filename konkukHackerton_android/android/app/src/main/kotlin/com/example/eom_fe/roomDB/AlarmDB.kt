@@ -33,7 +33,8 @@ abstract class AlarmDB: RoomDatabase(){
                 context,
                 AlarmDB::class.java,
                 "alarmdb"
-            ).addMigrations(migration_1_2).build()
+            ).addMigrations(migration_1_2)
+                .build()
 
             INSTANCE = instance
             return instance
@@ -47,5 +48,4 @@ val migration_1_2 = object : Migration(1, 2) {
             "ALTER TABLE Sound Add COLUMN isChecked INTEGER NOT NULL DEFAULT 0"
         )
     }
-
 }
