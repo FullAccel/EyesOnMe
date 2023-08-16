@@ -61,7 +61,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 : 모든 인증 친구 가져오기
-    suspend fun getAllValidators(cId: Int): List<String>? {
+    suspend fun getAllValidators(cId: Int): List<ValidatorListData>? {
         return try {
             val challengeData = withContext(Dispatchers.IO) {
                 getChallengeDataFunc(cId)
