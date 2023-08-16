@@ -202,7 +202,7 @@ class _PlanPutoff1State extends State<PlanPutoff1> {
                     vertical: 10,
                     horizontal: 120,
                   ),
-                  backgroundColor: Color(0xFF3BDE7C),
+                  backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
                   shadowColor: Colors.grey,
                   elevation: 3,

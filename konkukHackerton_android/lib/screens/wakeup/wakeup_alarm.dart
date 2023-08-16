@@ -131,7 +131,7 @@ class _WakeupAlarmState extends State<WakeupAlarm> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(90),
                   ),
-                  backgroundColor: Color(0xFF3BDE7C),
+                  backgroundColor: Theme.of(context).primaryColor,
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 84),
                 ),
               ),

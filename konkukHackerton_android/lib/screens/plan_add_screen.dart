@@ -82,7 +82,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(45),
               border: Border.all(
-                color: Color(0xFF3BDE7C),
+                color: Theme.of(context).primaryColor,
                 width: 4,
               ),
             ),
@@ -94,7 +94,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                 margin: EdgeInsets.only(right: 0.05.sw),
                 child: Icon(
                   Icons.keyboard_arrow_down_sharp,
-                  color: Color(0xFF3BDE7C),
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               underline: SizedBox.shrink(),
@@ -121,7 +121,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                     child: Text(
                       value,
                       style: TextStyle(
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   );
@@ -144,13 +144,13 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                       ),
                       hintText: "플랜명을 작성해주세요.",
                       hintStyle: TextStyle(
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.w500,
                         fontSize: 20.sp,
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Color(0xFF3BDE7C),
+                          color: Theme.of(context).primaryColor,
                           width: 2,
                         ),
                       ),
@@ -163,7 +163,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     backgroundColor: Color(0xFFF5F5F5),
-                    foregroundColor: Color(0xFF3BDE7C),
+                    foregroundColor: Theme.of(context).primaryColor,
                     fixedSize: Size(
                       0.54.sw,
                       0.0625.sh,
@@ -228,7 +228,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                       "~",
                       style: TextStyle(
                         fontSize: 32.sp,
-                        color: Color(0xFF3BDE7C),
+                        color: Theme.of(context).primaryColor,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -240,7 +240,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     backgroundColor: Color(0xFFF5F5F5),
-                    foregroundColor: Color(0xFF3BDE7C),
+                    foregroundColor: Theme.of(context).primaryColor,
                     fixedSize: Size(
                       0.54.sw,
                       0.0625.sh,

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:eom_fe/models/member_model.dart';
 import 'package:eom_fe/services/challenge_service.dart';
+import 'package:eom_fe/services/datetime_service.dart';
 import 'package:eom_fe/services/ui_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,6 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import '../models/challenge_model.dart';
 import '../models/plan_model.dart';
 import '../services/api_service.dart';
-import '../services/datetime_service.dart';
 import '../services/setplan_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,25 +27,27 @@ class _HomeScreenState extends State<HomeScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 
   List<PlanModel> todaysPlan = [];
-  late Future<List<ChallengeModel>> userChallenges;
+  List<ChallengeModel> userChallenges = [];
   final DateTime today = DateTime.now();
-  late Future<MemberModel> user;
+  late MemberModel user;
 
-  Future<List<ChallengeModel>> _getAllChallenges() async {
+  Future<void> _getAllChallenges() async {
     List<ChallengeModel> ret = [];
+
     try {
       String s = await platform.invokeMethod('getAllChallenges');
-      Future.delayed(Duration(milliseconds: 300), () {});
       List<dynamic> tmp = jsonDecode(s);
 
       for (var ch in tmp) {
         ret.add(ChallengeModel.fromJson(ch));
       }
-
-      return ret;
     } on PlatformException catch (e) {
       throw Exception("Failed to get challenges");
     }
+
+    setState(() {
+      userChallenges = ret;
+    });
   }
 
   Future<List<PlanModel>> _getTodaysPlan(String yyyymmdd) async {
@@ -77,18 +79,19 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<MemberModel> _getMemberData() async {
+  Future<void> _getMemberData() async {
     String s = "";
+    MemberModel ret;
     try {
       s = await platform.invokeMethod('getMemberData');
-      print(s);
-      Future.delayed(Duration(milliseconds: 500), () {});
-      MemberModel ret = MemberModel.fromJson(jsonDecode(s));
-
-      return ret;
+      ret = MemberModel.fromJson(jsonDecode(s));
     } on PlatformException catch (e) {
       throw Exception("Failed to get todays plan");
     }
+
+    setState(() {
+      user = ret;
+    });
   }
 
   ScrollController scrollController = ScrollController(
@@ -100,10 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //Future.delayed(Duration(milliseconds: 500), () {});
     getPlan();
-    userChallenges = _getAllChallenges();
+    _getAllChallenges();
     print(userChallenges);
-    user = _getMemberData();
+    _getMemberData();
+    print(today.weekday);
   }
 
   @override
@@ -301,167 +306,140 @@ class _HomeScreenState extends State<HomeScreen> {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: FutureBuilder(
-                future: user,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 0.03.sw, top: 0.03.sh),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${snapshot.data!.name}님",
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "지금 진행 중인",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                              Text(
-                                " 챌린지",
-                                style: TextStyle(
-                                  fontSize: 25.sp,
-                                  color: Theme.of(context).primaryColor,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                              ),
-                              Text(
-                                "입니다!",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                          FutureBuilder(
-                            future: userChallenges,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return Container(
-                                  margin: EdgeInsets.only(top: 15),
-                                  width: 0.95.sw,
-                                  height: 0.18.sh,
-                                  child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return Card(
-                                          clipBehavior: Clip.hardEdge,
-                                          elevation: 3,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                          child: Container(
-                                            width: 150,
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.white,
-                                                  Color(0xFFF0F3FF),
-                                                  Color(0xFFCBD3FF),
-                                                ],
-                                                begin: Alignment.bottomLeft,
-                                                end: Alignment.topRight,
-                                              ),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  margin: EdgeInsets.symmetric(
-                                                    vertical: 10,
-                                                    horizontal: 10,
-                                                  ),
-                                                  padding: EdgeInsets.symmetric(
-                                                      vertical: 0.01.sh,
-                                                      horizontal: 0.03.sw),
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            25),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Text(
-                                                    "D${getDDay(snapshot.data![index].deadline, today)}",
-                                                    style: TextStyle(
-                                                      fontSize: 14.sp,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  margin: EdgeInsets.only(
-                                                    top: 8,
-                                                    left: 10,
-                                                  ),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        "${ChallengeService.getInterval(snapshot.data![index].validationIntervalCode, snapshot.data![index].validationCountPerInterval)}",
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                      Text(
-                                                        "${snapshot.data![index].title}",
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(height: 0.035.sh),
-                                                LinearPercentIndicator(
-                                                  width: 150,
-                                                  animation: true,
-                                                  animationDuration: 100,
-                                                  lineHeight: 7,
-                                                  percent: 0.2,
-                                                  progressColor: Colors.black,
-                                                  barRadius:
-                                                      Radius.circular(10),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      separatorBuilder:
-                                          (BuildContext context, int index) =>
-                                              const Divider(),
-                                      itemCount: snapshot.data!.length),
-                                );
-                              }
-                              return const CircularProgressIndicator();
-                            },
-                          ),
-                        ],
+              child: Container(
+                margin: EdgeInsets.only(left: 0.03.sw, top: 0.03.sh),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${user.name}님",
+                      style: TextStyle(
+                        fontSize: 18.sp,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.w600,
                       ),
-                    );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "지금 진행 중인",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                        Text(
+                          " 챌린지",
+                          style: TextStyle(
+                            fontSize: 25.sp,
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        Text(
+                          "입니다!",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 15),
+                      width: 0.95.sw,
+                      height: 0.18.sh,
+                      child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              clipBehavior: Clip.hardEdge,
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Container(
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.white,
+                                      Color(0xFFF0F3FF),
+                                      Color(0xFFCBD3FF),
+                                    ],
+                                    begin: Alignment.bottomLeft,
+                                    end: Alignment.topRight,
+                                  ),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal: 10,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 0.01.sh,
+                                          horizontal: 0.03.sw),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Colors.white,
+                                      ),
+                                      child: Text(
+                                        "D${getDDay(userChallenges[index].deadline, today)}",
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        top: 8,
+                                        left: 10,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${ChallengeService.getInterval(userChallenges[index].validationIntervalCode, userChallenges[index].validationCountPerInterval)}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            "${userChallenges[index].title}",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 0.035.sh),
+                                    LinearPercentIndicator(
+                                      width: 150,
+                                      animation: true,
+                                      animationDuration: 100,
+                                      lineHeight: 7,
+                                      percent: 0.2,
+                                      progressColor: Colors.black,
+                                      barRadius: Radius.circular(10),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const Divider(),
+                          itemCount: userChallenges.length),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
