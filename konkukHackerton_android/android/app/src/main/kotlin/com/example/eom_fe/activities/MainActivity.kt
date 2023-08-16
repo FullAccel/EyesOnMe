@@ -465,8 +465,9 @@ class MainActivity: FlutterActivity() {
                     val path = jsonObject.getString("path")
 
                     CoroutineScope(Dispatchers.IO).launch {
-                        challengeFuntions.postChallengeImage(cId, date, writing, path)
-                        result.success("success")
+                        challengeFuntions.postChallengeImage(cId, date, writing, path) { accessUrl ->
+                            result.success(accessUrl)
+                        }
                     }
                 }
 

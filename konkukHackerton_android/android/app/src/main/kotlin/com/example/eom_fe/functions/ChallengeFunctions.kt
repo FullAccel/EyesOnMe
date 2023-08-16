@@ -320,7 +320,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
 
     // 실제
     // date : "yyyy-mm-dd" 형태로
-    fun postChallengeImage(cId: Int, date: String, writing: String, filePath: String,) {
+    fun postChallengeImage(cId: Int, date: String, writing: String, filePath: String, callback: (String?) -> Unit) {
         val date = date
         val writing = writing
         val dateRequestBody : RequestBody = date.toRequestBody()
@@ -349,16 +349,19 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as ProofResponseData
                     Log.d("eyesonme-CF", "result : $result")
+                    callback(result.images.last().accessUrl)
                 }
                 else {
                     Log.d("eyesonme-CF", "postChallengeImage null (1)")
                     Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
                 }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                 Log.d("eyesonme-CF", "postChallengeImage null (2)")
                 Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
             }
         }
         )
@@ -416,8 +419,8 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                 -${hostName}님의 성취를 열원하며, 아이투두 올림-
             """.trimIndent(),
             link = Link(
-                webUrl = "https://developers.kakao.com",
-                mobileWebUrl = "https://developers.kakao.com"
+//                webUrl = "https://developers.kakao.com",
+//                mobileWebUrl = "https://developers.kakao.com"
             ),
             buttons = listOf(
                 Button(
