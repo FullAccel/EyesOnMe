@@ -147,33 +147,38 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
 
 
     fun addValidatorDataFunc(cId: Int, vld: ValidatorListData?) {
-        val addValidatorDataBuilder = RetrofitBuilder.api.addValidatorData(cId, vld)
-        addValidatorDataBuilder.enqueue(object : Callback<APIResponseData> {
-            override fun onResponse(
-                call: Call<APIResponseData>,
-                response: Response<APIResponseData>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d("eyesonme-CF", "response : ${response.body()}")
-                    val temp = response.body() as APIResponseData
-                    val type: Type = object : TypeToken<Boolean>() {}.type
-                    val jsonResult = Gson().toJson(temp.data)
-                    val result = Gson().fromJson(jsonResult, type) as Boolean
-                    // whether request success or not
-                }
-                else {
-                    Log.d("eyesonme-CF", "addValidatorDataFunc null (1)")
-                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+        if (vld != null) {
+            val addValidatorDataBuilder = RetrofitBuilder.api.addValidatorData(cId, vld)
+            addValidatorDataBuilder.enqueue(object : Callback<APIResponseData> {
+                override fun onResponse(
+                    call: Call<APIResponseData>,
+                    response: Response<APIResponseData>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("eyesonme-CF", "response : ${response.body()}")
+                        val temp = response.body() as APIResponseData
+                        val type: Type = object : TypeToken<Boolean>() {}.type
+                        val jsonResult = Gson().toJson(temp.data)
+                        val result = Gson().fromJson(jsonResult, type) as Boolean
+                        // whether request success or not
+                    }
+                    else {
+                        Log.d("eyesonme-CF", "addValidatorDataFunc null (1)")
+                        Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
 
+                    }
+                }
+
+                override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                    Log.d("eyesonme-CF", "addValidatorDataFunc null (2)")
+                    Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
                 }
             }
-
-            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
-                Log.d("eyesonme-CF", "addValidatorDataFunc null (2)")
-                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
-            }
+            )
         }
-        )
+        else {
+            Log.d("eyesonme-CF", "addValidatorDataFunc validatorList is null")
+        }
     }
 
     fun getChallengeDataFunc2(cId: Int) {
