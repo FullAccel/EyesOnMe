@@ -128,9 +128,16 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     // result == challengeId
                     callback(result) // 결과 값을 콜백 함수로 전달
                 }
-                callback(null)
+                else {
+                    Log.d("eyesonme-CF", "addChallengeDataFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
+                }
+
             }
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "addChallengeDataFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
                 callback(null) // 실패 시에도 콜백 호출, 결과 값은 null
             }
         })
@@ -152,9 +159,16 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val result = Gson().fromJson(jsonResult, type) as Boolean
                     // whether request success or not
                 }
+                else {
+                    Log.d("eyesonme-CF", "addValidatorDataFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+
+                }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "addValidatorDataFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
             }
         }
         )
@@ -196,9 +210,13 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                 val result = Gson().fromJson(jsonResult, type) as ChallengeData
                 result
             } else {
+                Log.d("eyesonme-CF", "getChallengeDataFunc null (1)")
+                Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
                 null
             }
         } catch (e: Exception) {
+            Log.d("eyesonme-CF", "getChallengeDataFunc null (2)")
+            Log.d("eyesonme-CF", "error 1 : ${e.printStackTrace()}")
             null
         }
     }
@@ -209,15 +227,20 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
             val response = getAllChallengesBuilder.execute()
 
             if (response.isSuccessful) {
+                Log.d("eyesonme-CF", "response : ${response.body()}")
                 val temp = response.body() as APIResponseData
                 val type: Type = object : TypeToken<List<ChallengeData>>() {}.type
                 val jsonResult = Gson().toJson(temp.data)
                 val result = Gson().fromJson(jsonResult, type) as List<ChallengeData>
                 result
             } else {
+                Log.d("eyesonme-CF", "getAllChallengesFunc null (1)")
+                Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
                 null
             }
         } catch (e: Exception) {
+            Log.d("eyesonme-CF", "getAllChallengesFunc null (2)")
+            Log.d("eyesonme-CF", "error 2 : ${e.printStackTrace()}")
             null
         }
     }
@@ -237,9 +260,15 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Boolean
                 }
+                else {
+                    Log.d("eyesonme-CF", "editChallengeDataFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "editChallengeDataFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
             }
         }
         )
@@ -304,7 +333,29 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
                 Log.d("eyesonme-CF", "postChallengeImage null (2)")
-                Log.d("eyesonme-CF", "error 1 : ${t.printStackTrace()}")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+            }
+        }
+        )
+    }
+
+    fun sendValidatorKakaoMessage(cId: Int) {
+        val sendValidatorKakaoMessageBuilder = RetrofitBuilder.api.enterChallengeValidation(cId, memberInfo.id)
+        sendValidatorKakaoMessageBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<Boolean>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as Boolean
+                }
+            }
+
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
             }
         }
         )
