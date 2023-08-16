@@ -26,7 +26,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
   final isSelected = [true, false, false];
   String _alarmSound = "노래1";
   String _repeat = "없음";
-  bool _isSilenceMode = false;
+  bool _isSilenceMode = true;
   final _textController = TextEditingController();
 
   Future<void> _postTodoDataFunc(String jsonString) async {

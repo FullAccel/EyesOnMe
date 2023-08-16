@@ -42,7 +42,9 @@ class BackgroundActivity : FlutterActivity() {
                 val arguments = HashMap<String, Any>()
                 arguments["alarmCode"] = alarmCode // 정수 값을 추가
                 arguments["alarmType"] = alarmType // 정수 값을 추가
-//                playAlarmSound(alarmType)
+                if (alarmType == 2) {
+                    playAlarmSound(alarmType)
+                }
 
                 val gson = Gson()
                 val jsonString = gson.toJson(arguments) // 맵을 JSON 문자열로 변환
@@ -69,7 +71,10 @@ class BackgroundActivity : FlutterActivity() {
                 val arguments = HashMap<String, Any>()
                 arguments["alarmCode"] = alarmCode // 정수 값을 추가
                 arguments["alarmType"] = alarmType // 정수 값을 추가
-//                playAlarmSound(alarmType)
+                if (alarmType == 2) {
+                    playAlarmSound(alarmType)
+                }
+
 
                 val gson = Gson()
                 val jsonString = gson.toJson(arguments) // 맵을 JSON 문자열로 변환
@@ -135,7 +140,7 @@ class BackgroundActivity : FlutterActivity() {
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
-//            stopAlarmSound()
+            stopAlarmSound()
             mBound = false
         }
     }
@@ -153,13 +158,21 @@ class BackgroundActivity : FlutterActivity() {
         mBound = false
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        stopAlarmSound()
+    }
+
+
+
     private var mediaPlayer: MediaPlayer? = null
 
     fun playAlarmSound(type: Int) {
         try {
+            Log.d("eyesonme-BA", "playAlarmSound started")
             setSoundMode(type)
             val alert: Uri = Uri.parse("android.resource://" + context.packageName + "/" + R.raw.inspiring)
-            mediaPlayer = MediaPlayer.create(context, alert)
+            mediaPlayer = MediaPlayer.create(applicationContext, alert)
             mediaPlayer?.isLooping = true
             mediaPlayer?.start()
         } catch (e: Exception) {
@@ -168,7 +181,9 @@ class BackgroundActivity : FlutterActivity() {
     }
 
     fun stopAlarmSound() {
+        Log.d("eyesonme-BA", "stopAlarmSound started")
         mediaPlayer?.let {
+            Log.d("eyesonme-BA", "stopAlarmSound started 2")
             if (it.isPlaying) {
                 it.stop()
                 it.release()
