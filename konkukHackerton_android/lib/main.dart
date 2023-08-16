@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:eom_fe/screens/challenge/challenge_mainscreen.dart';
 import 'package:eom_fe/screens/entire_plan.dart';
 import 'package:eom_fe/screens/home_screen.dart';
 import 'package:eom_fe/screens/intro_screen1.dart';
@@ -217,6 +218,10 @@ class _MyAppState extends State<MyApp> {
               name: "/wakeup/preview",
               page: () => WakeupPreviewPlan(),
               transition: Transition.rightToLeft,
+            ),
+            GetPage(
+              name: "/challenge",
+              page: () => ChallengeMainScreen(),
             ),
           ],
         );

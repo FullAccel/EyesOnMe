@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
 
-  late Future<List<PlanModel>> todaysPlan;
+  List<PlanModel> todaysPlan = [];
   final DateTime today = DateTime.now();
 
   Future<List<PlanModel>> _getTodaysPlan(String yyyymmdd) async {
@@ -40,12 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> getPlan() async {
+    String day = DateFormat("yyyyMMdd").format(today);
+    List<PlanModel> ret = [];
+    try {
+      ret = await _getTodaysPlan(day);
+    } catch (e) {
+      print("Error: getPlan()");
+    }
+
+    setState(() {
+      todaysPlan = ret;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print(DateFormat("yyyyMMdd").format(today));
-    todaysPlan = _getTodaysPlan(DateFormat("yyyyMMdd").format(today));
+    getPlan();
   }
 
   @override
@@ -133,102 +146,90 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   width: 0.9.sw,
                   height: 0.4.sh,
-                  child: FutureBuilder(
-                      future: todaysPlan,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              Card(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15)),
-                                clipBehavior: Clip.hardEdge,
-                                child: Container(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 0.01.sh),
-                                  width: 0.9.sw,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Transform.scale(
-                                        scale: 1.2,
-                                        child: Transform.translate(
-                                          offset: Offset(-10, 0),
-                                          child: ElevatedButton(
-                                            onPressed: () {},
-                                            child: Image.asset(
-                                              "assets/images/icon_x.png",
-                                              scale: 0.7,
-                                            ),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFFF0F0F0),
-                                              shape: CircleBorder(),
-                                              padding: EdgeInsets.all(16.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Text(
-                                            SetPlanService.codeToCategory[
-                                                snapshot.data![index]
-                                                    .categoryCode]!,
-                                            style: TextStyle(
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF20884A),
-                                            ),
-                                          ),
-                                          Text(
-                                            snapshot.data![index].title,
-                                            style: TextStyle(
-                                              fontSize: 28.sp,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          Text(
-                                            "${ApiService.DateTimeTo12(snapshot.data![index].alarmStartTime)}~${ApiService.DateTimeTo12(snapshot.data![index].alarmEndTime)}",
-                                            style: TextStyle(
-                                              fontSize: 16.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF3BDE7C),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Transform.scale(
-                                        scale: 1.2,
-                                        child: Transform.translate(
-                                          offset: Offset(10, 0),
-                                          child: ElevatedButton(
-                                            onPressed: () {},
-                                            child: Image.asset(
-                                              "assets/images/icon_check.png",
-                                              scale: 0.7,
-                                            ),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Color(0xFF3BDE7C),
-                                              shape: CircleBorder(),
-                                              padding: EdgeInsets.all(16.0),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                  child: ListView.builder(
+                    itemCount: todaysPlan.length,
+                    itemBuilder: (context, index) {
+                      //print(todaysPlan[index].alarmEndTime);
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        clipBehavior: Clip.hardEdge,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 0.01.sh),
+                          width: 0.9.sw,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Transform.scale(
+                                scale: 1.2,
+                                child: Transform.translate(
+                                  offset: Offset(-10, 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Image.asset(
+                                      "assets/images/icon_x.png",
+                                      scale: 0.7,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFFF0F0F0),
+                                      shape: CircleBorder(),
+                                      padding: EdgeInsets.all(16.0),
+                                    ),
                                   ),
                                 ),
-                              );
-                            },
-                          );
-                        } else {
-                          return Text("no data");
-                        }
-                      }),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    SetPlanService.codeToCategory[
+                                        todaysPlan[index].categoryCode]!,
+                                    style: TextStyle(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF20884A),
+                                    ),
+                                  ),
+                                  Text(
+                                    todaysPlan[index].title,
+                                    style: TextStyle(
+                                      fontSize: 28.sp,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${ApiService.DateTimeTo12(todaysPlan[index].alarmStartTime)}~${ApiService.DateTimeTo12(todaysPlan[index].alarmEndTime)}",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF3BDE7C),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Transform.scale(
+                                scale: 1.2,
+                                child: Transform.translate(
+                                  offset: Offset(10, 0),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    child: Image.asset(
+                                      "assets/images/icon_check.png",
+                                      scale: 0.7,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xFF3BDE7C),
+                                      shape: CircleBorder(),
+                                      padding: EdgeInsets.all(16.0),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -247,8 +248,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Get.offAllNamed("/plan");
               break;
             case 2:
-              // TODO: challenge screen
               UIService.curMenu = index;
+              Get.offAllNamed("/challenge");
               break;
             case 3:
               UIService.curMenu = index;
@@ -258,36 +259,48 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: UIService.curMenu == 0
-                  ? Color(0xFF3BDE7C)
-                  : Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(top: 15.sp, right: 12.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu1.png"),
+                color: UIService.curMenu == 0
+                    ? Color(0xFF3BDE7C)
+                    : Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.calendar_month,
-              color: Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(right: 48.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu2.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.star,
-              color: Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(right: 28.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu3.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_3_rounded,
-              color: Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(right: 18),
+              child: ImageIcon(
+                AssetImage("assets/images/menu4.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),

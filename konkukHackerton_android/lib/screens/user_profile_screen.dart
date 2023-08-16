@@ -160,8 +160,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               Get.offAllNamed("/plan");
               break;
             case 2:
-              // TODO: challenge screen
               UIService.curMenu = index;
+              Get.offAllNamed("/challenge");
               break;
             case 3:
               UIService.curMenu = index;
@@ -171,36 +171,48 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         },
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(top: 15.sp, right: 12.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu1.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.calendar_month,
-              color: Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(right: 48.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu2.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.star,
-              color: Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(right: 28.sp),
+              child: ImageIcon(
+                AssetImage("assets/images/menu3.png"),
+                color: Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_3_rounded,
-              color: UIService.curMenu == 3
-                  ? Color(0xFF3BDE7C)
-                  : Color(0xFFBCBCBC),
-              size: 32.sp,
+            icon: Container(
+              margin: EdgeInsets.only(right: 18),
+              child: ImageIcon(
+                AssetImage("assets/images/menu4.png"),
+                color: UIService.curMenu == 3
+                    ? Color(0xFF3BDE7C)
+                    : Color(0xFFBCBCBC),
+                size: 32,
+              ),
             ),
             label: "",
           ),

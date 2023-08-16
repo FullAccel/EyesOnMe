@@ -1,5 +1,6 @@
 import 'package:eom_fe/widgets/oval_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,17 @@ class SleepTimeScreen extends StatefulWidget {
 }
 
 class _SleepTimeScreenState extends State<SleepTimeScreen> {
+  DateTime now = DateTime.now();
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+
+  Future<void> _delayWSAlarm(String yyyyMMdd) async {
+    try {
+      await platform.invokeMethod("delayWSAlarm", yyyyMMdd);
+    } on PlatformException catch (e) {
+      throw Exception("delayWSAlarm failed");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +100,12 @@ class _SleepTimeScreenState extends State<SleepTimeScreen> {
               ),
               SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _delayWSAlarm(DateTime(
+                          now.year, now.month, now.day, now.hour, now.minute, 0)
+                      .toString());
+                  Get.offAllNamed("/");
+                },
                 child: Text(
                   "10분 뒤 다시 울림",
                   style: TextStyle(

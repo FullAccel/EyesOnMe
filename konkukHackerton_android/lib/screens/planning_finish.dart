@@ -18,7 +18,9 @@ class PlanningFinish extends StatefulWidget {
 
 class _PlanningFinishState extends State<PlanningFinish> {
   static const platform = MethodChannel('samples.flutter.dev/battery');
+
   late Future<QuotesModel> quote;
+  late var arg;
   String jsonString = '''
   {
     "quote": "계획 없는 성공은 한낱 꿈에 불과하다.",
@@ -38,6 +40,28 @@ class _PlanningFinishState extends State<PlanningFinish> {
     }
   }
 
+  Future<void> _setWakeAlarm(String jsonString) async {
+    try {
+      final result = await platform.invokeMethod('setWakeAlarm', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  Future<void> _setSleepAlarm(String jsonString) async {
+    try {
+      final result = await platform.invokeMethod('setSleepAlarm', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
   Future<void> addPlan(String jsonString) async {
     print("${jsonString} 넣을 차례~");
     await _postTodoDataFunc(jsonString);
@@ -49,12 +73,24 @@ class _PlanningFinishState extends State<PlanningFinish> {
     // TODO: implement initState
     super.initState();
     quote = ApiService.getQuotes(jsonString);
-    print(Get.arguments);
-    addPlan(jsonEncode(Get.arguments));
+
+    //print(Get.arguments);
+    //addPlan(jsonEncode(Get.arguments));
   }
 
   @override
   Widget build(BuildContext context) {
+    arg = Get.arguments;
+    print("CurRoute: /plan/finish, arg: ${arg}");
+
+    switch (arg["argName"]) {
+      case "wakeupAndSleep":
+        _setWakeAlarm(jsonEncode(arg["data"][0]));
+        _setSleepAlarm(jsonEncode(arg["data"][1]));
+        print("wakeupAndSleep");
+        break;
+    }
+
     return Scaffold(
       body: Stack(
         alignment: AlignmentDirectional.center,
@@ -96,7 +132,9 @@ class _PlanningFinishState extends State<PlanningFinish> {
           Positioned(
             bottom: 0.05.sh,
             child: FilledButton(
-              onPressed: () => Get.offAllNamed('/'),
+              onPressed: () {
+                Get.offNamed("/");
+              },
               style: FilledButton.styleFrom(
                 backgroundColor: Color(0xFF3BDE7C),
                 textStyle: TextStyle(fontWeight: FontWeight.bold),
