@@ -117,7 +117,7 @@ class _PlanProgressingScreenState extends State<PlanProgressingScreen> {
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(110, 110),
                           shape: CircleBorder(),
-                          backgroundColor: Color(0xFF3BDE7C),
+                          backgroundColor: Theme.of(context).primaryColor,
                         ),
                         child: Text(
                           "진행 중",

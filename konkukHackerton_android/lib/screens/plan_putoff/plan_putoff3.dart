@@ -115,7 +115,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Color(0xFF9AAAFF),
+                  color: Theme.of(context).primaryColor.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -132,7 +132,7 @@ class _PlanPutoff3State extends State<PlanPutoff3> {
                     Text(
                       "${DateTimeTo12(plan.alarmStartTime)} ~ ${DateTimeTo12(plan.alarmEndTime)}",
                       style: TextStyle(
-                        color: Color(0xFF25A7FFF),
+                        color: Theme.of(context).primaryColor.withOpacity(0.7),
                         fontSize: 32.sp,
                         fontWeight: FontWeight.w600,
                       ),

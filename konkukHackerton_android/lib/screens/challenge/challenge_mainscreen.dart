@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:eom_fe/services/api_service.dart';
 import 'package:eom_fe/services/challenge_service.dart';
 import 'package:eom_fe/services/setplan_service.dart';
 import 'package:eom_fe/widgets/challenge_appbar.dart';
@@ -64,7 +63,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     "categoryCode": "C001",
   };
 
-  List<ChallengeModel> challengeList = [];
+  List<ChallengeModel> userChallenges = [];
   DateTime now = DateTime.now();
 
   @override
@@ -123,7 +122,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
           return GestureDetector(
             onTap: () {
               Get.toNamed("/challenge/detail",
-                  arguments: challengeList[index].id);
+                  arguments: userChallenges[index].id);
             },
             child: Card(
               clipBehavior: Clip.hardEdge,
@@ -158,7 +157,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                               color: Colors.white,
                             ),
                             child: Text(
-                              "D${getDDay(challengeList[index].deadline, now)}",
+                              "D${getDDay(userChallenges[index].deadline, now)}",
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
@@ -170,7 +169,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                           margin: EdgeInsets.only(top: 0.02.sh, left: 0.01.sw),
                           child: Text(
                             SetPlanService.codeToCategory[
-                                challengeList[index].categoryCode]!,
+                                userChallenges[index].categoryCode]!,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: Theme.of(context).primaryColor,
@@ -181,7 +180,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                         Container(
                           margin: EdgeInsets.only(left: 0.01.sw),
                           child: Text(
-                            challengeList[index].title,
+                            userChallenges[index].title,
                             style: TextStyle(
                               fontSize: 24.sp,
                               fontWeight: FontWeight.w600,
@@ -200,8 +199,8 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                       ),
                       child: Text(
                         ChallengeService.getInterval(
-                            challengeList[index].validationIntervalCode,
-                            challengeList[index].validationCountPerInterval),
+                            userChallenges[index].validationIntervalCode,
+                            userChallenges[index].validationCountPerInterval),
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.w600,
@@ -209,7 +208,8 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                       ),
                     ),
                     CustomPaint(
-                      painter: ArcPainter(challengeList[index].achievementRate),
+                      painter:
+                          ArcPainter(userChallenges[index].achievementRate),
                       child: Container(
                         width: 80,
                         height: 80,
@@ -234,7 +234,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
                                 height: 0.002.sh,
                               ),
                               Text(
-                                "${challengeList[index].achievementRate}%",
+                                "${userChallenges[index].achievementRate}%",
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.w800,
@@ -254,7 +254,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
         },
         separatorBuilder: (BuildContext context, int index) =>
             SizedBox(height: 0.01.sh),
-        itemCount: challengeList.length,
+        itemCount: userChallenges.length,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
@@ -361,22 +361,19 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
   }
 
   Future<List<ChallengeModel>> _getAllChallenges() async {
-    print("_getAllChallenges()");
     List<ChallengeModel> ret = [];
-    String tmp = "";
-    try {
-      tmp = await platform.invokeMethod("getAllChallenges");
-      print("invoke getAllChallenges: $tmp");
-      List<dynamic> list = jsonDecode(tmp);
 
-      for (var ch in list) {
+    try {
+      String s = await platform.invokeMethod('getAllChallenges');
+      List<dynamic> tmp = jsonDecode(s);
+
+      for (var ch in tmp) {
         ret.add(ChallengeModel.fromJson(ch));
-        print(ret);
       }
 
-      return ApiService.sortChallenges(ret);
+      return ret;
     } on PlatformException catch (e) {
-      throw Exception("Exception: _getAllChallenges");
+      throw Exception("Failed to get challenges");
     }
   }
 
@@ -390,7 +387,7 @@ class _ChallengeMainScreenState extends State<ChallengeMainScreen> {
     }
 
     setState(() {
-      challengeList = ret;
+      userChallenges = ret;
     });
   }
 }
