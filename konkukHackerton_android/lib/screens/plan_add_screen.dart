@@ -360,7 +360,7 @@ class _PlanAddScreenState extends State<PlanAddScreen> {
                                       isSelected[i] = false;
                                     }
                                   }
-                                  if (index == 2) {
+                                  if (index == 0) {
                                     _isSilenceMode = true;
                                   } else {
                                     _isSilenceMode = false;

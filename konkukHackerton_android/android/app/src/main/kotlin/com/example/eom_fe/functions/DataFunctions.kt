@@ -421,7 +421,8 @@ class DataFunctions (context: Context, applicationContext: Context) {
         )
     }
 
-    fun getTodoDataFunc(todoId: Int) {
+    fun getTodoDataFunc(todoId: Int, callback: (ToDoData?) -> Unit) {
+        Log.d("eyesonme-DF", "getTodoDataFunc is called")
         val getTodoDataBuilder = RetrofitBuilder.api.getTodoData(todoId)
         getTodoDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
@@ -434,10 +435,17 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val type: Type = object : TypeToken<ToDoData>() {}.type
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as ToDoData
+                    callback(result)
+                }
+                else {
+                    Log.d("eyesonme-DF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
                 }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-DF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
             }
         }
         )

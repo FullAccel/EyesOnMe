@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
             fontFamily: 'Nanum_SQUARE',
           ),
           //home: LoginScreen(),
-          initialRoute: '/challenges',
+          initialRoute: '/login',
           getPages: [
             GetPage(name: '/', page: () => HomeScreen()),
             GetPage(name: '/intro1', page: () => IntroScreen1()),
@@ -225,10 +225,17 @@ class _MyAppState extends State<MyApp> {
 
   Future<bool> permission() async {
     Map<Permission, PermissionStatus> status =
-        await [Permission.systemAlertWindow].request(); // [] 권한배열에 권한을 작성
+        await [Permission.systemAlertWindow, Permission.accessNotificationPolicy, Permission.manageExternalStorage].request(); // [] 권한배열에 권한을 작성
 
-    if (await Permission.systemAlertWindow.isGranted) {
-      return Future.value(true);
+    if (await Permission.accessNotificationPolicy.isGranted) {
+
+      if (await Permission.systemAlertWindow.isGranted) {
+        if (await Permission.manageExternalStorage.isGranted) {
+          return Future.value(true);
+        }
+        return Future.value(false);
+      }
+      return Future.value(false);
     } else {
       return Future.value(false);
     }

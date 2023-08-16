@@ -246,6 +246,15 @@ class MainActivity: FlutterActivity() {
 
 
                 }
+                "getSingleTodoData" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataFunctions.getTodoDataFunc(jsonString.toInt()) { data ->
+                            result.success(data)
+                        }
+                    }
+                }
+
                 "editTodoDataFunc" -> {
                     val jsonString = call.arguments as String
 
