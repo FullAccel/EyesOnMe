@@ -1,10 +1,13 @@
 package com.example.fluttertest.activities
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.fluttertest.R
 import com.example.fluttertest.api.RetrofitBuilder
 import com.example.fluttertest.alarm_package.AlarmFunctions
@@ -219,7 +222,6 @@ class MainActivity : AppCompatActivity() {
                     Log.d("alarmNotification", "getAllAlarm - launch executed")
 
                 }
-
             }
         }
 
@@ -234,6 +236,49 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAlarm(alarmCode : Int, content : String, time : String){
         alarmFunctions.callAlarm(time, alarmCode, content)
+    }
+
+
+    //권한 확인
+    fun checkPermission() {
+
+        // 1. 위험권한(Camera) 권한 승인상태 가져오기
+        val cameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.SYSTEM_ALERT_WINDOW)
+        if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
+            // 카메라 권한이 승인된 상태일 경우
+            startProcess()
+
+        } else {
+            // 카메라 권한이 승인되지 않았을 경우
+            requestPermission()
+        }
+    }
+
+    // 2. 권한 요청
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.SYSTEM_ALERT_WINDOW), 99)
+    }
+
+    // 권한 처리
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            99 -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startProcess()
+                } else {
+                    Log.d("MainActivity", "종료")
+                }
+            }
+        }
+    }
+
+    // 3. 카메라 기능 실행
+    fun startProcess() {
+        Toast.makeText(this, "카메라 기능 실행", Toast.LENGTH_SHORT).show()
     }
 
 }

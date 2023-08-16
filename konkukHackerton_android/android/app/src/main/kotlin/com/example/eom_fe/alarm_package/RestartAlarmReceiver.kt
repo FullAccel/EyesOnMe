@@ -6,6 +6,8 @@ import com.example.eom_fe.roomDB.AlarmDataModel
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +19,7 @@ class RestartAlarmReceiver : BroadcastReceiver() {
     var data:ArrayList<AlarmDataModel> = ArrayList()
     lateinit var db: AlarmDB
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action.equals("android.intent.action.BOOT_COMPLETED")) {
             functions = AlarmFunctions(context)
@@ -29,7 +32,8 @@ class RestartAlarmReceiver : BroadcastReceiver() {
                         val time = list[i].time
                         val code = list[i].alarm_code
                         val content = list[i].content
-                        functions.callAlarm(time, code, content) // 알람 실행
+                        val type = list[i].type
+                        functions.callAlarm(time, code, content, type) // 알람 실행
                     }
                 }
             }

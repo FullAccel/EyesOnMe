@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable_launch_background.xml.flat",
+        "source": "com.example.eom_fe.app-main-37:/drawable/launch_background.xml"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/layout_row.xml.flat",
+        "source": "com.example.eom_fe.app-main-37:/layout/row.xml"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.example.eom_fe.app-main-37:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/layout_activity_alarm_list.xml.flat",
+        "source": "com.example.eom_fe.app-main-37:/layout/activity_alarm_list.xml"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-ldpi_btn_star.png.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-ldpi/btn_star.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-xxhdpi_btn_star.png.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-xxhdpi/btn_star.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-xhdpi_btn_star.png.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-xhdpi/btn_star.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.example.eom_fe.app-main-37:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.example.eom_fe.app-main-37:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.example.eom_fe.app-main-37:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-v21_launch_background.xml.flat",
+        "source": "com.example.eom_fe.app-main-37:/drawable-v21/launch_background.xml"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-anydpi-v21_btn_star.xml.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-anydpi-v21/btn_star.xml"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-xxxhdpi_btn_star.png.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-xxxhdpi/btn_star.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.example.eom_fe.app-main-37:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-mdpi_btn_star.png.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-mdpi/btn_star.png"
+    },
+    {
+        "merged": "com.example.eom_fe.app-merged_res-44:/drawable-hdpi_btn_star.png.flat",
+        "source": "com.example.eom_fe.app-pngs-39:/drawable-hdpi/btn_star.png"
+    }
+]

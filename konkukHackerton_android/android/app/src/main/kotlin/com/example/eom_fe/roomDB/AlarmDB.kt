@@ -10,7 +10,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [AlarmDataModel::class],
-    version = 2
+    version = 2,
+    exportSchema = false,
 )
 
 abstract class AlarmDB: RoomDatabase(){
@@ -26,13 +27,14 @@ abstract class AlarmDB: RoomDatabase(){
                 return tempInstance
             }
 
-            Log.d("alarmNotification", "getDatabase excuted")
+            Log.d("eyesonme-ADB", "getDatabase excuted")
 
             val instance = Room.databaseBuilder(
                 context,
                 AlarmDB::class.java,
                 "alarmdb"
-            ).addMigrations(migration_1_2).build()
+            ).addMigrations(migration_1_2)
+                .build()
 
             INSTANCE = instance
             return instance
@@ -46,5 +48,4 @@ val migration_1_2 = object : Migration(1, 2) {
             "ALTER TABLE Sound Add COLUMN isChecked INTEGER NOT NULL DEFAULT 0"
         )
     }
-
 }
