@@ -24,6 +24,8 @@ public class FCMConfig {
         FirebaseApp firebaseApp = null;
         List<FirebaseApp> firebaseApps = FirebaseApp.getApps();
 
+
+
         if (firebaseApps != null && !firebaseApps.isEmpty())
         {
             for (FirebaseApp app : firebaseApps)

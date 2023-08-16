@@ -12,14 +12,14 @@ public class ToDoUpdateDto {
     private String title;
     private String alarmStartTime;
     private String alarmEndTime;
-    private String afterCategoryCode;
+    private String categoryCode;
 
     @Builder
-    public ToDoUpdateDto(String title, String alarmStartTime, String alarmEndTime, String afterCategoryCode) {
+    public ToDoUpdateDto(String title, String alarmStartTime, String alarmEndTime, String categoryCode) {
         this.title = title;
         this.alarmStartTime = alarmStartTime;
         this.alarmEndTime = alarmEndTime;
-        this.afterCategoryCode = afterCategoryCode;
+        this.categoryCode = categoryCode;
     }
 
     public ToDo toEntity(){

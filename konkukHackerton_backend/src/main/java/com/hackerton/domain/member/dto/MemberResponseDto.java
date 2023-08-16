@@ -1,5 +1,6 @@
 package com.hackerton.domain.member.dto;
 
+import com.hackerton.domain.member.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,14 +24,13 @@ public class MemberResponseDto {
     private int challengeSuccessCount;
 
     @Builder
-
-    public MemberResponseDto(Long id, String name, String email, String profileUrl, String firebaseToken, int planSuccessCount, int challengeSuccessCount) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.profileUrl = profileUrl;
-        this.firebaseToken = firebaseToken;
-        this.planSuccessCount = planSuccessCount;
-        this.challengeSuccessCount = challengeSuccessCount;
+    public MemberResponseDto(Member entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.email = entity.getEmail();
+        this.profileUrl = entity.getProfileUrl();
+        this.firebaseToken = entity.getFirebaseToken();
+        this.planSuccessCount = entity.getPlanSuccessCount();
+        this.challengeSuccessCount = entity.getChallengeSuccessCount();
     }
 }

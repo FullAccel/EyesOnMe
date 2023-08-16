@@ -43,9 +43,27 @@ public enum ErrorCode {
     CATEGORY_NOT_FOUND(400, "CT001", "존재 하지 않는 카테고리입니다"),
 
     //Firebase
-    TOKEN_NOT_FOUND(400, "FB001", "해당 멤버의 토큰이 존재하지 않습니다"),
+    TOKEN_NOT_FOUND(400, "FB001", "해당 멤버의 토큰이 올바르지 않습니다"),
     PUSH_NOTIFICATION_FAIL(400, "FB002", "알림 보내기를 실패하였습니다"),
+
+    //Challenge
+    VALIDATION_INTERVAL_NOT_FOUND(400, "C001", "존재 하지 않는 인증 간격입니다."),
+    CHALLENGE_NOT_FOUND(400, "C002", " 존재 하지 않는 챌린지 입니다"),
+    VALIDATOR_UNDER_ZERO(400, "C003", "검증자는 0명이 될 수 없습니다"),
+    VALIDATOR_UPPER_MAX_NUM(400, "C004", "검증자는 3명 이상이 될 수 없습니다"),
+    VALIDATION_COUNT_EXCEPTION(400, "C005", "검증 횟수는 1회 이상 99회 이하여야 합니다"),
+    VALIDATION_INTERVAL_TOO_SMALL(400, "C006", "인증 간격이 챌린지 전체 기간보다 큽니다"),
+
+    //Validation
+    VALIDATION_NOT_FOUND(400, "V001", "존재 하지 않은 검증입니다"),
+
+    //Proof
+    PROOF_NOT_FOUND(400, "P001", "등록된 Proof가 없습니다"),
+
     ;
+
+
+
 
     private final int status;
     private final String code;

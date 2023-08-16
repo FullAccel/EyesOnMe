@@ -39,17 +39,14 @@ public class Member extends BaseTimeEntity {
 
     private String firebaseToken;
 
-
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member")
     private List<Follows> followings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    @MapKey(name = "yearMonth")
-    private Map<String,DailyPlan> dailyPlans = new HashMap<>();
+    @OneToMany(mappedBy = "member")
+    private List<DailyPlan> dailyPlans = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Category> categories = new ArrayList<>();
@@ -64,8 +61,6 @@ public class Member extends BaseTimeEntity {
         this.firebaseToken = firebaseToken;
     }
 
-
-
     public Member update(String name, String picture){
         this.name = name;
         this.profileUrl = picture;
@@ -75,17 +70,6 @@ public class Member extends BaseTimeEntity {
 
     public String getRoleKey(){
         return this.role.getKey();
-    }
-
-    public MemberResponseDto toMemberResponseDto(){
-        return MemberResponseDto.builder()
-                .id(this.id)
-                .name(this.name)
-                .email(this.email)
-                .profileUrl(this.profileUrl)
-                .planSuccessCount(this.planSuccessCount)
-                .challengeSuccessCount(this.challengeSuccessCount)
-                .build();
     }
 
     public void setFirebaseToken(String firebaseToken) {

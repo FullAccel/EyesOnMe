@@ -23,33 +23,33 @@ public class DailyPlanService {
     private final DailyPlanRepository dailyPlanRepository;
     private final MemberRepository memberRepository;
 
+    private final int YEAR_MONTH_START_INDEX = 0;
+    private final int DAY_START_INDEX = 6;
+    private final int DATE_END_INDEX = 8;
+
     @Transactional
-    public Long save(Long memberId, String yearMonthDate){
+    public Long save(Long memberId, String yearMonthDay){
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 멤버가 존재하지 않습니다 : " + memberId));
 
-        String yearMonth =yearMonthDate.substring(0,6);
-        int date = Integer.parseInt(yearMonthDate.substring(6,8));
+        String yearMonth =yearMonthDay.substring(YEAR_MONTH_START_INDEX, DAY_START_INDEX);
+        int day = Integer.parseInt(yearMonthDay.substring(DAY_START_INDEX, DATE_END_INDEX));
 
-        if(dailyPlanRepository.existsDailyPlanByYearMonthAndDate(yearMonth, date))
-            throw new EntityAlreadyExistException(DAILYPLAN_ALREADY_EXIST, "해당 날짜에 데일리 플랜이 이미 존재합니다, PUT으로 update해주세요 : " + yearMonthDate);
+        if(dailyPlanRepository.existsDailyPlanByYearMonthAndDayAndMemberId(yearMonth, day, memberId))
+            throw new EntityAlreadyExistException(DAILYPLAN_ALREADY_EXIST, "해당 날짜에 데일리 플랜이 이미 존재합니다 : " + yearMonthDay);
 
         DailyPlan dailyPlan = DailyPlan.builder()
                 .member(member)
                 .yearMonth(yearMonth)
-                .date(date)
+                .day(day)
                 .build();
         return dailyPlanRepository.save(dailyPlan).getId();
     }
 
     public DailyPlanResponseDto findById(Long dailyPlanId) {
-        DailyPlan dailyPlan = dailyPlanRepository.findById(dailyPlanId)
+        return dailyPlanRepository.findById(dailyPlanId)
+                .map(DailyPlanResponseDto::new)
                 .orElseThrow(() -> new EntityNotFoundException(DAILYPLAN_NOT_FOUND, "해당 데일리 플랜이 존재하지 않습니다 : " + dailyPlanId));
-
-        return DailyPlanResponseDto.builder()
-                .entity(dailyPlan)
-                .build();
-
     }
 
     @Transactional
@@ -65,7 +65,7 @@ public class DailyPlanService {
                 .orElseThrow(() -> new EntityNotFoundException(MEMBER_NOT_FOUND, "해당 멤버가 존재하지 않습니다 : " + memberId));
 
 
-        List<DailyPlanResponseDto> dailyPlanResponseDtos = dailyPlanRepository.findByYearMonth(yearMonth)
+        List<DailyPlanResponseDto> dailyPlanResponseDtos = dailyPlanRepository.findByYearMonthAndMemberId(yearMonth, memberId)
                 .stream()
                 .map(DailyPlanResponseDto::new)
                 .collect(Collectors.toList());

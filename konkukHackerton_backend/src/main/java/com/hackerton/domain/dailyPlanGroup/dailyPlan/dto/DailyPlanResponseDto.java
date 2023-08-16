@@ -13,11 +13,10 @@ public class DailyPlanResponseDto {
     private String yearMonth;
     private int date;
 
-
     @Builder
     public DailyPlanResponseDto(DailyPlan entity) {
         this.dailyPlanId = entity.getId();
         this.yearMonth = entity.getYearMonth();
-        this.date = entity.getDate();
+        this.date = entity.getDay();
     }
 }

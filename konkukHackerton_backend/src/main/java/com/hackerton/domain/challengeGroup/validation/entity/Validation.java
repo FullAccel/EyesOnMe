@@ -2,15 +2,12 @@ package com.hackerton.domain.challengeGroup.validation.entity;
 
 import com.hackerton.domain.BaseTimeEntity;
 import com.hackerton.domain.challengeGroup.challenge.entity.Challenge;
-import com.hackerton.domain.challengeGroup.check.entity.Check;
-import com.hackerton.domain.challengeGroup.proof.entity.Proof;
+import com.hackerton.domain.member.entity.Member;
+import com.hackerton.global.status.ProgressStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -24,16 +21,32 @@ public class Validation extends BaseTimeEntity {
 
     private String validatorName;
 
-    @OneToMany(mappedBy = "validation")
-    private List<Check> checks = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private ProgressStatus validationStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "CREATOR_MEMBER_ID")
+    private Member creatorMember;
+
+    @ManyToOne
+    @JoinColumn(name = "VALIDATOR_MEMBER_ID")
+    private Member validatorMember;
 
     @ManyToOne
     @JoinColumn(name = "CHALLENGE_ID")
     private Challenge challenge;
 
     @Builder
-    public Validation(String validatorName, Challenge challenge) {
+    public Validation(String validatorName, Member creatorMember, Member validatorMember, Challenge challenge) {
         this.validatorName = validatorName;
+        this.validationStatus = ProgressStatus.IN_PROGRESS;
+        this.creatorMember = creatorMember;
+        this.validatorMember = validatorMember;
         this.challenge = challenge;
+
+    }
+
+    public void setValidationStatus(ProgressStatus achievementCheck) {
+        this.validationStatus = achievementCheck;
     }
 }

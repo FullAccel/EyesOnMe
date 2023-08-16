@@ -28,21 +28,21 @@ public class ToDoController {
     }
 
     @PutMapping("/{toDoId}")
-    public ResponseEntity<ResultResponse> update(@PathVariable Long toDoId, @RequestBody ToDoUpdateDto toDoUpdateDto) {
-        boolean isUpdate = toDoService.updateById(toDoId, toDoUpdateDto);
+    public ResponseEntity<ResultResponse> update(@PathVariable Long toDoId, @RequestBody ToDoRequestDto toDoRequestDto) {
+        boolean isUpdate = toDoService.updateById(toDoId, toDoRequestDto);
 
         return ResponseEntity.ok(ResultResponse.of(UPDATE_TODO_SUCCESS, isUpdate));
     }
 
     @GetMapping("/{toDoId}")
-    public ResponseEntity<ResultResponse> getToDoListById(@PathVariable Long toDoId) {
+    public ResponseEntity<ResultResponse> getToDoById(@PathVariable Long toDoId) {
         ToDoResponseDto findById = toDoService.findById(toDoId);
 
         return ResponseEntity.ok(ResultResponse.of(GET_TODO_SUCCESS, findById));
     }
 
     @GetMapping("/{dailyPlanId}/list")
-    public ResponseEntity<ResultResponse> getALLToDoListByDailyPlanId(@PathVariable Long dailyPlanId) {
+    public ResponseEntity<ResultResponse> getALLToDoByDailyPlanId(@PathVariable Long dailyPlanId) {
         List<ToDoResponseDto> allByDailyPlanId = toDoService.findAllByDailyPlanId(dailyPlanId);
         return ResponseEntity.ok(ResultResponse.of(GET_TODO_ALL_SUCCESS, allByDailyPlanId));
     }

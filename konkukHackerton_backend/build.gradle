@@ -27,13 +27,19 @@ dependencies {
     implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.1'
+
     //FCM
     implementation 'com.google.firebase:firebase-admin:9.2.0'
 
     //logger
     implementation('org.slf4j:jcl-over-slf4j')
     implementation('ch.qos.logback:logback-classic')
+
+    //AWS
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 }
+
 
 test {
     useJUnitPlatform()

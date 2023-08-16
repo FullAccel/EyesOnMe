@@ -49,7 +49,25 @@ public enum ResultCode {
     GET_BEST3_TODO_SUCCESS(200, "CT002", "달성률 베스트 3 투두를 조회하였습니다"),
     GET_WORST3_TODO_SUCCESS(200, "CT002", "달성률 워스트 3 투두를 플랜을 조회하였습니다"),
 
+    //Challenge
+    SAVE_CHALLENGE_SUCCESS(200, "C001", "챌린지를 저장했습니다"),
+    SAVE_VALIDATOR_SUCCESS(200, "C002", "검증자를 챌린지에 등록했습니다"),
+    GET_CHALLENGE_SUCCESS(200,"C003", "챌린지를 조회했습니다"),
+    GET_ALL_CHALLENGE_SUCCESS(200,"C004", "해당 유저의 챌린지를 모두 조회했습니다"),
+    UPDATE_CHALLENGE_SUCCESS(200, "C005", "챌린지를 업데이트 했습니다"),
 
+    //Validation
+    VALIDATOR_ENTRY_SUCCESS(200, "V001", "검증가가 챌린지에 입장했습니다"),
+    DELETE_VALIDATION_SUCCESS(200, "V002", "검증자를 삭제 했습니다"),
+    CHECK_VALIDATION_SUCCESS(200, "V003", "검증을 완료했습니다"),
+
+
+    //Proof
+    PROOF_UPLOAD_SUCCESS(200,"P001","검증 사진 등록에 성공하였습니다."),
+    GET_PROOF_SUCCESS(200,"P002","해당 날짜의 Proof를 조회했습니다"),
+    GET_ALL_PROOF_SUCCESS(200,"P003","챌린지의 Proof를 모두 조회했습니다"),
+    UPDATE_PROOF_SUCCESS(200, "P004", "Proof를 업데이트 하였습니다"),
+    DELETE_PROOF_SUCCESS(200, "P005", "Proof를 삭제 하였습니다"),
     ;
 
     private final int status;

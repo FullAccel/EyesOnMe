@@ -36,8 +36,8 @@ public class FollowService {
         if(memberId == followingMemberId)
             throw new FollowMyselfFailException(FOLLOW_MYSELF_FAIL, "해당 팔로우 ID는 본인입니다 : " + followingMemberId);
 
-//        if(followRepository.existsByMemberIdAndFollowingMemberId(memberId, followingMemberId))
-//            throw new EntityAlreadyExistException(FOLLOW_ALREADY_EXIST, "해당 ID의 유저는 이미 팔로우 했습니다 : " + followingMemberId);
+        if(followRepository.existsByMemberIdAndFollowingMemberId(memberId, followingMemberId))
+            throw new EntityAlreadyExistException(FOLLOW_ALREADY_EXIST, "해당 ID의 유저는 이미 팔로우 했습니다 : " + followingMemberId);
 
         //알람 보냄
         FCMNotificationRequestDto messageDto = FCMNotificationRequestDto.builder()

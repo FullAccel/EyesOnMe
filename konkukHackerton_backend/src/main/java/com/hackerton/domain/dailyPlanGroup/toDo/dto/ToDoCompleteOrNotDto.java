@@ -9,7 +9,4 @@ public class ToDoCompleteOrNotDto {
 
     private String ToDoStatusCode;
 
-    public ToDoCompleteOrNotDto(String toDoStatusCode) {
-        ToDoStatusCode = toDoStatusCode;
-    }
 }
