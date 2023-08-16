@@ -543,6 +543,93 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         )
     }
 
+    // 실제 : 챌린지 검증 인정~
+    fun checkValidationAsCompleteFunc(cId: Int) {
+        val checkValidationAsCompleteBuilder = RetrofitBuilder.api.checkValidationAsComplete(cId, memberInfo.id)
+        checkValidationAsCompleteBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<Boolean>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as Boolean
+                }
+                else {
+                    Log.d("eyesonme-CF", "checkValidationAsCompleteFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                }
+            }
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "checkValidationAsCompleteFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+            }
+        }
+        )
+    }
+
+    // 실제 : 챌린지 검증 노인정~
+    fun checkValidationAsFailFunc(cId: Int) {
+        val checkValidationAsFailBuilder = RetrofitBuilder.api.checkValidationAsFail(cId, memberInfo.id)
+        checkValidationAsFailBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<Boolean>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as Boolean
+                }
+                else {
+                    Log.d("eyesonme-CF", "checkValidationAsFailFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                }
+            }
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "checkValidationAsFailFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+            }
+        }
+        )
+    }
+
+    // 실제 : 내가 validator인 챌린지 모두 가져오기
+    fun getChallengeListFromValidatorFunc(callback: (List<ChallengeDataFromValidator>?) -> Unit) {
+        val getChallengeListFromValidatorBuilder = RetrofitBuilder.api.getChallengeListFromValidator(memberInfo.id)
+        getChallengeListFromValidatorBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<List<ChallengeDataFromValidator>>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as List<ChallengeDataFromValidator>
+                    callback(result)
+                }
+                else {
+                    Log.d("eyesonme-CF", "getChallengeListFromValidatorFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
+                }
+            }
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "getChallengeListFromValidatorFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
+            }
+        }
+        )
+    }
+
 
 
 

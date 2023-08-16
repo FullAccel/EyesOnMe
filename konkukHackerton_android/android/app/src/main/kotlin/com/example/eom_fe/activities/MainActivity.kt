@@ -523,6 +523,31 @@ class MainActivity: FlutterActivity() {
                     }
                 }
 
+                "checkValidationAsComplete" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.checkValidationAsCompleteFunc(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
+                "checkValidationAsFail" -> {
+                    val jsonString = call.arguments as String
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.checkValidationAsFailFunc(jsonString.toInt())
+                        result.success("success")
+                    }
+                }
+                "getChallengeListFromValidator" -> {
+                    Log.d("eyesonme-MA", "getChallengeListFromValidator called in Kotlin")
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.getChallengeListFromValidatorFunc { data ->
+                            // data를 사용하여 원하는 작업 수행
+                            result.success(Gson().toJson(data).toString())
+                        }
+                    }
+                }
+
 
 
 

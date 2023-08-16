@@ -115,6 +115,15 @@ interface RetrofitService {
     @DELETE("validation/{challengeId}/{validatorId}")
     fun deleteValidatorData(@Path("challengeId") cId: Int, @Path("validatorId") vId: Int): Call<APIResponseData>
 
+    @POST("validation/check/complete/{challengeId}/{validatorId}")
+    fun checkValidationAsComplete(@Path("challengeId") cId: Int, @Path("validatorId") vId: Int): Call<APIResponseData>
+
+    @POST("validation/check/fail/{challengeId}/{validatorId}")
+    fun checkValidationAsFail(@Path("challengeId") cId: Int, @Path("validatorId") vId: Int): Call<APIResponseData>
+
+    @GET("validation/challengeList/{memberId}")
+    fun getChallengeListFromValidator(@Path("memberId") mId: Int): Call<APIResponseData>
+
 
     // Challenge Post
     @Multipart
