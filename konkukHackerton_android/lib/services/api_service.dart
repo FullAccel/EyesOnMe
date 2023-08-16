@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../models/plan_model.dart';
 
 class ApiService {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
   static Future<QuotesModel> getQuotes(String jsonString) async {
     final quote = jsonDecode(jsonString);
 
@@ -63,5 +64,40 @@ class ApiService {
     } else {
       return "${int.parse(h) % 12}:${tmp.substring(3, 5)} pm";
     }
+  }
+
+  static Future<List<PlanModel>> getTodaysPlan(String yyyymmdd) async {
+    print("_getTodaysPlan called");
+    List<PlanModel> ret;
+    String s = "";
+    try {
+      s = await platform.invokeMethod('getAllDailyPlansByDate', yyyymmdd);
+      print("raw value : $s");
+      ret = (jsonDecode(s) as List).map((e) => PlanModel.fromJson(e)).toList();
+      ret = ApiService.sortDailyPlans(ret);
+
+      print("todaysPlan.length: ${ret.length}");
+
+      return ret;
+    } on PlatformException catch (e) {
+      throw Exception("Failed to get Today;s plan");
+    }
+  }
+
+  static Future<void> _postTodoDataFunc(String jsonString) async {
+    try {
+      final result =
+          await platform.invokeMethod('postTodoDataFunc', jsonString);
+      print("alarm: $result");
+
+      // await platform.invokeMethod('testData');
+    } on PlatformException catch (e) {
+      print("Error: ${e.message}");
+    }
+  }
+
+  static Future<void> addPlan(String jsonString) async {
+    print("jsonString: $jsonString");
+    await _postTodoDataFunc(jsonString);
   }
 }
