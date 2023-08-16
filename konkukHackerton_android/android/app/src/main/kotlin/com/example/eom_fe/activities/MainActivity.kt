@@ -10,40 +10,27 @@ import androidx.annotation.RequiresApi
 import com.example.eom_fe.R
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.alarm_package.AlarmService
-import com.example.eom_fe.api.RetrofitBuilder
 import com.example.eom_fe.data.*
-import com.example.eom_fe.follow.CustomMessageFactory
 import com.example.eom_fe.functions.ChallengeFunctions
 import com.example.eom_fe.functions.DataFunctions
 import com.example.eom_fe.functions.LoginFunctions
 import com.example.eom_fe.roomDB.AlarmDB
 import com.example.eom_fe.roomDB.AlarmDataModel
-import com.facebook.stetho.Stetho
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.template.model.Link
 import com.kakao.sdk.template.model.TextTemplate
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 //import io.flutter.plugins.GeneratedPluginRegistrant
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.File
-import java.lang.reflect.Type
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.coroutines.suspendCoroutine
 
 
 class MainActivity: FlutterActivity() {
@@ -429,7 +416,13 @@ class MainActivity: FlutterActivity() {
                     val gson = Gson()
                     val todoFData: ChallengeMakeData = gson.fromJson(jsonString, ChallengeMakeData::class.java)
                     CoroutineScope(Dispatchers.IO).launch {
-                        challengeFuntions.makeChallengeWithValidator(todoFData.challengeRequestData, todoFData.validatorNameList)
+                        if (todoFData.validatorNameList == null) {
+                            challengeFuntions.makeChallengeWithValidator(todoFData.challengeRequestData, null)
+                        }
+                        else {
+                            challengeFuntions.makeChallengeWithValidator(todoFData.challengeRequestData, todoFData.validatorNameList)
+                        }
+
                         result.success("success")
                     }
                     // Gson().toJson(validatorList).toString()

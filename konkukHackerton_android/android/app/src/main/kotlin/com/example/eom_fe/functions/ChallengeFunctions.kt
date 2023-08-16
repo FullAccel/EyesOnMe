@@ -2,10 +2,8 @@ package com.example.eom_fe.functions
 
 import android.content.Context
 import android.util.Log
-import com.example.eom_fe.activities.MainActivity
 import com.example.eom_fe.alarm_package.AlarmFunctions
 import com.example.eom_fe.api.RetrofitBuilder
-import com.example.eom_fe.api.RetrofitBuilder.api
 import com.example.eom_fe.data.*
 import com.example.eom_fe.roomDB.AlarmDB
 import com.google.gson.Gson
@@ -16,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -24,7 +21,6 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.awaitResponse
 import java.io.File
 import java.lang.reflect.Type
 
@@ -87,13 +83,19 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     }
 
     // 실제 : 챌린지 만들기 (검증자와 함께)
-    fun makeChallengeWithValidator(cd: ChallengeRequestData, vld: List<String>) {
+    fun makeChallengeWithValidator(cd: ChallengeRequestData, vld: List<String>?) {
         addChallengeDataFunc(cd) { challengeId ->
             if (challengeId != null) {
                 // 결과 값인 challengeId를 사용하여 다른 작업 수행
                 CoroutineScope(Dispatchers.IO).launch {
-                    val validatorList = ValidatorListData(vld)
-                    addValidatorDataFunc(challengeId, validatorList)
+                    if (vld == null) {
+                        addValidatorDataFunc(challengeId, null)
+
+                    } else {
+                        val validatorList = ValidatorListData(vld)
+                        addValidatorDataFunc(challengeId, validatorList)
+                    }
+
                 }
             } else {
                 // 실패한 경우 처리
@@ -144,7 +146,7 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
     }
 
 
-    fun addValidatorDataFunc(cId: Int, vld: ValidatorListData) {
+    fun addValidatorDataFunc(cId: Int, vld: ValidatorListData?) {
         val addValidatorDataBuilder = RetrofitBuilder.api.addValidatorData(cId, vld)
         addValidatorDataBuilder.enqueue(object : Callback<APIResponseData> {
             override fun onResponse(
@@ -389,9 +391,15 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
                     val jsonResult = Gson().toJson(temp.data)
                     val result = Gson().fromJson(jsonResult, type) as Boolean
                 }
+                else {
+                    Log.d("eyesonme-CF", "sendValidatorKakaoMessage null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                }
             }
 
             override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "sendValidatorKakaoMessage null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
             }
         }
         )
