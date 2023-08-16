@@ -630,6 +630,67 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         )
     }
 
+    // 실제 : 특정 proof 가져오기
+    fun getProofDataFunc(cId: Int, date: DateDataForGettingProof, callback: (ProofResponseData?) -> Unit) {
+        val getProofDataFuncBuilder = RetrofitBuilder.api.getProofData(cId, date)
+        getProofDataFuncBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<ProofResponseData>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as ProofResponseData
+                    callback(result)
+                }
+                else {
+                    Log.d("eyesonme-CF", "getProofDataFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
+                }
+            }
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "getProofDataFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
+            }
+        }
+        )
+    }
+
+    // 실제 : 모든 proof 리스트로 가져오기
+    fun getAllProofDataFunc(cId: Int, callback: (List<ProofResponseData>?) -> Unit) {
+        val getAllProofDataFuncBuilder = RetrofitBuilder.api.getAllProofData(cId)
+        getAllProofDataFuncBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<List<ProofResponseData>>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as List<ProofResponseData>
+                    callback(result)
+                }
+                else {
+                    Log.d("eyesonme-CF", "getAllProofDataFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                    callback(null)
+                }
+            }
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "getAllProofDataFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+                callback(null)
+            }
+        }
+        )
+    }
 
 
 

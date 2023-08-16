@@ -134,5 +134,15 @@ interface RetrofitService {
         @Part image: MultipartBody.Part?
     ): Call<APIResponseData>
 
+    @GET("proof/{challengeId}")
+    fun getProofData(@Path("challengeId") cId: Int, @Body params: DateDataForGettingProof): Call<APIResponseData>
 
+    @GET("proof/{challengeId}/list")
+    fun getAllProofData(@Path("challengeId") cId: Int): Call<APIResponseData>
+
+    @PUT("proof/{challengeId}/{proofId}")
+    fun editProofData(@Path("challengeId") cId: Int, @Path("proofId") pId: Int): Call<APIResponseData>
+
+    @DELETE("proof/{challengeId}")
+    fun deleteProofData(@Path("challengeId") cId: Int)
 }

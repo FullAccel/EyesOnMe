@@ -489,6 +489,31 @@ class MainActivity: FlutterActivity() {
                     }
                 }
 
+                "getProofSingleDay" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val cId = jsonObject.getInt("id")
+                    val date = jsonObject.getString("date")
+
+                    val ddfgp = DateDataForGettingProof(date)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.getProofDataFunc(cId, ddfgp) { data ->
+                            result.success(Gson().toJson(data).toString())
+                        }
+                    }
+                }
+
+                "getAllProof" -> {
+                    val cId = call.arguments as String
+
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.getAllProofDataFunc(cId.toInt()) { data ->
+                            result.success(Gson().toJson(data).toString())
+                        }
+                    }
+                }
+
                 "sendKakaoValidationMessage" -> {
                     val jsonString = call.arguments as String
                     val jsonObject = JSONObject(jsonString)
