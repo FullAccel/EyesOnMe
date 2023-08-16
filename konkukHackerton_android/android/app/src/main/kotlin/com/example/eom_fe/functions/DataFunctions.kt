@@ -280,9 +280,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
 
                             CoroutineScope(Dispatchers.IO).launch {
                                 Log.d("eyesonme-DF", "postTodoDataFunc : !!CoroutineScope")
-                                setAlarm(scode, content, stime)
-                                setAlarm(mcode, content, mtime)
-                                setAlarm(ecode, content, etime)
+                                setAlarm(scode, content, stime, aType)
+                                setAlarm(mcode, content, mtime, aType)
+                                setAlarm(ecode, content, etime, aType)
                                 db.alarmDao().addAlarm(AlarmDataModel(scode, scode, stime, content, aType, aRepeat))
                                 db.alarmDao().addAlarm(AlarmDataModel(mcode, mcode, mtime, content, aType, aRepeat))
                                 db.alarmDao().addAlarm(AlarmDataModel(ecode, ecode, etime, content, aType, aRepeat))
@@ -306,9 +306,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
                                     val content = todo.title
                                     CoroutineScope(Dispatchers.IO).launch {
                                         Log.d("eyesonme-DF", "postTodoDataFunc : CoroutineScope")
-                                        setAlarm(scode, content, stime)
-                                        setAlarm(mcode, content, mtime)
-                                        setAlarm(ecode, content, etime)
+                                        setAlarm(scode, content, stime, aType)
+                                        setAlarm(mcode, content, mtime, aType)
+                                        setAlarm(ecode, content, etime, aType)
                                         db.alarmDao().addAlarm(AlarmDataModel(scode, scode, stime, content, aType, aRepeat))
                                         db.alarmDao().addAlarm(AlarmDataModel(mcode, mcode, mtime, content, aType, aRepeat))
                                         db.alarmDao().addAlarm(AlarmDataModel(ecode, ecode, etime, content, aType, aRepeat))
@@ -377,14 +377,14 @@ class DataFunctions (context: Context, applicationContext: Context) {
                                     db.alarmDao().deleteAlarm(alarm.alarm_code)
                                     if (isAlarm) {
                                         if (alarm.alarm_code % 10 == 0) {
-                                            setAlarm(alarm.alarm_code, todo.title, todo.alarmStartTime)
+                                            setAlarm(alarm.alarm_code, todo.title, todo.alarmStartTime, aType)
                                             db.alarmDao().addAlarm(AlarmDataModel(alarm.alarm_code, alarm.alarm_code, todo.alarmStartTime, todo.title, aType, aRepeat))
                                         } else if (alarm.alarm_code % 10 == 1) {
                                             val mtime = calculateMidTime(todo.alarmStartTime, todo.alarmEndTime)
-                                            setAlarm(alarm.alarm_code, todo.title, mtime)
+                                            setAlarm(alarm.alarm_code, todo.title, mtime, aType)
                                             db.alarmDao().addAlarm(AlarmDataModel(alarm.alarm_code, alarm.alarm_code, mtime, todo.title, aType, aRepeat))
                                         } else if (alarm.alarm_code % 10 == 2) {
-                                            setAlarm(alarm.alarm_code, todo.title, todo.alarmEndTime)
+                                            setAlarm(alarm.alarm_code, todo.title, todo.alarmEndTime, aType)
                                             db.alarmDao().addAlarm(AlarmDataModel(alarm.alarm_code, alarm.alarm_code, todo.alarmEndTime, todo.title, aType, aRepeat))
                                         } else {
                                             Log.d("eyesonme-DF", "editTodoDataFunc - something is wrong...")
@@ -402,9 +402,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
                                 val ecode = todo.id * 10 + 2
 
                                 val content = todo.title
-                                setAlarm(scode, content, stime)
-                                setAlarm(mcode, content, mtime)
-                                setAlarm(ecode, content, etime)
+                                setAlarm(scode, content, stime, aType)
+                                setAlarm(mcode, content, mtime, aType)
+                                setAlarm(ecode, content, etime, aType)
                                 db.alarmDao().addAlarm(AlarmDataModel(scode, scode, stime, content, aType, aRepeat))
                                 db.alarmDao().addAlarm(AlarmDataModel(mcode, mcode, mtime, content, aType, aRepeat))
                                 db.alarmDao().addAlarm(AlarmDataModel(ecode, ecode, etime, content, aType, aRepeat))
@@ -554,9 +554,9 @@ class DataFunctions (context: Context, applicationContext: Context) {
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun setAlarm(alarmCode : Int, content : String, time : String){
-        Log.d("eyesonme-DF", "setAlarm called - alarmCode : $alarmCode, content: $content, time: $time")
-        alarmFunctions.callAlarm(time, alarmCode, content)
+    private fun setAlarm(alarmCode : Int, content : String, time : String, alarmType: Int){
+        Log.d("eyesonme-DF", "setAlarm called - alarmCode : $alarmCode, content: $content, time: $time, alarmType: $alarmType")
+        alarmFunctions.callAlarm(time, alarmCode, content, alarmType)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -567,7 +567,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
         var alarmCode = random.random()
         // 기상 alarmCode는 홀수, 음수
         if (alarmCode % 2 == 0) alarmCode++
-        setAlarm(alarmCode, "기상", time)
+        setAlarm(alarmCode, "기상", time, aType)
 
         CoroutineScope(Dispatchers.IO).launch {
             db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, "기상", aType, aRepeat))
@@ -580,7 +580,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
         var alarmCode = random.random()
         // 취침 alarmCode는 짝수, 음수
         if (alarmCode % 2 != 0) alarmCode++
-        setAlarm(alarmCode, "취침", time)
+        setAlarm(alarmCode, "취침", time, aType)
 
         CoroutineScope(Dispatchers.IO).launch {
             db.alarmDao().addAlarm(AlarmDataModel(alarmCode, alarmCode, time, "취침", aType, aRepeat))
@@ -623,11 +623,11 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     db.alarmDao().deleteAlarm(aCode)
                     if (aCode % 2 == 0) {
                         // 취침
-                        setAlarm(aCode, "취침", time)
+                        setAlarm(aCode, "취침", time, aType)
                         db.alarmDao().addAlarm(AlarmDataModel(aCode, aCode, time, "취침", aType, aRepeat))
                     }
                     else {
-                        setAlarm(aCode, "기상", time)
+                        setAlarm(aCode, "기상", time, aType)
                         db.alarmDao().addAlarm(AlarmDataModel(aCode, aCode, time, "기상", aType, aRepeat))
                     }
                     return@launch
@@ -651,7 +651,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
             val newTime = parsedTime.plusMinutes(preEAlarm.repeat.toLong())
             val nTime = newTime.format(formatter)
             val nAlarm = AlarmDataModel(ecode, ecode, nTime, preEAlarm.content, preEAlarm.type, preEAlarm.repeat)
-            setAlarm(ecode, preEAlarm.content, nTime)
+            setAlarm(ecode, preEAlarm.content, nTime, preEAlarm.type)
             db.alarmDao().addAlarm(nAlarm)
         }
     }
@@ -673,7 +673,7 @@ class DataFunctions (context: Context, applicationContext: Context) {
                     val nTime = newTime.format(formatter)
 
                     val nAlarm = AlarmDataModel(aCode, aCode, nTime, preAlarm.content, preAlarm.type, preAlarm.repeat)
-                    setAlarm(aCode, preAlarm.content, nTime)
+                    setAlarm(aCode, preAlarm.content, nTime, preAlarm.type)
                     db.alarmDao().addAlarm(nAlarm)
                     return@launch
                 }

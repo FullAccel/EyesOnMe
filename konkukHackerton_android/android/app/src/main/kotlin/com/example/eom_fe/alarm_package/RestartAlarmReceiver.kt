@@ -32,7 +32,8 @@ class RestartAlarmReceiver : BroadcastReceiver() {
                         val time = list[i].time
                         val code = list[i].alarm_code
                         val content = list[i].content
-                        functions.callAlarm(time, code, content) // 알람 실행
+                        val type = list[i].type
+                        functions.callAlarm(time, code, content, type) // 알람 실행
                     }
                 }
             }

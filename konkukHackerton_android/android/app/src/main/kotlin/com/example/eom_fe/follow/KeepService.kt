@@ -15,6 +15,7 @@ class KeepService: Service() {
     private val binder = LocalBinder()
 
     var alarmCode = 0
+    var alarmType = 0
 
     inner class LocalBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods
@@ -30,6 +31,7 @@ class KeepService: Service() {
         Log.d("eyesonme-KS", "KeepService - onTaskRemoved called")
         val restartServiceIntent = Intent(applicationContext, this.javaClass)
         restartServiceIntent.putExtra("alarm_code", alarmCode)
+        restartServiceIntent.putExtra("alarm_type", alarmType)
         restartServiceIntent.setPackage(packageName)
 
         val restartServicePendingIntent = PendingIntent.getService(
@@ -49,11 +51,13 @@ class KeepService: Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent != null) {
             alarmCode = intent.getIntExtra("alarm_code", 0)
+            alarmType = intent.getIntExtra("alarm_type", 0)
             Log.d("eyesonme-KS", "KeepService - onStartCommand alarmCode : $alarmCode")
             if (alarmCode != 0) {
                 // alarmCode를 사용하여 필요한 작업 수행
                 val i = Intent(applicationContext, BackgroundActivity::class.java)
                 i.putExtra("alarm_code", alarmCode)
+                i.putExtra("alarm_type", alarmType)
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 applicationContext.startActivity(i)
                 Log.d("eyesonme-KS", "KeepService - onStartCommand called")

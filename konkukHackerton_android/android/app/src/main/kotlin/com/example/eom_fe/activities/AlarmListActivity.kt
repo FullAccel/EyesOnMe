@@ -107,9 +107,4 @@ class AlarmListActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun setAlarm(alarmCode : Int, content : String, time : String){
-        alarmFunctions.callAlarm(time, alarmCode, content)
-    }
-
 }

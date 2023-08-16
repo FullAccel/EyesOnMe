@@ -478,6 +478,36 @@ class ChallengeFunctions (context: Context, applicationContext: Context) {
         }
     }
 
+    // 실제 : validator 지우기
+    fun deleteValidatorDataFunc(cId: Int, vId: Int) {
+        val deleteValidatorDataBuilder = RetrofitBuilder.api.deleteValidatorData(cId, vId)
+        deleteValidatorDataBuilder.enqueue(object : Callback<APIResponseData> {
+            override fun onResponse(
+                call: Call<APIResponseData>,
+                response: Response<APIResponseData>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d("eyesonme-CF", "response : ${response.body()}")
+                    val temp = response.body() as APIResponseData
+                    val type: Type = object : TypeToken<Boolean>() {}.type
+                    val jsonResult = Gson().toJson(temp.data)
+                    val result = Gson().fromJson(jsonResult, type) as Boolean
+                }
+                else {
+                    Log.d("eyesonme-CF", "deleteValidatorDataFunc null (1)")
+                    Log.d("eyesonme-CF", "error 1 : ${response.errorBody()!!.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<APIResponseData>, t: Throwable) {
+                Log.d("eyesonme-CF", "deleteValidatorDataFunc null (2)")
+                Log.d("eyesonme-CF", "error 2 : ${t.printStackTrace()}")
+            }
+        }
+        )
+    }
+
+
 
 
 }

@@ -73,6 +73,7 @@ class MainActivity: FlutterActivity() {
                 for (i in 0 until size){
                     val time = list[i].time
                     val code = list[i].alarm_code
+                    val type = list[i].type
 
                     // 현재 시간을 얻어옴
                     val currentTime = Calendar.getInstance()
@@ -89,7 +90,7 @@ class MainActivity: FlutterActivity() {
                             // time이 현재 시간보다 이후인 경우
 
                             val content = list[i].content
-                            functions.callAlarm(time, code, content) // 알람 실행
+                            functions.callAlarm(time, code, content, type) // 알람 실행
                         } else {
                             db.alarmDao().deleteAlarm(code)
                         }
@@ -490,6 +491,17 @@ class MainActivity: FlutterActivity() {
                     val cId = call.arguments as String
                     CoroutineScope(Dispatchers.IO).launch {
                         challengeFuntions.enterValidation(cId.toInt())
+                        result.success("success")
+                    }
+                }
+                "deleteValidator" -> {
+                    val jsonString = call.arguments as String
+                    val jsonObject = JSONObject(jsonString)
+
+                    val cId = jsonObject.getInt("challengeId")
+                    val vId = jsonObject.getInt("validatorId")
+                    CoroutineScope(Dispatchers.IO).launch {
+                        challengeFuntions.deleteValidatorDataFunc(cId, vId)
                         result.success("success")
                     }
                 }

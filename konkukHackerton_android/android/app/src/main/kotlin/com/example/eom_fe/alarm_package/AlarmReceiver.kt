@@ -41,9 +41,11 @@ class AlarmReceiver() : BroadcastReceiver() {
         val serviceIntent = Intent(context, KeepService::class.java)
         if (intent != null) {
             val alarmRqCode = intent.getIntExtra("alarm_rqCode", 0)
+            val alarmRqType = intent.getIntExtra("alarm_rqType", 0)
             if (alarmRqCode != 0) {
                 // alarmRqCode를 사용하여 필요한 작업 수행
                 serviceIntent.putExtra("alarm_code", alarmRqCode)
+                serviceIntent.putExtra("alarm_type", alarmRqType)
                 context?.startService(serviceIntent)
             }
         }
